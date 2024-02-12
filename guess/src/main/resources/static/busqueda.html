@@ -4,75 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscador de Partidas</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            max-width: 1200px;
-            margin: 20px auto;
-        }
-        .search-bar {
-            grid-column: 1 / span 2;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .sidebar {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-right: 20px;
-        }
-        .search-results {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .search-form {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
-        .search-form input[type="text"] {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            outline: none;
-        }
-        .search-form button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .search-results ul {
-            list-style: none;
-            padding: 0;
-        }
-        .search-results li {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="busqueda.css">
 </head>
 <body>
 <div class="container">
@@ -82,6 +14,15 @@
             <input type="text" id="searchInput" placeholder="Buscar partidas...">
             <button onclick="search()">Buscar</button>
         </div>
+    </div>
+    <div id="viewButtons">
+        <ul id style="overflow: hidden; list-style-type: none;">
+            <li style="float: left;"><a href="game.html"><button>Anuncios</button></a></li>
+            <li style="float: left;"><button>Marcadores</button></li>
+            <li style="float: left;"><a href="busqueda.html"><button>Anuncios</button></a></li>
+            <li style="float: left;"><a href="perfil.html"><button>Perfil</button></a></li>
+            <li style="float: left;"><a href="/"><button>Home</button></a></li>
+        </ul>
     </div>
     <div class="sidebar">
         <h2>Filtros</h2>

@@ -11,5 +11,5 @@ import jakarta.servlet.http.HttpSession;
 @Controller 
 public class RootController {
     @GetMapping("/")
-public String index(HttpSession session, Model model, @RequestParam(required = false) Integer entero) { return "landingpage"; }
+public String index(HttpSession session, Model model, @RequestParam(required = false) Integer entero) { return "index"; }
 }

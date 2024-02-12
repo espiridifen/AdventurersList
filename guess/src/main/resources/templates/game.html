@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventurer's List: Nombre de la Partida</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .game_container {
+        display: grid;
+        grid-template-columns: auto 60% auto;
+        max-width: 1200px;
+        margin: 20px 20px;
+        grid-auto-rows: minmax(100px, auto);
+    }
+    .image{
+        grid-column: 1;
+        width: 250px;
+        background-size: contain;
+    }
+    .gamedata{
+        grid-column: 2;
+        background-color: red;
+    }
+    .playerlist{
+        grid-column: 1;
+        font-size: x-large;
+    }
+    .list{
+        list-style: none;
+        margin: 1pt;
+    }
+    .location{
+        grid-column: 3;
+        background-color: aqua;
+        
+    }
+</style>
+<body>
+    <div class="game_container">
+        <img class="image" src="resources/gatoque.jpg"/>
+        <div class="gamedata"><ul class="list">
+            <li><h1>Title</h1></li>
+            <li><h2>System</h2></li>
+            <li><h3>Schedules</h3></li>
+        </ul></div>
+        <div class="playerlist">
+            Jugadores:
+            <ul class="list">
+                <li>Usuario</li>
+                <li>Usuario</li>
+                <li>Usuario</li>
+                <li>Usuario</li>
+                <li>Usuario</li>
+            </ul>
+        </div>
+        <div class="description">
+            Descripción: 
+            NARRATOR:
+            (Black screen with text; The sound of buzzing bees can be heard)
+            According to all known laws
+            of aviation,
+             :
+            there is no way a bee
+            should be able to fly.
+             :
+            Its wings are too small to get
+            its fat little body off the ground.
+             :
+            The bee, of course, flies anyway
+             :
+            because bees don't care
+            what humans think is impossible.
+            BARRY BENSON:
+            (Barry is picking out a shirt)
+            Yellow, black. Yellow, black.
+            Yellow, black. Yellow, black.
+             :
+            Ooh, black and yellow!
+            Let's shake it up a little.
+            JANET BENSON:
+            Barry! Breakfast is ready!
+            BARRY:
+            Coming!
+             :
+            Hang on a second.
+            (Barry uses his antenna like a phone)
+             :
+            Hello?
+        </div>
+        <div class="location">
+            link al sitio en el que se haga
+        </div>
+    </div>
+</body>
+</html>

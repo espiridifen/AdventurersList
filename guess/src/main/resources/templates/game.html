@@ -5,52 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adventurer's List: Nombre de la Partida</title>
 </head>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
-    .game_container {
-        display: grid;
-        grid-template-columns: auto 60% auto;
-        max-width: 1200px;
-        margin: 20px 20px;
-        grid-auto-rows: minmax(100px, auto);
-    }
-    .image{
-        grid-column: 1;
-        width: 250px;
-        background-size: contain;
-    }
-    .gamedata{
-        grid-column: 2;
-        background-color: red;
-    }
-    .playerlist{
-        grid-column: 1;
-        font-size: x-large;
-    }
-    .list{
-        list-style: none;
-        margin: 1pt;
-    }
-    .location{
-        grid-column: 3;
-        background-color: aqua;
-        
-    }
-</style>
+<link rel="stylesheet" href="resources/style/game.css">
 <body>
     <div class="game_container">
-        <img class="image" src="resources/gatoque.jpg"/>
+        <div class="image_container">
+            <img src="resources/gatoque.jpg"/>
+        </div>
         <div class="gamedata"><ul class="list">
             <li><h1>Title</h1></li>
             <li><h2>System</h2></li>
             <li><h3>Schedules</h3></li>
         </ul></div>
-        <div class="playerlist">
+        <div class="genericlist">
+            Director de Juego:
+            <ul class="list">
+                <li>Usuario</li>
+            </ul>
             Jugadores:
             <ul class="list">
                 <li>Usuario</li>
@@ -95,7 +65,25 @@
             Hello?
         </div>
         <div class="location">
-            link al sitio en el que se haga
+            Dónde se juega
+            <ul class="genericlist">
+                <div class="image_container">
+                    <img src="resources/gatoque.jpg"/>
+                </div>
+            </ul>
+            <!-- Esto si el usuario es jugador de la partida, se saca desde th -->
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Link a la partida</a>
+        </div>
+        <div class="button_container">
+            <ul class="list">
+                <li>
+                    <button>Unirte a la partida</button>
+                </li>
+                <li>
+                    <button>Guardar partida</button>
+                </li>
+            </ul>
+    
         </div>
     </div>
 </body>

@@ -1,0 +1,65 @@
+.background {
+    background-image: url(../img/stone_texture_kuwahara.png);
+}
+.missions-table {
+    width: 100%;
+    border: 10px solid;
+    filter: brightness(70%) sepia(100%);
+    border-color: #3d2402; 
+    filter:none;
+    background-image: url(../img/wood_texture_kuwahara.png); /* Replace with your background image URL */
+    background-size: cover;
+    padding: 20px; /* Adjust as needed */
+    box-sizing: border-box;
+    /* Add other styling as needed */
+  }
+
+#missionsButtons {
+grid-column: 1 / span 2;
+padding: 10px 0;
+text-align: center;
+border-radius: 8px;
+margin-bottom: 20px;
+}
+
+#missionsButtons ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+#missionsButtons li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#missionsButtons button {
+    background-color: #4b1f05;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#missionsButtons button:hover {
+    background-color: #2b1103;
+}
+.mission{
+    background-color: wheat;
+    background-image: none;
+    aspect-ratio: 2/3;
+    max-width: 20%;
+    display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+}
+.mission div {
+    align-content: center;
+}
+.mission-list {
+    display: flex;
+    list-style-type: none;
+    
+}

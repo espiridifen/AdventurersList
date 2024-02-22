@@ -3,48 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
     <title>Página Principal</title>
 </head>
-<body>
+<body class="background">
 <div class = "container">
-    <div id="appTitle">
-        <h1>Adventurer's List</h1>
-    </div>
-    <div id="viewButtons">
-        <ul id style="overflow: hidden; list-style-type: none;">
-            <li style="float: left;"><a href="game.html"><button>Pagina de partida</button></a></li>
-            <li style="float: left;"><button>Marcadores</button></li>
-            <li style="float: left;"><a href="busqueda.html"><button>Anuncios</button></a></li>
-            <li style="float: left;"><a href="perfil.html"><button>Perfil</button></a></li>
-        </ul>
-    </div>
-    <div id="contentBox">
-        <ul style="list-style-type: none;">
-            <li><div id="partidapreview">
-                <div style="float: left; margin: 10px;"><img src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/></div>
+    
+    <div id="contentBox" class="missions-table">
+        <div id="appTitle">
+            <h1>Adventurer's List</h1>
+        </div>
+        <div id="missionsButtons">
+            <ul id style="overflow: hidden; list-style-type: none;">
+                <li style="float: left;"><a href="game.html"><button>Pagina de partida</button></a></li>
+                <li style="float: left;"><button>Marcadores</button></li>
+                <li style="float: left;"><a href="busqueda.html"><button>Anuncios</button></a></li>
+                <li style="float: left;"><a href="perfil.html"><button>Perfil</button></a></li>
+            </ul>
+        </div>
+        <ul class="mission-list">
+            <li><div id="partidapreview" class="mission">
                 <div ><h2>Nombre de la campaña</h2></div>
+                <div style="float: left; margin: 10px;"><img src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/></div>
                 <div ><h3>Sistema</h3></div>
-                <div style="max-width: 600px;">Sabías que Final Fantasy XIV tiene una prueba gratuita que incluye la totalidad de A Realm Reborn y la expansi´´on ganadora de premios Heavensward y la expansion ganadora de premios Stormblood hasta el nivel 70 sin restricción al tiempo de juego?</div>
+                <div ><h3>Fecha</h3></div>
             </div></li>
-            <li><div id="partidapreview">
-                <div style="float: left; margin: 10px;"><img src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/></div>
+            <li><div id="partidapreview" class="mission">
                 <div ><h2>Nombre de la campaña</h2></div>
+                <div style="float: left; margin: 10px;"><img src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/></div>
                 <div ><h3>Sistema</h3></div>
-                <div style="max-width: 600px;">Sabías que Final Fantasy XIV tiene una prueba gratuita que incluye la totalidad de A Realm Reborn y la expansi´´on ganadora de premios Heavensward y la expansion ganadora de premios Stormblood hasta el nivel 70 sin restricción al tiempo de juego?</div>
+                <div ><h3>Fecha</h3></div>
             </div></li>
-            <li><div id="partidapreview">
-                <div style="float: left; margin: 10px;"><img src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/></div>
+            <li><div id="partidapreview" class="mission">
                 <div ><h2>Nombre de la campaña</h2></div>
-                    <div ><h3>Sistema</h3></div>
-                    <div style="max-width: 600px;">Sabías que Final Fantasy XIV tiene una prueba gratuita que incluye la totalidad de A Realm Reborn y la expansi´´on ganadora de premios Heavensward y la expansion ganadora de premios Stormblood hasta el nivel 70 sin restricción al tiempo de juego?</div>
-                </div></li>
-                <li><div id="partidapreview">
-                    <div style="float: left; margin: 10px;"><img src="img/gatoque.jpg"alt="que" style="width: 100px; height: 100px;"/></div>
-                    <div ><h2>Nombre de la campaña</h2></div>
-                    <div ><h3>Sistema</h3></div>
-                    <div style="max-width: 600px;">Sabías que Final Fantasy XIV tiene una prueba gratuita que incluye la totalidad de A Realm Reborn y la expansi´´on ganadora de premios Heavensward y la expansion ganadora de premios Stormblood hasta el nivel 70 sin restricción al tiempo de juego?</div>
-                </div></li>
+                <div style="float: left; margin: 10px;"><img src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/></div>
+                <div ><h3>Sistema</h3></div>
+                <div ><h3>Fecha</h3></div>
+            </div></li>
+            <li><div id="partidapreview" class="mission">
+                <div ><h2>Nombre de la campaña</h2></div>
+                <div style="float: left; margin: 10px;"><img src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/></div>
+                <div ><h3>Sistema</h3></div>
+                <div ><h3>Fecha</h3></div>
+            </div></li>
+            
                 
             </ul>
         </div>

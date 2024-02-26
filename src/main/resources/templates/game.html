@@ -7,8 +7,16 @@
 </head>
 <link rel="stylesheet" href="../static/game.css" th:href="@{/css/game.css}">
 <link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
-<body>
-    <div class="game_container">
+<body class="background">
+    <div class="missions-table game_container">
+        <div class="mainButtons">
+            <ul id style="overflow: hidden; list-style-type: none;">
+                <li style="float: left;"><a href="game.html" th:href="@{game}"><button>Pagina de partida</button></a></li>
+                <li style="float: left;"><button>Marcadores</button></li>
+                <li style="float: left;"><a href="busqueda.html" th:href="@{busqueda}"><button>Anuncios</button></a></li>
+                <li style="float: left;"><a href="perfil.html" th:href="@{perfil}"><button>Perfil</button></a></li>
+            </ul>
+        </div>
         <div class="image_container">
             <img src="img/gatoque.jpg"/>
         </div>
@@ -16,16 +24,10 @@
             <li><h1>Title</h1></li>
             <li><h2>System</h2></li>
             <li><h3>Schedules</h3></li>
-        </ul></div>
-        <div id="viewButtons">
-            <ul id style="overflow: hidden; list-style-type: none;">
-                <li style="float: left;"><a href="game.html"><button>Pagina de partida</button></a></li>
-                <li style="float: left;"><button>Marcadores</button></li>
-                <li style="float: left;"><a href="busqueda.html"><button>Anuncios</button></a></li>
-                <li style="float: left;"><a href="perfil.html"><button>Perfil</button></a></li>
-                <li style="float: left;"><a href="/"><button>Home</button></a></li>
-            </ul>
-        </div>
+        </ul>
+    </div>
+    
+        
         <div class="genericlist">
             Director de Juego:
             <ul class="list">

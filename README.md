@@ -9,13 +9,16 @@ Consta de 3 Roles para su funcionamiento:
 -Administrador: Modera la página web, revisando las publicaciones de los usuarios y dando de
 baja cuentas de usuarios sobre las que se reciban quejas. Puede ver publicaciones y perfiles.
 También permite crear moderadores.
+
 -Moderador: Modera la página web de la misma manera que el administrador. La principal
 diferencia es que no puede crear nuevos moderadores.
+
 -Usuario: Puede publicar y apuntarse a parƟdas de rol. Para apuntarse podrá buscar parƟdas de
 acuerdo a disponibilidad, sistema de juego, experiencia requerida, localización y número de
 sesiones. A la hora de publicar parƟdas deberá dar detalles sobre fecha y hora de la parƟda, el
 sistema de juego, el nivel de experiencia requerido, la localización o si es online y el número de
 sesiones esperadas. 
+
 
 ## Contenido del repositiorio
 

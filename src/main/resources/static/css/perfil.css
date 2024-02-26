@@ -62,7 +62,9 @@ body {
     font-size: 20px;
 }
 .sidebar {
-    background-color: #fff;
+    background-image: url(../img/wood_texture_kuwahara.png); 
+    background-size: cover;
+    filter: brightness(60%);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -78,11 +80,13 @@ body {
 }
 .game-list {
     flex: 1;
-    background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border-radius: 8px;
+    width: fit-content;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center
 }
 .game-item {
     border: 1px solid #ccc;

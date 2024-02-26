@@ -7,11 +7,10 @@
     filter: brightness(70%) sepia(100%);
     border-color: #3d2402; 
     filter:none;
-    background-image: url(../img/wood_texture_kuwahara.png); /* Replace with your background image URL */
+    background-image: url(../img/wood_texture_kuwahara.png); 
     background-size: cover;
-    padding: 20px; /* Adjust as needed */
+    padding: 20px; 
     box-sizing: border-box;
-    /* Add other styling as needed */
   }
 
 #missionsButtons {

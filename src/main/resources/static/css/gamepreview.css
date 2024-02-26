@@ -1,0 +1,50 @@
+.mission{
+    background-color: wheat;
+    background: url(../img/quest.png) no-repeat center center;
+    background-size: contain;
+    /* max-width: 20%; */
+    min-width: 250px;
+    display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+}
+
+.mission::before {
+    content: "";
+    display: block;
+    
+}
+
+.container {
+    position: relative;
+  }
+  
+  .absolute-div div {
+    position: absolute; 
+  }
+  
+  .div1 {
+    top: 10px;
+  left: 200px;
+  /* width: 50px;
+  */
+    margin-top: 20px;
+  height: 50px; 
+    font-size: 12px;
+  }
+  
+  .div2 {
+    border: 20px;
+
+  }
+  
+  .div3 {
+    height: 20px;
+    margin: 10px 10px 10px 10px;
+  
+  }
+  .div4 {
+    height: 50px;
+    
+  }

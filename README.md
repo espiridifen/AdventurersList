@@ -17,7 +17,7 @@ sesiones. A la hora de publicar parƟdas deberá dar detalles sobre fecha y hora
 sistema de juego, el nivel de experiencia requerido, la localización o si es online y el número de
 sesiones esperadas. 
 
-## Contenido de la plantilla
+## Contenido del repositiorio
 
 - en [src/main/java/es/ucm/fdi/iw] están los ficheros de configuración-mediante-código de la aplicación (ojo porque en otro sitio está el fichero principal de configuración-mediante-propiedades, [application.properties]
 

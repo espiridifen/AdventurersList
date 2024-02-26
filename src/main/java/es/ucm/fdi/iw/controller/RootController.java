@@ -14,10 +14,10 @@ public class RootController {
 
 	private static final Logger log = LogManager.getLogger(RootController.class);
 
-	@GetMapping("/login")
-    public String login(Model model) {
-        return "login";
-    }
+	// @GetMapping("/login")
+    // public String login(Model model) {
+    //     return "login";
+    // }
 
 	@GetMapping("/")
     public String index(Model model) {

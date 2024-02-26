@@ -47,14 +47,21 @@ margin-bottom: 20px;
 }
 .mission{
     background-color: wheat;
-    background-image: none;
-    aspect-ratio: 2/3;
-    max-width: 20%;
+    background: url(../img/quest.png) no-repeat center center;
+    background-size: contain;
+    /* max-width: 20%; */
     display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
 }
+
+.mission::before {
+    content: "";
+    display: block;
+    
+}
+
 .mission div {
     align-content: center;
 }

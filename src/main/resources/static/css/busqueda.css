@@ -5,14 +5,19 @@ body {
     padding: 0;
 }
 .container {
+    
     display: grid;
     grid-template-columns: auto 1fr;
     max-width: 1200px;
     margin: 20px auto;
 }
+.container div{
+    border-color: #3d2402; 
+}
 .search-bar {
     grid-column: 1 / span 2;
-    background-color: #333;
+    background-image: url(../img/wood_texture_kuwahara_dark.png); 
+    background-size: cover;
     padding: 20px;
     border-radius: 8px;
     color: #fff;
@@ -20,7 +25,8 @@ body {
 }
 #viewButtons {
     grid-column: 1 / span 2;
-    background-color: #666;
+    background-image: url(../img/wood_texture_kuwahara_dark.png); 
+    background-size: cover;
     padding: 10px 0;
     text-align: center;
     border-radius: 8px;
@@ -40,7 +46,8 @@ body {
 }
 
 #viewButtons button {
-    background-color: #999;
+    background-image: url(../img/wood_texture_kuwahara_darker.png); 
+    background-size: cover;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -52,14 +59,16 @@ body {
     background-color: #777;
 }
 .sidebar {
-    background-color: #fff;
+    background-image: url(../img/wood_texture_kuwahara_dark.png); 
+    background-size: cover;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin-right: 20px;
 }
 .search-results {
-    background-color: #fff;
+    background-image: url(../img/wood_texture_kuwahara_dark.png); 
+    background-size: cover;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -81,7 +90,8 @@ body {
     outline: none;
 }
 .search-form button {
-    background-color: #007bff;
+    background-image: url(../img/wood_texture_kuwahara_darker.png); 
+    background-size: cover;
     color: #fff;
     border: none;
     padding: 10px 20px;

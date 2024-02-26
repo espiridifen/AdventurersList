@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscador de Partidas</title>
-    <link rel="stylesheet" href="busqueda.css">
+    <link rel="stylesheet" href="../static/busqueda.css" th:href="@{/css/busqueda.css}">
+    <link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
 </head>
-<body>
-<div class="container">
-    <div class="search-bar">
-        <h1>Buscador de Partidas</h1>
+<body class="background">
+    <div class="missions-table" style="max-width: 90%; margin: 5%;">
+    
+        <div class="container">
+            <div class="search-bar">
+                <h1>Buscador de Partidas</h1>
         <div class="search-form">
             <input type="text" id="searchInput" placeholder="Buscar partidas...">
             <button onclick="search()">Buscar</button>
@@ -71,6 +74,7 @@
         <ul id="searchResults">
             <!-- Los resultados de la búsqueda se mostrarán aquí -->
         </ul>
+    </div>
     </div>
 </div>
 </body>

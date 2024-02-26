@@ -6,6 +6,7 @@ podrás publicar los juegos en los que necesites jugadores y dando detalles como
 número de sesiones o la experiencia requerida, tan solo tendrás que esperar a que se unan los
 jugadores. 
 Consta de 3 Roles para su funcionamiento:
+
 -Administrador: Modera la página web, revisando las publicaciones de los usuarios y dando de
 baja cuentas de usuarios sobre las que se reciban quejas. Puede ver publicaciones y perfiles.
 También permite crear moderadores.

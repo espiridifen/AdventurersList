@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import es.ucm.fdi.iw.model.Lorem;
+import es.ucm.fdi.iw.model.Quest;
+
 /**
  *  Non-authenticated requests only.
  */
@@ -21,6 +24,21 @@ public class RootController {
 
 	@GetMapping("/")
     public String index(Model model) {
+
+
+
+        // model.addAttribute("availableQuests", Lorem.nombreAlAzar());
+
+        // Quest game = new Quest();
+        // game.setName("Marberto");
+        // game.setSystem("Dungeons and Dragons 5th Edition");
+        // game.setDate("March 7th, 2021");
+
+        // model.addAttribute("game", game);
+
+
+
+
         return "landingpage";
     }
 }

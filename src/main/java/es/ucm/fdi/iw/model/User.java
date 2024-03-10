@@ -57,6 +57,9 @@ public class User implements Transferable<User.Transfer> {
 	@JoinColumn(name = "recipient_id")	
 	private List<Message> received = new ArrayList<>();		
 
+    private String bio;
+    private String availability;
+
     /**
      * Checks whether this user has a given role.
      * @param role to check

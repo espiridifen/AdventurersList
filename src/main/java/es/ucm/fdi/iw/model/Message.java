@@ -27,7 +27,7 @@ import lombok.AllArgsConstructor;
 @NamedQueries({
 	@NamedQuery(name="Message.countUnread",
 	query="SELECT COUNT(m) FROM Message m "
-			+ "WHERE m.recipient.id = :userId AND m.dateRead = null")
+			+ "WHERE m.userRecipient.id = :userId AND m.dateRead = null")
 })
 @Data
 public class Message implements Transferable<Message.Transfer> {
@@ -37,12 +37,14 @@ public class Message implements Transferable<Message.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")
-	private long id;
+	private Long id;
 	@ManyToOne
 	private User sender;
 	@ManyToOne
-	private User recipient;
+	private User userRecipient;
 	private String text;
+	@ManyToOne
+	private Game gameRecipient;
 	
 	private LocalDateTime dateSent;
 	private LocalDateTime dateRead;
@@ -62,7 +64,10 @@ public class Message implements Transferable<Message.Transfer> {
 		long id;
 		public Transfer(Message m) {
 			this.from = m.getSender().getUsername();
-			this.to = m.getRecipient().getUsername();
+			if (m.getUserRecipient() != null)
+				this.to = m.getUserRecipient().getUsername();
+			else
+				this.to = m.getGameRecipient().getName();
 			this.sent = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(m.getDateSent());
 			this.received = m.getDateRead() == null ?
 					null : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(m.getDateRead());
@@ -73,7 +78,8 @@ public class Message implements Transferable<Message.Transfer> {
 
 	@Override
 	public Transfer toTransfer() {
-		return new Transfer(sender.getUsername(), recipient.getUsername(), 
+		String recip = userRecipient == null ? userRecipient.getUsername() : gameRecipient.getName();
+		return new Transfer(sender.getUsername(), recip, 
 			DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateSent),
 			dateRead == null ? null : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateRead),
 			text, id

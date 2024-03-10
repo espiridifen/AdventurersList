@@ -282,7 +282,7 @@ public class UserController {
 		
 		// construye mensaje, lo guarda en BD
 		Message m = new Message();
-		m.setRecipient(u);
+		m.setUserRecipient(u);
 		m.setSender(sender);
 		m.setDateSent(LocalDateTime.now());
 		m.setText(text);

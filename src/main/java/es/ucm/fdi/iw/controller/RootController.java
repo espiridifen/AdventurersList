@@ -1,6 +1,7 @@
 package es.ucm.fdi.iw.controller;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,11 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import es.ucm.fdi.iw.model.Game;
-import es.ucm.fdi.iw.model.Lorem;
 import es.ucm.fdi.iw.model.Quest;
-import es.ucm.fdi.iw.model.User;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,26 +32,12 @@ public class RootController {
     EntityManager entityManager;
     
     
-
 	@GetMapping("/")
+    @Transactional
     public String index(Model model) {
-
-        Game gamePrueba = new Game(new User());
-        gamePrueba.setName("Marberto");
-        gamePrueba.setGamesystem("Dungeons and Dragons 5th Edition");
-        gamePrueba.setDate(LocalDateTime.of(2017, 3, 7, 16, 00, 00));
-        gamePrueba.setExperience("Beginner");
-        gamePrueba.setSessionQuantity(1);
-        gamePrueba.setType("One-shot");
-        gamePrueba.setMeeting("Online");
-
-        //entityManager.persist(gamePrueba);
-        
         List<Game> games = entityManager.createQuery("select g from Game g", Game.class).getResultList();
 
         List<Quest> quests = new ArrayList<>(); // Initialize the quests variable
-
-        games.add(gamePrueba); //Para ver si Thymeleaf tira
 
         for (Game game : games) {
             Quest q = new Quest();
@@ -73,9 +57,6 @@ public class RootController {
         // game.setDate("March 7th, 2021");
 
         // model.addAttribute("game", game);
-
-
-
 
         return "landingpage";
     }

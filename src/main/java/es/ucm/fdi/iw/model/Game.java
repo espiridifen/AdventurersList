@@ -12,6 +12,7 @@ import lombok.NonNull;
 @Table(name = "games")
 public class Game { // TODO: nullables
     
+    
     private @GeneratedValue @Id Long id;
     private String name;
     private String experience;

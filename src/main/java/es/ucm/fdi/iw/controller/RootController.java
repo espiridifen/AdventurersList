@@ -32,6 +32,8 @@ public class RootController {
     // }
     @Autowired
     EntityManager entityManager;
+    
+    
 
 	@GetMapping("/")
     public String index(Model model) {
@@ -39,7 +41,7 @@ public class RootController {
         Game gamePrueba = new Game(new User());
         gamePrueba.setName("Marberto");
         gamePrueba.setGamesystem("Dungeons and Dragons 5th Edition");
-        gamePrueba.setDate(LocalDateTime.now());
+        gamePrueba.setDate(LocalDateTime.of(2017, 3, 7, 16, 00, 00));
         gamePrueba.setExperience("Beginner");
         gamePrueba.setSessionQuantity(1);
         gamePrueba.setType("One-shot");

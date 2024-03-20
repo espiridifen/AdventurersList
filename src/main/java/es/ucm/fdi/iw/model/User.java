@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,13 +40,15 @@ public class User implements Transferable<User.Transfer> {
     @SequenceGenerator(name = "gen", sequenceName = "gen")
 	private long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
-    @Column(nullable = false)
-    private String password;
+    @Column(unique = true)
+    private @NotNull String username;
 
-    private String firstName;
-    private String lastName;
+    private @NotNull String password;
+
+    @JoinColumn(name = "first_name")
+    private @NotNull String firstName;
+    @JoinColumn(name = "last_name")
+    private @NotNull String lastName;
 
     private boolean enabled;
     private String roles; // split by ',' to separate roles

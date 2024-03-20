@@ -11,28 +11,34 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Entity
 @Data
 @NoArgsConstructor
 @Table(name = "games")
-public class Game { // TODO: nullables
-    
-    
+public class Game {
     private @GeneratedValue(strategy = GenerationType.IDENTITY) @Id Long id;
-    private String name;
-    private String experience;
-    private LocalDateTime date;
-    private String gamesystem;
+
+    private @NotNull String name;
+
+    private @NotNull String experience;
+
+    private @NotNull LocalDateTime date;
+
+    private @NotNull String gamesystem;
+
     @Column(name = "sessionquantity", columnDefinition = "INTEGER")
-    private Integer sessionQuantity;
+    private int sessionQuantity;
+
     @ManyToOne(cascade=CascadeType.ALL, targetEntity=User.class)
     @JoinColumn(name = "owner") // Specify the column name
-    private @NonNull User owner;
-    private String type;
-    private String meeting;
+    private @NotNull User owner;
+    
+    private @NotNull String type;
+
+    private @NotNull String meeting;
 }

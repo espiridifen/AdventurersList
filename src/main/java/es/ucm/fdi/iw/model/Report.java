@@ -8,11 +8,32 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "reports")
-public class Report implements Serializable {
-    private @Id @ManyToOne User user;
+@Table(name = "report")
+public class Report {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
+    @SequenceGenerator(name = "gen", sequenceName = "gen")
+	private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "reported_user", nullable = true)
+    private User reportedUser; // nullable
+
+    @ManyToOne
+    @JoinColumn(name = "reported_game", nullable = true)
+    private Game reportedGame; // nullable
+
+    @ManyToOne
+    @JoinColumns({
+        @JoinColumn(name = "reported_review_game", nullable = true),
+        @JoinColumn(name = "reported_review_user", nullable = true)
+    })
+    private Review reportedReview; // nullable
+
     private String reason;
-    private @ManyToOne User reportedUser; // nullable
-    private @ManyToOne Game reportedGame; // nullable
-    private @ManyToOne Review reportedReview; // nullable
 }

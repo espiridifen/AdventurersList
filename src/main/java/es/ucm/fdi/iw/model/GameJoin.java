@@ -1,21 +1,20 @@
 package es.ucm.fdi.iw.model;
 
-import java.util.Set;
-
 import javax.persistence.*;
 
+import es.ucm.fdi.iw.model.compositepks.GameJoinId;
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "joins")
-public class GameJoin { // TODO: composite primary keys, non-null
-    private @Id Long id;
-    
-    @ManyToMany(cascade=CascadeType.ALL, targetEntity=User.class)
-    private Set<User> user;
+@IdClass(GameJoinId.class)
+public class GameJoin {
+    @Id
+    @ManyToOne
+    private User user;
 
-    @ManyToMany(cascade=CascadeType.ALL, targetEntity=Game.class)
-    private Set<Game> game;
-
+    @Id
+    @ManyToOne
+    private Game game;
 }

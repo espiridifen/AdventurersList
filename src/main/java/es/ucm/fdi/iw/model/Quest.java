@@ -11,4 +11,5 @@ public class Quest {
     private String name;
     private String system;
     private String date;
+    private Long id;
 }

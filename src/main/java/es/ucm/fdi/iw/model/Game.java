@@ -1,6 +1,8 @@
 package es.ucm.fdi.iw.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -43,4 +46,8 @@ public class Game {
     private @NotNull String type;
 
     private @NotNull String meeting;
+    
+	@OneToMany
+	@JoinColumn(name = "recipient_id")	
+	private List<Message> received = new ArrayList<>();
 }

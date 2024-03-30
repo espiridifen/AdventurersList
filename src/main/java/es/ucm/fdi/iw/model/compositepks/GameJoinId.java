@@ -6,8 +6,10 @@ import java.util.Objects;
 import es.ucm.fdi.iw.model.Game;
 import es.ucm.fdi.iw.model.User;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 public class GameJoinId implements Serializable {
 
     private User user;

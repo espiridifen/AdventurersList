@@ -3,10 +3,12 @@ package es.ucm.fdi.iw.model;
 import javax.persistence.*;
 
 import es.ucm.fdi.iw.model.compositepks.GameJoinId;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
 @Data
+@AllArgsConstructor
 @Table(name = "joins")
 @IdClass(GameJoinId.class)
 public class GameJoin {

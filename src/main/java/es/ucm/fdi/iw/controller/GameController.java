@@ -5,13 +5,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +32,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.ucm.fdi.iw.model.Game;
+import es.ucm.fdi.iw.model.GameJoin;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
@@ -46,17 +51,52 @@ public class GameController {
 
     @GetMapping("")
     @Transactional
-    public String game(Model model, @RequestParam("questID") long questID){
-
+    public String game(Model model, @RequestParam("questID") long questID) {
         TypedQuery<Game> query = entityManager.createQuery("select g from Game g where g.id = :questID", Game.class);
         query.setParameter("questID", questID);
         query.setMaxResults(1);
         
-
         model.addAttribute("game", query.getSingleResult());
 
         return "game";
     }
+
+    @PostMapping("/join")
+    @Transactional
+    public ResponseEntity<String> joinGameString(HttpServletResponse response, @RequestParam("gameId") long gameId, @RequestParam("userId") long userId) {
+        log.debug("\n\n\nGets here 0\n\n\n");
+        TypedQuery<Game> g_query = entityManager.createQuery("select g from Game g where g.id = :gameId", Game.class);
+        g_query.setParameter("gameId", gameId);
+        g_query.setMaxResults(1);
+        TypedQuery<User> u_query = entityManager.createQuery("select u from User u where u.id = :userId", User.class);
+        u_query.setParameter("userId", userId);
+        u_query.setMaxResults(1);
+        Game g;
+        User u;
+
+        log.debug("\n\n\nGets here 1\n\n\n");
+        try {
+            g = g_query.getSingleResult();
+            u = u_query.getSingleResult();
+        }
+        catch (NoResultException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game or user not found");
+            // return "game";
+        }
+        catch (Exception e) {
+            log.error("Error: " +e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error");
+            // return "game";
+        }
+
+        log.debug("Gets here 2");
+        entityManager.persist(new GameJoin(u, g));
+        log.debug("All good");
+
+        return ResponseEntity.ok("Joined the game successfully");
+        // return "game";
+    }
+    
     
     /**
      * Returns JSON with all received messages

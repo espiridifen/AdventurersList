@@ -89,7 +89,13 @@
         <div class="button_container">
             <ul class="list">
                 <li>
-                    <button>Unirte a la partida</button>
+                    <form th:action="@{/join}" method="post">
+                        <input type="hidden" name="questID" th:value="${game.id}"/>
+                        <button>
+                            Unirte a la partida
+                        </button>
+                        
+                    </form>
                 </li>
                 <li>
                     <button>Guardar partida</button>

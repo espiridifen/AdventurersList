@@ -27,7 +27,8 @@
         </div>
         <ul class="mission-list">
             <li th:each="quest : ${availableQuests}">
-                <form th:action="@{/quest}" method="post">
+                <div th:replace="fragments/quest :: form(quest=${quest})"></div>
+                <!-- <form th:action="@{/quest}" method="post">
                     <input type="hidden" name="questID" th:value="${quest.id}"/>
                     <button id="partidapreview" class="mission container">
                         <div class="absolute-div div1" th:text="${quest.name}"><h2>Nombre de la campaña</h2></div>
@@ -35,8 +36,8 @@
                         <div class="absolute-div div3" th:text="${quest.system}">Sistema</div>
                         <div class="absolute-div div4" th:text="${quest.Date}">Fecha</div>
                     </button>
-                </form>
-        </li>
+                </form> -->
+            </li>
             </ul>
         </div>
     </div>

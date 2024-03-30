@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" th:href="@{/css/gamepreview.css}">
-</head>
-<body>
-    <div id="partidapreview" class="mission container">
-        <div class="absolute-div div1" ><h2>Nombre de la campaña</h2></div>
-        <div class="absolute-div div2"><img src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/></div>
-        <div class="absolute-div div3" >Sistema</div>
-        <div class="absolute-div div4" >Fecha</div>
-    </div>
-</body>
-</html>
+
+    <form th:fragment="form(quest)" th:action="@{/quest}" method="post">
+        <input type="hidden" name="questID" th:value="${quest.id}"/>
+        <button id="partidapreview" class="mission container">
+            <div class="absolute-div div1" th:text="${quest.name}"><h2>Nombre de la campaña</h2></div>
+            <div class="absolute-div div2"><img src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/></div>
+            <div class="absolute-div div3" th:text="${quest.system}">Sistema</div>
+            <div class="absolute-div div4" th:text="${quest.Date}">Fecha</div>
+        </button>
+    </form>

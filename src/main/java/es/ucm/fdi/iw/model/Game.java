@@ -25,6 +25,8 @@ public class Game {
 
     private @NotNull String name;
 
+    private @NotNull String description;
+
     private @NotNull String experience;
 
     private @NotNull LocalDateTime date;

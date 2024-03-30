@@ -1,12 +1,9 @@
 package es.ucm.fdi.iw.controller;
 
-import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +23,7 @@ import java.util.List;
 @Controller
 public class RootController {
 
-	private static final Logger log = LogManager.getLogger(RootController.class);
+	// private static final Logger log = LogManager.getLogger(RootController.class);
 
 	@GetMapping("/login")
     public String login(Model model) {
@@ -66,7 +63,6 @@ public class RootController {
         TypedQuery<Game> query = entityManager.createQuery("select g from Game g where g.id = :questID", Game.class);
         query.setParameter("questID", questID);
         query.setMaxResults(1);
-        
 
         model.addAttribute("game", query.getSingleResult());
 

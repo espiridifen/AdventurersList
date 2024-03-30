@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.parser.Entity;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;

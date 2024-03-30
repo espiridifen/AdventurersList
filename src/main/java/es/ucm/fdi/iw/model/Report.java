@@ -1,7 +1,5 @@
 package es.ucm.fdi.iw.model;
 
-import java.io.Serializable;
-
 import javax.persistence.*;
 
 import lombok.Data;

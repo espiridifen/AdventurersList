@@ -28,10 +28,11 @@ public class RootController {
 
 	private static final Logger log = LogManager.getLogger(RootController.class);
 
-	// @GetMapping("/login")
-    // public String login(Model model) {
-    //     return "login";
-    // }
+	@GetMapping("/login")
+    public String login(Model model) {
+        return "login";
+    }
+
     @Autowired
     EntityManager entityManager;
     
@@ -53,15 +54,6 @@ public class RootController {
         }
 
         model.addAttribute("availableQuests", quests);
-
-        // model.addAttribute("availableQuests", Lorem.nombreAlAzar());
-
-        // Quest game = new Quest();
-        // game.setName("Marberto");
-        // game.setSystem("Dungeons and Dragons 5th Edition");
-        // game.setDate("March 7th, 2021");
-
-        // model.addAttribute("game", game);
 
         return "landingpage";
     }

@@ -107,7 +107,7 @@
             </div>
             
         </div>
-        <div class="messageBoard" th:if= "${session.u.id}">
+        <div class="messageBoard" th:if= "${userIsJoined}">
             <ul>
                 <li th:each="message : ${messageLog}">
                     <div th:replace= "~{fragments/message.html :: div(message=${message})}"></div>

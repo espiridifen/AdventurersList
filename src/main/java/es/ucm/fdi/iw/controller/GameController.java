@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -46,17 +47,30 @@ public class GameController {
     @Autowired
     EntityManager entityManager;
 
+    @Autowired
+    HttpSession httpSession;
+
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("")
     @Transactional
-    public String game(Model model, @RequestParam("questID") long questID) {
-        TypedQuery<Game> query = entityManager.createQuery("select g from Game g where g.id = :questID", Game.class);
-        query.setParameter("questID", questID);
-        query.setMaxResults(1);
+    public String game(Model model, @RequestParam("questID") long questID, HttpServletRequest request) {
+        TypedQuery<Game> gameSearchQuery = entityManager.createQuery("select g from Game g where g.id = :questID", Game.class);
+        gameSearchQuery.setParameter("questID", questID);
+        gameSearchQuery.setMaxResults(1);
+
+        // Get user ID from their HTTP Session
+        long userId = ((User)httpSession.getAttribute("u")).getId();
+
+        TypedQuery<GameJoin> gameJoinedSearchQuery = entityManager.createQuery("select j from GameJoin j where j.user.id = :userId and j.game.id = :gameId", GameJoin.class);
+        gameJoinedSearchQuery.setParameter("userId", userId);
+        gameJoinedSearchQuery.setParameter("gameId", questID);
+        gameJoinedSearchQuery.setMaxResults(1);
+        List<GameJoin> gj = gameJoinedSearchQuery.getResultList();
         
-        model.addAttribute("game", query.getSingleResult());
+        model.addAttribute("game", gameSearchQuery.getSingleResult());
+        model.addAttribute("userIsJoined", !gj.isEmpty()); // User has joined the game if there is some result in the query
 
         return "game";
     }

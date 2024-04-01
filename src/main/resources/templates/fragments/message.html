@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
+<!-- <div th:fragment="div(message)" class="message">
+    <div class="message">
+        <img th:src="@{message.user.profilePicture}" alt="User Profile Picture" style="float: left; margin-right: 10px;" />
+        <div style="float: right;">
+            <p th:text="${message.user.name}" class="username">Mamertín</p>
+            <p th:text="${message.text}" class="messageText">Una mamertada, probablemente</p>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</div> -->
+
+<link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
+
+    <div th:fragment="div(message)" class="messageContainer">
+        <img alt="User Profile Picture" class="profilePicture" src="img/gatoque.jpg" th:src="@{message.user.profilePicture}"/>
+        <div class="text">
+            <p th:text="${message.user.name}" class="username" >Mamertín</p>
+            <p th:text="${message.text}" class="messageText">Una mamertada, probablemente</p>
+        </div>
+        
+    </div>

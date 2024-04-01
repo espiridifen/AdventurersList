@@ -92,7 +92,6 @@
                     <li>
                         <form th:action="@{/game/join}" method="post">
                             <input type="hidden" name="gameId" th:value="${game.id}"/>
-                            <input type="hidden" name="userId" th:value="${session.u.id}"/>
                             <button>
                                 Unirte a la partida
                             </button>

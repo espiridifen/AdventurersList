@@ -77,24 +77,23 @@ public class GameController {
 
     @PostMapping("/join")
     @Transactional
-    public ResponseEntity<String> joinGameString(HttpServletResponse response, @RequestParam("gameId") long gameId, @RequestParam("userId") long userId) {
-        log.debug("\n\n\nGets here 0\n\n\n");
+    public ResponseEntity<String> joinGameString(HttpServletResponse response, @RequestParam("gameId") long gameId) {
         TypedQuery<Game> g_query = entityManager.createQuery("select g from Game g where g.id = :gameId", Game.class);
         g_query.setParameter("gameId", gameId);
         g_query.setMaxResults(1);
+        long userId = ((User)httpSession.getAttribute("u")).getId();
         TypedQuery<User> u_query = entityManager.createQuery("select u from User u where u.id = :userId", User.class);
         u_query.setParameter("userId", userId);
         u_query.setMaxResults(1);
         Game g;
         User u;
 
-        log.debug("\n\n\nGets here 1\n\n\n");
         try {
             g = g_query.getSingleResult();
             u = u_query.getSingleResult();
         }
         catch (NoResultException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game or user not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game not found");
             // return "game";
         }
         catch (Exception e) {
@@ -103,9 +102,7 @@ public class GameController {
             // return "game";
         }
 
-        log.debug("Gets here 2");
         entityManager.persist(new GameJoin(u, g));
-        log.debug("All good");
 
         return ResponseEntity.ok("Joined the game successfully");
         // return "game";

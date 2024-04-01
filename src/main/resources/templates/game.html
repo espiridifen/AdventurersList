@@ -114,7 +114,6 @@
             </ul> 
             <form th:action="@{/game/sendMessage}" method="post">
                 <input type="hidden" name="gameId" th:value="${game.id}"/>
-                <input type="hidden" name="userId" th:value="${session.u.id}"/>
                 <input type="text" name="message"/>
                 <button>Enviar</button>
         </div>

@@ -12,5 +12,13 @@ VALUES ('Marberto', 'Descripcion1', 'Beginner', '2007-03-17T16:00:00', 'Dungeons
 INSERT INTO games (name, description, experience, date, gamesystem, sessionquantity, owner, type, meeting)
 VALUES ('Juego2', 'Descripcion2', 'Beginner', '2020-04-20T16:00:00', 'Dungeons and Dragons 5th Edition', 3, 1, 'One-shot', 'Online');
 
+INSERT INTO joins (user_id, game_id)
+VALUES (1, 1);
+
+INSERT INTO message (id, date_sent, text, game_recipient_id, sender_id)
+VALUES (0, '2024-04-01T23:55:56', 'hola', 1, 1);
+
+
+
 -- start id numbering from a value that is larger than any assigned above
 ALTER SEQUENCE "PUBLIC"."GEN" RESTART WITH 1024;

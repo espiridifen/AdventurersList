@@ -107,6 +107,45 @@ public class GameController {
         return ResponseEntity.ok("Joined the game successfully");
         // return "game";
     }
+
+    @PostMapping("/sendMessage")
+    @Transactional
+    public ResponseEntity<String> sendMessage(HttpServletResponse response, @RequestParam("gameId") long gameId, @RequestParam("message") String message) {
+        TypedQuery<Game> g_query = entityManager.createQuery("select g from Game g where g.id = :gameId", Game.class);
+        g_query.setParameter("gameId", gameId);
+        g_query.setMaxResults(1);
+        long userId = ((User)httpSession.getAttribute("u")).getId();
+        TypedQuery<User> u_query = entityManager.createQuery("select u from User u where u.id = :userId", User.class);
+        u_query.setParameter("userId", userId);
+        u_query.setMaxResults(1);
+        Game g;
+        User u;
+
+        try {
+            g = g_query.getSingleResult();
+            u = u_query.getSingleResult();
+        }
+        catch (NoResultException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game not found");
+            // return "game";
+        }
+        catch (Exception e) {
+            log.error("Error: " +e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error");
+            // return "game";
+        }
+        Message m = new Message();
+        // m.setId(null);
+        m.setSender(u);
+        m.setGameRecipient(g);
+        m.setText(message);
+        m.setDateSent(LocalDateTime.now());
+
+        entityManager.persist(m);
+
+        return ResponseEntity.ok("Message sent successfully");
+        // return "game";
+    }
     
     
     /**

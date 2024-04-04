@@ -1,6 +1,7 @@
 package es.ucm.fdi.iw.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,6 +70,18 @@ public class GameController {
         gameJoinedSearchQuery.setMaxResults(1);
         List<GameJoin> gj = gameJoinedSearchQuery.getResultList();
         
+        TypedQuery<GameJoin> gameJoins = entityManager.createQuery("select j from GameJoin j where j.game.id = :gameId", GameJoin.class);
+        gameJoins.setParameter("gameId", questID);
+        List<GameJoin> joinlist = gameJoins.getResultList();
+
+        List<String> users = new ArrayList<String>();
+        for (GameJoin join : joinlist) {
+            if (join.getUser().getId() != userId) {
+                users.add(join.getUser().getUsername());
+            }
+        }
+        
+        model.addAttribute("users", users); // All the usernames except for the owner
         model.addAttribute("game", gameSearchQuery.getSingleResult());
         model.addAttribute("userIsJoined", !gj.isEmpty()); // User has joined the game if there is some result in the query
 

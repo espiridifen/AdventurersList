@@ -10,13 +10,10 @@
 <body class="background">
     <div class="missions-table" style="width: 90%; margin-left: 5%; margin-top: 5%;">
         <div class="game_container">
-            <div class="mainButtons">
-                <ul id style="overflow: hidden; list-style-type: none;">
-                    <li style="float: left;"><a href="game.html" th:href="@{game}"><button>Pagina de partida</button></a></li>
-                    <li style="float: left;"><button>Marcadores</button></li>
-                    <li style="float: left;"><a href="busqueda.html" th:href="@{busqueda}"><button>Anuncios</button></a></li>
-                    <li style="float: left;"><a href="perfil.html" th:href="@{perfil}"><button>Perfil</button></a></li>
-                </ul>
+            <div id="viewButtons">
+                <div th:replace="~{fragments/missionsButtons.html :: missionsButtons}">
+                    no funcó :(
+                </div>
             </div>
             <div class="image_container">
                 <img src="img/gatoque.jpg"/>

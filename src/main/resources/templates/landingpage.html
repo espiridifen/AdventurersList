@@ -17,13 +17,8 @@
         <div id="appTitle">
             <h1>Adventurer's List</h1>
         </div>
-        <div id="missionsButtons">
-            <ul id style="overflow: hidden; list-style-type: none;">
-                <li style="float: left;"><a href="game.html" th:href="@{game}"><button>Pagina de partida</button></a></li>
-                <li style="float: left;"><button>Marcadores</button></li>
-                <li style="float: left;"><a href="busqueda.html" th:href="@{busqueda}"><button>Anuncios</button></a></li>
-                <li style="float: left;"><a href="perfil.html" th:href="@{perfil}"><button>Perfil</button></a></li>
-            </ul>
+        <div th:replace="~{fragments/missionsButtons.html :: missionsButtons}">
+            no funcó :(
         </div>
         <ul class="mission-list">
             <li th:each="quest : ${availableQuests}">

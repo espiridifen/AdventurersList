@@ -90,6 +90,7 @@ public class GameController {
 
     @PostMapping("/join")
     @Transactional
+	@ResponseBody
     public ResponseEntity<String> joinGameString(HttpServletResponse response, @RequestParam("gameId") long gameId) {
         TypedQuery<Game> g_query = entityManager.createQuery("select g from Game g where g.id = :gameId", Game.class);
         g_query.setParameter("gameId", gameId);
@@ -119,6 +120,52 @@ public class GameController {
 
         return ResponseEntity.ok("Joined the game successfully");
         // return "game";
+    }
+
+    @PostMapping("/leave")
+    @Transactional
+    @ResponseBody
+    public ResponseEntity<String> leaveGame(HttpServletResponse response, @RequestParam("gameId") long gameId) {
+        TypedQuery<Game> gameQuery = entityManager.createQuery("select g from Game g where g.id = :gameId", Game.class);
+        gameQuery.setParameter("gameId", gameId);
+        gameQuery.setMaxResults(1);
+        
+        Game game;
+        try {
+            game = gameQuery.getSingleResult();
+        } catch (NoResultException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game not found");
+        } catch (Exception e) {
+            log.error("Error: " + e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
+        }
+
+        long userId;
+        try {
+            userId = ((User) httpSession.getAttribute("u")).getId();
+        } catch (Exception e) {
+            log.error("Error retrieving user from session: " + e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+        }
+
+        TypedQuery<GameJoin> joinQuery = entityManager.createQuery("select j from GameJoin j where j.user.id = :userId and j.game.id = :gameId", GameJoin.class);
+        joinQuery.setParameter("userId", userId);
+        joinQuery.setParameter("gameId", gameId);
+        joinQuery.setMaxResults(1);
+
+        GameJoin join;
+        try {
+            join = joinQuery.getSingleResult();
+        } catch (NoResultException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not in the game");
+        } catch (Exception e) {
+            log.error("Error: " + e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
+        }
+
+        entityManager.remove(join);
+
+        return ResponseEntity.ok("Left the game successfully");
     }
 
     @PostMapping("/sendMessage")

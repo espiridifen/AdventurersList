@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adventurer's List: Nombre de la Partida</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include the meta tag for CSRF token -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 <link rel="stylesheet" href="../static/game.css" th:href="@{/css/game.css}">
 <link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
@@ -56,33 +61,21 @@
             </div>
             <div class="button_container">
                 <ul class="list">
-                    <li th:unless="${userIsJoined}">
-                        <form th:action="@{/game/join}" method="post">
-                            <input type="hidden" name="gameId" th:value="${game.id}"/>
-                            <button>
-                                Unirte a la partida
-                            </button>
-                            
-                        </form>
+                    <li>
+                        <button id="joinButton" onclick="joinGame()">Unirte a la partida</button>
                     </li>
-                    <li th:if="${userIsJoined}">
-                        <form th:action="@{/game/leave}" method="post">
-                            <input type="hidden" name="gameId" th:value="${game.id}"/>
-                            <button>
-                                Salir de la partida
-                            </button>
-                            
-                        </form>
+                    <li style="display: none;" id="leaveButtonContainer">
+                        <button id="leaveButton" onclick="leaveGame()">Salir de la partida</button>
                     </li>
                     <li>
                         <button>Guardar partida</button>
                     </li>
                 </ul>
-    
             </div>
             
+            
         </div>
-        <div class="messageBoard" th:if= "${userIsJoined}">
+        <div class="messageBoard">
             <ul>
                 <li th:each="message : ${messageLog}">
                     <div th:replace= "~{fragments/message.html :: div(message=${message})}"></div>
@@ -94,5 +87,78 @@
                 <button>Enviar</button>
         </div>
     </div>
+
+    <script th:inline="javascript">
+        // Check if the user is already joined when the page loads
+        $(document).ready(function() {
+            var isJoined = /*[[${userIsJoined}]]*/ false;
+            updateButtonState(isJoined);
+        });
+
+        /*<![CDATA[*/
+        function joinGame(gameId) {
+            var gameId = /*[[${game.id}]]*/ '';
+            var token = /*[[${_csrf.token}]]*/ '';
+            var header = "_csrf";
+
+            var parsedGameId = parseInt(gameId);
+            
+            $.ajax({
+                type: "POST",
+                url: "/game/join",
+                data: { 
+                    gameId: parsedGameId,
+                    [header]: token
+                },
+                success: function(data) {
+                    // Handle success
+                    updateButtonState(true);
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                }
+            });
+        }
+    
+        function leaveGame(gameId) {
+            var gameId = /*[[${game.id}]]*/ '';
+            var token = /*[[${_csrf.token}]]*/ '';
+            var header = "_csrf";
+
+            var parsedGameId = parseInt(gameId);
+    
+            $.ajax({
+                type: "POST",
+                url: "/game/leave",
+                data: { 
+                    gameId: gameId,
+                    [header]: token
+                },
+                success: function(data) {
+                    // Handle success
+                    updateButtonState(false);
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                }
+            });
+        }
+
+        function updateButtonState(isJoined) {
+            if (isJoined) {
+                $("#joinButton").hide();
+                $("#leaveButtonContainer").show();
+                $(".messageBoard").show();
+            } else {
+                $("#leaveButtonContainer").hide();
+                $("#joinButton").show();
+                $(".messageBoard").hide();
+            }
+        }
+        /*]]>*/
+    </script>
+    
+
 </body>
+
 </html>

@@ -62,13 +62,7 @@
             <div class="button_container">
                 <ul class="list">
                     <li>
-                        <button id="joinButton" onclick="joinGame()">Unirte a la partida</button>
-                    </li>
-                    <li style="display: none;" id="leaveButtonContainer">
-                        <button id="leaveButton" onclick="leaveGame()">Salir de la partida</button>
-                    </li>
-                    <li>
-                        <button>Guardar partida</button>
+                        <button id="joinLeaveButton" onclick="joinOrLeaveGame()">Unirte a la partida</button>
                     </li>
                 </ul>
             </div>
@@ -89,30 +83,33 @@
     </div>
 
     <script th:inline="javascript">
-        // Check if the user is already joined when the page loads
-        $(document).ready(function() {
-            var isJoined = /*[[${userIsJoined}]]*/ false;
-            updateButtonState(isJoined);
-        });
+        var isJoined = /*[[${userIsJoined}]]*/ false;
 
-        /*<![CDATA[*/
-        function joinGame(gameId) {
+        $(document).ready(function() {
+            updateButtonText(isJoined);
+        });
+    
+        function joinOrLeaveGame() {
             var gameId = /*[[${game.id}]]*/ '';
             var token = /*[[${_csrf.token}]]*/ '';
             var header = "_csrf";
-
+    
             var parsedGameId = parseInt(gameId);
+            
+            var url = isJoined ? "/game/leave" : "/game/join";
+            var buttonText = isJoined ? "Salir de la partida" : "Unirte a la partida";
             
             $.ajax({
                 type: "POST",
-                url: "/game/join",
+                url: url,
                 data: { 
                     gameId: parsedGameId,
                     [header]: token
                 },
                 success: function(data) {
                     // Handle success
-                    updateButtonState(true);
+                    isJoined = !isJoined; // Toggle join status
+                    updateButtonText(isJoined);
                 },
                 error: function(xhr, status, error) {
                     // Handle error
@@ -120,42 +117,17 @@
             });
         }
     
-        function leaveGame(gameId) {
-            var gameId = /*[[${game.id}]]*/ '';
-            var token = /*[[${_csrf.token}]]*/ '';
-            var header = "_csrf";
-
-            var parsedGameId = parseInt(gameId);
-    
-            $.ajax({
-                type: "POST",
-                url: "/game/leave",
-                data: { 
-                    gameId: gameId,
-                    [header]: token
-                },
-                success: function(data) {
-                    // Handle success
-                    updateButtonState(false);
-                },
-                error: function(xhr, status, error) {
-                    // Handle error
-                }
-            });
-        }
-
-        function updateButtonState(isJoined) {
+        function updateButtonText(isJoined) {
             if (isJoined) {
-                $("#joinButton").hide();
-                $("#leaveButtonContainer").show();
                 $(".messageBoard").show();
-            } else {
-                $("#leaveButtonContainer").hide();
-                $("#joinButton").show();
-                $(".messageBoard").hide();
+                var buttonText = "Salir de la partida";
             }
+            else {
+                $(".messageBoard").hide();
+                var buttonText = "Unirte a la partida";
+            }
+            $("#joinLeaveButton").text(buttonText);
         }
-        /*]]>*/
     </script>
     
 

@@ -95,9 +95,7 @@
             var header = "_csrf";
     
             var parsedGameId = parseInt(gameId);
-            
             var url = isJoined ? "/game/leave" : "/game/join";
-            var buttonText = isJoined ? "Salir de la partida" : "Unirte a la partida";
             
             $.ajax({
                 type: "POST",

@@ -196,12 +196,12 @@ function postImage(img, endpoint, name, filename) {
  */
 document.addEventListener("DOMContentLoaded", () => {
     if (config.socketUrl) {
-        let subs = config.admin ? ["/topic/admin", "/user/queue/updates"] : ["/user/queue/updates"]
+        let subs = config.admin ? ["/topic/admin", "/game/queue/updates"] : ["/game/queue/updates"]
         ws.initialize(config.socketUrl, subs);
 
         let p = document.querySelector("#nav-unread");
         if (p) {
-            go(`${config.rootUrl}/user/unread`, "GET").then(d => p.textContent = d.unread);
+            go(`${config.rootUrl}/game/unread`, "GET").then(d => p.textContent = d.unread);
         }
     } else {
         console.log("Not opening websocket: missing config", config)

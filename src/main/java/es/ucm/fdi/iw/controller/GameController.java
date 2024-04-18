@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import es.ucm.fdi.iw.model.Game;
 import es.ucm.fdi.iw.model.GameJoin;
@@ -201,7 +203,19 @@ public class GameController {
         m.setText(message);
         m.setDateSent(LocalDateTime.now());
 
+        String json;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            json = mapper.writeValueAsString(m);
+        }
+        catch (Exception e) {
+            log.info(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
+        }
         entityManager.persist(m);
+        messagingTemplate.convertAndSend("/game/"+gameId+"/queue/updates", json);
 
         return ResponseEntity.ok("Message sent successfully");
         // return "game";

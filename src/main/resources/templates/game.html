@@ -72,13 +72,14 @@
         <div class="messageBoard">
             <ul>
                 <li th:each="message : ${messageLog}">
-                    <div th:replace= "~{fragments/message.html :: div(message=${message})}"></div>
+                    <div th:replace="~{fragments/message.html :: div(message=${message})}"></div>
                 </li>
             </ul> 
-            <form th:action="@{/game/sendMessage}" method="post">
-                <input type="hidden" name="gameId" th:value="${game.id}"/>
-                <input type="text" name="message"/>
-                <button>Enviar</button>
+            <div id="sendMessageForm">
+                <input type="hidden" id="gameId" name="gameId" th:value="${game.id}"/>
+                <input type="text" id="message" name="message"/>
+                <button id="sendMessageButton">Enviar</button>
+            </div>
         </div>
     </div>
 
@@ -87,6 +88,32 @@
 
         $(document).ready(function() {
             updateButtonText(isJoined);
+
+            $("#sendMessageButton").click(function() {
+                var gameId = /*[[${game.id}]]*/ '';
+                var token = /*[[${_csrf.token}]]*/ '';
+                var header = "_csrf";
+                var message = $("#message").val();
+
+                var parsedGameId = parseInt(gameId);
+                $.ajax({
+                    type: "POST",
+                    url: "/game/sendMessage",
+                    data: {
+                        gameId: parsedGameId,
+                        message: message,
+                        [header]: token
+                    },
+                    success: function(data) {
+                        console.log("Message sent successfully");
+                        $("#message").val(""); // Clear the textbox
+                        // Optionally update the message board with the new message
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error sending message: " + xhr.statusText);
+                    }
+                });
+            });
         });
     
         function joinOrLeaveGame() {

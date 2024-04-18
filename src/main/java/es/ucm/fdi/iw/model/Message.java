@@ -12,6 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.Getter;
@@ -37,8 +38,10 @@ public class Message implements Transferable<Message.Transfer> {
     @SequenceGenerator(name = "gen", sequenceName = "gen")
 	private Long id;
 	@ManyToOne
+	@JsonIgnoreProperties({"sent"}) // Exclude sent field to avoid infinite recursion
 	private User sender;
 	@ManyToOne
+	@JsonIgnoreProperties({"owner"}) // Exclude sent field to avoid infinite recursion
 	private Game gameRecipient;
 	private String text;
 	

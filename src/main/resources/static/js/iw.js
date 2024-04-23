@@ -3,7 +3,7 @@
 /**
  * WebSocket API, which only works once initialized
  */
-const ws = {
+var ws = {
 
     /**
      * Number of retries if connection fails
@@ -14,11 +14,8 @@ const ws = {
      * Default action when message is received. 
      */
     receive: (text) => {
+        console.log("Mensaje recibido:")
         console.log(text);
-        let p = document.querySelector("#nav-unread");
-        if (p) {
-            p.textContent = +p.textContent + 1;
-        }
     },
 
     headers: { 'X-CSRF-TOKEN': config.csrf.value },
@@ -199,10 +196,11 @@ document.addEventListener("DOMContentLoaded", () => {
         let subs = config.admin ? ["/topic/admin", "/game/queue/updates"] : ["/game/queue/updates"]
         ws.initialize(config.socketUrl, subs);
 
-        let p = document.querySelector("#nav-unread");
-        if (p) {
-            go(`${config.rootUrl}/game/unread`, "GET").then(d => p.textContent = d.unread);
-        }
+        // let p = document.querySelector("#nav-unread");
+        // if (p) {
+        // go(`${config.rootUrl}/game/unread`, "GET")
+            // .then(d => p.textContent = d.unread);
+        // }
     } else {
         console.log("Not opening websocket: missing config", config)
     }

@@ -38,10 +38,10 @@ public class Message implements Transferable<Message.Transfer> {
     @SequenceGenerator(name = "gen", sequenceName = "gen")
 	private Long id;
 	@ManyToOne
-	@JsonIgnoreProperties({"sent"}) // Exclude sent field to avoid infinite recursion
+	@JsonIgnoreProperties({"sent", "password", "enabled", "roles", "received"}) // Exclude sent field to avoid infinite recursion
 	private User sender;
 	@ManyToOne
-	@JsonIgnoreProperties({"owner"}) // Exclude sent field to avoid infinite recursion
+	@JsonIgnoreProperties({"owner", "name", "description", "experience", "date", "gamesystem", "sessionQuantity", "type", "meeting", "received"}) // Exclude sent field to avoid infinite recursion
 	private Game gameRecipient;
 	private String text;
 	

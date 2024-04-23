@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <th:block th:replace="fragments/head :: header" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adventurer's List: Nombre de la Partida</title>
@@ -53,7 +54,7 @@
                 Dónde se juega
                 <ul class="genericlist">
                     <div class="image_container">
-                        <img src="resources/gatoque.jpg"/>
+                        <img src="img/gatoque.jpg"/>
                     </div>
                 </ul>
                 <!-- Esto si el usuario es jugador de la partida, se saca desde th -->
@@ -76,26 +77,38 @@
                 </li>
             </ul> 
             <div id="sendMessageForm">
-                <input type="hidden" id="gameId" name="gameId" th:value="${game.id}"/>
                 <input type="text" id="message" name="message"/>
                 <button id="sendMessageButton">Enviar</button>
             </div>
         </div>
     </div>
 
+    <script th:src="@{/js/stomp.js}" src="js/stomp.js"></script>
+    <!-- <script th:src="@{/js/game.js}" src="js/game.js"  type="text/javascript"></script> -->
+    <script th:src="@{/js/iw.js}" src="js/iw.js"  type="text/javascript"></script>
+
     <script th:inline="javascript">
         var isJoined = /*[[${userIsJoined}]]*/ false;
+        var gameId = /*[[${game.id}]]*/ '';
+        var parsedGameId = parseInt(gameId);
+
+        function connectWebsocket() {
+            if (isJoined) {
+                ws.subscribe("/game/"+parsedGameId+"/queue/updates")
+            }
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(connectWebsocket, 1000);
+        });
 
         $(document).ready(function() {
             updateButtonText(isJoined);
 
             $("#sendMessageButton").click(function() {
-                var gameId = /*[[${game.id}]]*/ '';
                 var token = /*[[${_csrf.token}]]*/ '';
                 var header = "_csrf";
                 var message = $("#message").val();
 
-                var parsedGameId = parseInt(gameId);
                 $.ajax({
                     type: "POST",
                     url: "/game/sendMessage",
@@ -115,12 +128,12 @@
                 });
             });
         });
-    
+
         function joinOrLeaveGame() {
             var gameId = /*[[${game.id}]]*/ '';
             var token = /*[[${_csrf.token}]]*/ '';
             var header = "_csrf";
-    
+
             var parsedGameId = parseInt(gameId);
             var url = isJoined ? "/game/leave" : "/game/join";
             
@@ -140,8 +153,15 @@
                     // Handle error
                 }
             });
+            
+            if (!isJoined) {
+                ws.subscribe("/game/"+parsedGameId+"/queue/updates")
+            }
+            else {
+                ws.stompClient.unsubscribe("/game/"+parsedGameId+"/queue/updates")
+            }
         }
-    
+
         function updateButtonText(isJoined) {
             if (isJoined) {
                 $(".messageBoard").show();

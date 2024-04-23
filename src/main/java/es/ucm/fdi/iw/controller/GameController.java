@@ -87,7 +87,7 @@ public class GameController {
         model.addAttribute("game", gameSearchQuery.getSingleResult());
         model.addAttribute("userIsJoined", !gj.isEmpty()); // User has joined the game if there is some result in the query
 
-        return "game";
+        return "game.html";
     }
 
     @PostMapping("/join")
@@ -203,6 +203,7 @@ public class GameController {
         m.setText(message);
         m.setDateSent(LocalDateTime.now());
 
+        entityManager.persist(m); // Persist now to get ID to send to the websocket
         String json;
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -214,7 +215,7 @@ public class GameController {
             log.info(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
         }
-        entityManager.persist(m);
+        log.info("Sending message to websocket "+ "/game/"+gameId+"/queue/updates"+ ": " + json);
         messagingTemplate.convertAndSend("/game/"+gameId+"/queue/updates", json);
 
         return ResponseEntity.ok("Message sent successfully");
@@ -232,7 +233,7 @@ public class GameController {
 		Game game = entityManager.find(Game.class, gameId);
 		log.info("Generating message list for game {} ({} messages)", 
             game.getId(), game.getReceived().size());
-		return  game.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
+		return game.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
 	}
 
     /**

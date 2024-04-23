@@ -90,6 +90,8 @@
     <script th:inline="javascript">
         var isJoined = /*[[${userIsJoined}]]*/ false;
         var gameId = /*[[${game.id}]]*/ '';
+        var token = /*[[${_csrf.token}]]*/ '';
+        var header = "_csrf";
         var parsedGameId = parseInt(gameId);
 
         function connectWebsocket() {
@@ -99,14 +101,13 @@
         }
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(connectWebsocket, 1000);
+            setTimeout(getAllMessages, 1000);
         });
 
         $(document).ready(function() {
             updateButtonText(isJoined);
 
             $("#sendMessageButton").click(function() {
-                var token = /*[[${_csrf.token}]]*/ '';
-                var header = "_csrf";
                 var message = $("#message").val();
 
                 $.ajax({
@@ -130,11 +131,6 @@
         });
 
         function joinOrLeaveGame() {
-            var gameId = /*[[${game.id}]]*/ '';
-            var token = /*[[${_csrf.token}]]*/ '';
-            var header = "_csrf";
-
-            var parsedGameId = parseInt(gameId);
             var url = isJoined ? "/game/leave" : "/game/join";
             
             $.ajax({
@@ -161,6 +157,34 @@
                 ws.stompClient.unsubscribe("/game/"+parsedGameId+"/queue/updates")
             }
         }
+
+        function getAllMessages() {
+            $.ajax({
+                type: "GET",
+                url: "/game/received",
+                data: { 
+                    gameId: parsedGameId,
+                    [header]: token
+                },
+                success: function(data) {
+                    // Handle success
+                    console.log("Received the following messages:");
+                    data.forEach(function(message) {
+                        console.log("From:", message.from);
+                        console.log("To:", message.to);
+                        console.log("Sent:", message.sent);
+                        console.log("Received:", message.received);
+                        console.log("Text:", message.text);
+                        console.log("ID:", message.id);
+                        console.log("---");
+                    });
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                }
+            });
+        }
+
 
         function updateButtonText(isJoined) {
             if (isJoined) {

@@ -47,7 +47,6 @@ public class Game {
 
     private @NotNull String meeting;
     
-	@OneToMany
-	@JoinColumn(name = "recipient_id")	
+	@OneToMany(mappedBy = "gameRecipient")
 	private List<Message> received = new ArrayList<>();
 }

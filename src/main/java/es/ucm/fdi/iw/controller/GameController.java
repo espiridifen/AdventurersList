@@ -229,7 +229,7 @@ public class GameController {
     @GetMapping(path = "received", produces = "application/json")
 	@Transactional // para no recibir resultados inconsistentes
 	@ResponseBody  // para indicar que no devuelve vista, sino un objeto (jsonizado)
-	public List<Message.Transfer> retrieveMessages(HttpSession session, @RequestParam("gameID") long gameId) {	
+	public List<Message.Transfer> retrieveMessages(HttpSession session, @RequestParam("gameId") long gameId) {	
 		Game game = entityManager.find(Game.class, gameId);
 		log.info("Generating message list for game {} ({} messages)", 
             game.getId(), game.getReceived().size());

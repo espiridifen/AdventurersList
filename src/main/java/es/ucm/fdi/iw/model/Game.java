@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.model;
 
+import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +17,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
 @Table(name = "games")
-public class Game {
+public class Game implements Transferable<Game.Transfer> {
     private @GeneratedValue(strategy = GenerationType.IDENTITY) @Id Long id;
 
     private @NotNull String name;
@@ -49,4 +52,37 @@ public class Game {
     
 	@OneToMany(mappedBy = "gameRecipient")
 	private List<Message> received = new ArrayList<>();
+    
+    // Transfer, for JSON generation for the Search menu
+    @Getter
+    @AllArgsConstructor
+	public static class Transfer {
+        private String name;
+        private String description;
+        private String experience;
+        private String date;
+        private String gamesystem;
+        private String owner;
+        private String type;
+        private String meeting;
+
+		public Transfer(Game g) {
+            this.name = g.getName();
+            this.description = g.getDescription();
+            this.experience = g.getExperience();
+            this.date = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(g.getDate());
+            this.gamesystem = g.getGamesystem();
+            this.owner = g.getOwner().getUsername();
+            this.type = g.getType();
+            this.meeting = g.getMeeting();
+        }
+	}
+    
+	@Override
+	public Transfer toTransfer() {
+		return new Transfer(name, description, experience,
+        DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(date),
+        gamesystem, owner.getUsername(), type, meeting
+        );
+    }
 }

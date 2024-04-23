@@ -26,7 +26,7 @@ import lombok.AllArgsConstructor;
 @NamedQueries({
 	@NamedQuery(name="Message.countUnread",
 	query="SELECT COUNT(m) FROM Message m "
-			+ "WHERE m.gameRecipient.id = :gameId AND m.dateRead = null")
+			+ "WHERE m.gameRecipient.id = :gameId")
 })
 @Data
 public class Message implements Transferable<Message.Transfer> {
@@ -46,7 +46,6 @@ public class Message implements Transferable<Message.Transfer> {
 	private String text;
 	
 	private LocalDateTime dateSent;
-	private LocalDateTime dateRead;
 	
 	/**
 	 * Objeto para persistir a/de JSON
@@ -58,15 +57,12 @@ public class Message implements Transferable<Message.Transfer> {
 		private String from;
 		private String to;
 		private String sent;
-		private String received;
 		private String text;
 		long id;
 		public Transfer(Message m) {
 			this.from = m.getSender().getUsername();
 			this.to = m.getGameRecipient().getName();
 			this.sent = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(m.getDateSent());
-			this.received = m.getDateRead() == null ?
-					null : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(m.getDateRead());
 			this.text = m.getText();
 			this.id = m.getId();
 		}
@@ -77,7 +73,6 @@ public class Message implements Transferable<Message.Transfer> {
 		String recip = gameRecipient.getName();
 		return new Transfer(sender.getUsername(), recip, 
 			DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateSent),
-			dateRead == null ? null : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateRead),
 			text, id
         );
     }

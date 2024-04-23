@@ -6,6 +6,10 @@
     <title>Buscador de Partidas</title>
     <link rel="stylesheet" href="../static/busqueda.css" th:href="@{/css/busqueda.css}">
     <link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include the meta tag for CSRF token -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 <body class="background">
     <div class="missions-table" style="max-width: 90%; margin: 5%;">
@@ -13,65 +17,92 @@
         <div class="container">
             <div class="search-bar">
                 <h1>Buscador de Partidas</h1>
-        <div class="search-form">
-            <input type="text" id="searchInput" placeholder="Buscar partidas...">
-            <button onclick="search()">Buscar</button>
+                <div class="search-form">
+                    <input type="text" id="searchInput" placeholder="Buscar partidas...">
+                    <button onclick="search()">Buscar</button>
+                </div>
+            </div>
+            <div id="viewButtons">
+                <div th:replace="~{fragments/missionsButtons.html :: missionsButtons}">
+                    no funcó :(
+                </div>
+            </div>
+            <div class="sidebar">
+                <h2>Filtros</h2>
+                <ul>
+                    <li>
+                        <input type="checkbox" id="priceRange0-50" value="0-50">
+                        <label for="priceRange0-50">opcion</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="priceRange50-100" value="50-100">
+                        <label for="priceRange50-100">opcion</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="priceRange100-150" value="100-150">
+                        <label for="priceRange100-150">opcion</label>
+                    </li>
+                    <!-- Agrega más opciones de rango de precios según tu necesidad -->
+                </ul>
+                <br>
+                <ul>
+                    <li>
+                        <input type="checkbox" id="starRating1" value="1">
+                        <label for="starRating1">opcion</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="starRating2" value="2">
+                        <label for="starRating2">opcion</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="starRating3" value="3">
+                        <label for="starRating3">opcion</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="starRating4" value="4">
+                        <label for="starRating4">opcion</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="starRating5" value="5">
+                        <label for="starRating5">opcion</label>
+                    </li>
+                </ul>
+                <!-- Agrega más filtros según tu necesidad -->
+            </div>
+            <div class="search-results">
+                <h2>Lista de partidas</h2>
+                <ul id="searchResults">
+                    <!-- Los resultados de la búsqueda se mostrarán aquí -->
+                </ul>
+            </div>
         </div>
     </div>
-    <div id="viewButtons">
-        <div th:replace="~{fragments/missionsButtons.html :: missionsButtons}">
-            no funcó :(
-        </div>
-    </div>
-    <div class="sidebar">
-        <h2>Filtros</h2>
-        <ul>
-            <li>
-                <input type="checkbox" id="priceRange0-50" value="0-50">
-                <label for="priceRange0-50">opcion</label>
-            </li>
-            <li>
-                <input type="checkbox" id="priceRange50-100" value="50-100">
-                <label for="priceRange50-100">opcion</label>
-            </li>
-            <li>
-                <input type="checkbox" id="priceRange100-150" value="100-150">
-                <label for="priceRange100-150">opcion</label>
-            </li>
-            <!-- Agrega más opciones de rango de precios según tu necesidad -->
-        </ul>
-        <br>
-        <ul>
-            <li>
-                <input type="checkbox" id="starRating1" value="1">
-                <label for="starRating1">opcion</label>
-            </li>
-            <li>
-                <input type="checkbox" id="starRating2" value="2">
-                <label for="starRating2">opcion</label>
-            </li>
-            <li>
-                <input type="checkbox" id="starRating3" value="3">
-                <label for="starRating3">opcion</label>
-            </li>
-            <li>
-                <input type="checkbox" id="starRating4" value="4">
-                <label for="starRating4">opcion</label>
-            </li>
-            <li>
-                <input type="checkbox" id="starRating5" value="5">
-                <label for="starRating5">opcion</label>
-            </li>
-        </ul>
-        <!-- Agrega más filtros según tu necesidad -->
-    </div>
-    <div class="search-results">
-        <h2>Lista de partidas</h2>
-        <ul id="searchResults">
-            <!-- Los resultados de la búsqueda se mostrarán aquí -->
-        </ul>
-    </div>
-    </div>
-</div>
+
+    <script th:inline="javascript">
+        var token = /*[[${_csrf.token}]]*/ '';
+        var header = "_csrf";
+        function search() {
+            $.ajax({
+                type: "GET",
+                url: "/busqueda/gamequery",
+                data: { 
+                    searchQuery: document.getElementById("searchInput").value,
+                    [header]: token
+                },
+                success: function(data) {
+                    // Handle success
+                    console.log("Received the following result:");
+                    data.forEach(function(game) {
+                        console.log("Name:", game.name);
+                        console.log("---");
+                    });
+                    
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                }
+            });
+        }
+    </script>
 </body>
 </html>

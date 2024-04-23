@@ -78,12 +78,10 @@ public class GameController {
 
         List<String> users = new ArrayList<String>();
         for (GameJoin join : joinlist) {
-            if (join.getUser().getId() != userId) {
-                users.add(join.getUser().getUsername());
-            }
+            users.add(join.getUser().getUsername());
         }
         
-        model.addAttribute("users", users); // All the usernames except for the owner
+        model.addAttribute("users", users);
         model.addAttribute("game", gameSearchQuery.getSingleResult());
         model.addAttribute("userIsJoined", !gj.isEmpty()); // User has joined the game if there is some result in the query
 

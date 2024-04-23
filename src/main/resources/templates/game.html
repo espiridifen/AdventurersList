@@ -34,17 +34,14 @@
             
             <div class="genericlist">
                 Director de Juego:
-                <ul class="list">
+                <ul class="list" style="margin-left: 10px;">
                     <li th:text="${game.owner.username}">Usuario</li>
                 </ul>
                 Jugadores:
-                <ul class="list" >
-                
+                <ul class="list" style="margin-left: 10px;">
                     <li th:each="user : ${users}">
-                        <div th:text="user">user</div>
+                        <div th:text="${user}">user</div>
                     </li>
-                 
-                    
                 </ul>
             </div>
             <div class="description" th:text="${game.description}">
@@ -52,11 +49,14 @@
             </div>
             <div class="location">
                 Dónde se juega
-                <ul class="genericlist">
+                <!-- <ul class="genericlist">
                     <div class="image_container">
                         <img src="img/gatoque.jpg"/>
                     </div>
-                </ul>
+                </ul> -->
+                <div class="location" th:text="${game.meeting}">
+                    loc
+                </div>
                 <!-- Esto si el usuario es jugador de la partida, se saca desde th -->
                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Link a la partida</a>
             </div>

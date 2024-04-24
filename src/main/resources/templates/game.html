@@ -13,6 +13,7 @@
 </head>
 <link rel="stylesheet" href="../static/game.css" th:href="@{/css/game.css}">
 <link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
+<link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
 <body class="background">
     <div class="missions-table" style="width: 90%; margin-left: 5%; margin-top: 5%;">
         <div class="game_container">
@@ -71,15 +72,16 @@
             
         </div>
         <div class="messageBoard">
+            
             <ul>
-                <li th:each="message : ${messageLog}">
+                <li th:each="message : ${messageLog}" id="messageBoard">
                     <div th:replace="~{fragments/message.html :: div(message=${message})}"></div>
                 </li>
             </ul> 
-            <div id="sendMessageForm">
-                <input type="text" id="message" name="message"/>
-                <button id="sendMessageButton">Enviar</button>
-            </div>
+        </div>
+        <div id="sendMessageForm">
+            <input type="text" id="message" name="message"/>
+            <button id="sendMessageButton">Enviar</button>
         </div>
     </div>
 
@@ -122,6 +124,7 @@
                         console.log("Message sent successfully");
                         $("#message").val(""); // Clear the textbox
                         // Optionally update the message board with the new message
+                        getAllMessages();
                     },
                     error: function(xhr, status, error) {
                         console.error("Error sending message: " + xhr.statusText);
@@ -169,6 +172,7 @@
                 success: function(data) {
                     // Handle success
                     console.log("Received the following messages:");
+                    cleanMessageBoard();
                     data.forEach(function(message) {
                         console.log("From:", message.from);
                         console.log("To:", message.to);
@@ -177,6 +181,19 @@
                         console.log("Text:", message.text);
                         console.log("ID:", message.id);
                         console.log("---");
+                        
+                        
+                        var messageDiv = createMessageHTML(message);
+                        updateMessageBoard(messageDiv);
+                        // var messageDiv =
+                        // <div th:fragment="div(message)" class="messageContainer">
+                        //     <img alt="User Profile Picture" class="profilePicture" src="img/gatoque.jpg" th:src="@{message.user.profilePicture}"/>
+                        //         <div class="text">
+                        //             <p th:text="${message.user.name}" class="username" >Mamertín</p>
+                        //             <p th:text="${message.text}" class="messageText">Una mamertada, probablemente</p>
+                        //         </div>
+                        // </div>
+                        // ;
                     });
                 },
                 error: function(xhr, status, error) {
@@ -189,6 +206,7 @@
         function updateButtonText(isJoined) {
             if (isJoined) {
                 $(".messageBoard").show();
+                getAllMessages();
                 var buttonText = "Salir de la partida";
             }
             else {
@@ -196,6 +214,52 @@
                 var buttonText = "Unirte a la partida";
             }
             $("#joinLeaveButton").text(buttonText);
+        }
+
+        function createMessageHTML(messageData){
+            var messageDiv = document.createElement("div");
+            messageDiv.classList.add("messageContainer");
+
+            var profilePicture = document.createElement("img");
+            profilePicture.setAttribute("alt", "User Profile Picture");
+            profilePicture.classList.add("profilePicture");
+            profilePicture.setAttribute("src", "img/gatoque.jpg"); // This line might need adjustment based on your project structure
+            // Set the 'th:src' attribute if needed in your context
+            // profilePicture.setAttribute("th:src", "@{message.user.profilePicture}");
+
+            var textDiv = document.createElement("div");
+            textDiv.classList.add("text");
+
+            var username = document.createElement("p");
+            username.classList.add("username");
+            // Assuming 'message' is available in your context
+            username.textContent = messageData.from;
+            // If you're using Thymeleaf, you might need to use th:text in your HTML template instead
+            username.setAttribute("th:text", "${message.user.name}");
+
+            var messageText = document.createElement("p");
+            messageText.classList.add("messageText");
+            // Assuming 'message' is available in your context
+            messageText.textContent = messageData.text;
+            // If you're using Thymeleaf, you might need to use th:text in your HTML template instead
+            messageText.setAttribute("th:text", "${message.text}");
+
+            textDiv.appendChild(username);
+            textDiv.appendChild(messageText);
+
+            messageDiv.appendChild(profilePicture);
+            messageDiv.appendChild(textDiv);
+
+            return messageDiv;
+
+        }
+
+        function updateMessageBoard(message) {
+            $(".messageBoard").append(message);
+        }
+
+        function cleanMessageBoard() {
+            $(".messageBoard").empty();
         }
     </script>
     

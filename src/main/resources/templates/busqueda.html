@@ -92,9 +92,11 @@
                 success: function(data) {
                     // Handle success
                     console.log("Received the following result:");
+                    refreshResults();
                     data.forEach(function(game) {
                         console.log("Name:", game.name);
                         console.log("---");
+                        addQuestToResults(game);
                     });
                     
                 },
@@ -102,6 +104,67 @@
                     // Handle error
                 }
             });
+        }
+
+        function refreshResults() {
+            var searchResults = document.getElementById("searchResults");
+            searchResults.innerHTML = "";
+        }
+
+        function addQuestToResults(quest) {
+            var searchResults = document.getElementById("searchResults");
+            searchResults.innerHTML += createQuestHTML(quest);
+        }
+
+        function createQuestHTML(quest) {
+            // Create form element
+            var form = document.createElement('form');
+            form.setAttribute('th:fragment', 'form(quest)');
+            form.setAttribute('th:action', '@{/quest}');
+            form.setAttribute('method', 'post');
+
+            // Create input element for questID
+            var input = document.createElement('input');
+            input.setAttribute('type', 'hidden');
+            input.setAttribute('name', 'questID');
+            input.setAttribute('th:value', '${quest.id}');
+            form.appendChild(input);
+
+            // Create button element
+            var button = document.createElement('button');
+            button.setAttribute('id', 'partidapreview');
+            button.setAttribute('class', 'mission container');
+
+            // Create div1
+            var div1 = document.createElement('div');
+            div1.setAttribute('class', 'absolute-div div1');
+            div1.setAttribute('th:text', '${quest.name}');
+            div1.innerHTML = '<h2>Nombre de la campaña</h2>';
+            button.appendChild(div1);
+
+            // Create div2
+            var div2 = document.createElement('div');
+            div2.setAttribute('class', 'absolute-div div2');
+            div2.innerHTML = '<img src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/>';
+            button.appendChild(div2);
+
+            // Create div3
+            var div3 = document.createElement('div');
+            div3.setAttribute('class', 'absolute-div div3');
+            div3.setAttribute('th:text', '${quest.system}');
+            div3.textContent = 'Sistema';
+            button.appendChild(div3);
+
+            // Create div4
+            var div4 = document.createElement('div');
+            div4.setAttribute('class', 'absolute-div div4');
+            div4.setAttribute('th:text', '${quest.Date}');
+            div4.textContent = 'Fecha';
+            button.appendChild(div4);
+
+            form.appendChild(button);
+
+            return form.outerHTML;
         }
     </script>
 </body>

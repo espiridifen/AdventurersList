@@ -123,15 +123,15 @@
         function createQuestHTML(quest) {
             // Create form element
             var form = document.createElement('form');
-            form.setAttribute('th:fragment', 'form(quest)');
-            form.setAttribute('th:action', '@{/quest}');
-            form.setAttribute('method', 'post');
+            form.setAttribute('method', 'get'); // Use 'get' method to navigate to a new page
+            form.setAttribute('action', '/game'); // Set the action attribute to the desired URL
+            var input = document.createElement('input');
 
             // Create input element for questID
             var input = document.createElement('input');
             input.setAttribute('type', 'hidden');
             input.setAttribute('name', 'questID');
-            input.setAttribute('th:value', '' + quest.id + '');
+            input.setAttribute('value', quest.id);
             form.appendChild(input);
 
             // Create button element

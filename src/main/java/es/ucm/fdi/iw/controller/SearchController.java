@@ -58,7 +58,7 @@ public class SearchController {
 
         model.addAttribute("game", query.getSingleResult());
 
-        return "redirect:/game?questID=" + questID;
+        return "game?questID=" + questID;
     }
 
 }

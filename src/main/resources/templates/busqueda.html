@@ -94,7 +94,11 @@
                     console.log("Received the following result:");
                     refreshResults();
                     data.forEach(function(game) {
+                        console.log("Game:", game);
                         console.log("Name:", game.name);
+                        console.log("System:", game.gamesystem);
+                        console.log("Date:", game.date);
+                        console.log("ID:", game.id);
                         console.log("---");
                         addQuestToResults(game);
                     });
@@ -127,7 +131,7 @@
             var input = document.createElement('input');
             input.setAttribute('type', 'hidden');
             input.setAttribute('name', 'questID');
-            input.setAttribute('th:value', '${quest.id}');
+            input.setAttribute('th:value', '' + quest.id + '');
             form.appendChild(input);
 
             // Create button element
@@ -138,8 +142,8 @@
             // Create div1
             var div1 = document.createElement('div');
             div1.setAttribute('class', 'absolute-div div1');
-            div1.setAttribute('th:text', '${quest.name}');
-            div1.innerHTML = '<h2>Nombre de la campaña</h2>';
+            div1.setAttribute('th:text', quest.name);
+            div1.textContent = quest.name;
             button.appendChild(div1);
 
             // Create div2
@@ -152,14 +156,14 @@
             var div3 = document.createElement('div');
             div3.setAttribute('class', 'absolute-div div3');
             div3.setAttribute('th:text', '${quest.system}');
-            div3.textContent = 'Sistema';
+            div3.textContent = quest.gamesystem;
             button.appendChild(div3);
 
             // Create div4
             var div4 = document.createElement('div');
             div4.setAttribute('class', 'absolute-div div4');
             div4.setAttribute('th:text', '${quest.Date}');
-            div4.textContent = 'Fecha';
+            div4.textContent = quest.date;
             button.appendChild(div4);
 
             form.appendChild(button);

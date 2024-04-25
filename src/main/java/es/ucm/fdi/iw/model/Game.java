@@ -57,6 +57,7 @@ public class Game implements Transferable<Game.Transfer> {
     @Getter
     @AllArgsConstructor
 	public static class Transfer {
+        private long id;
         private String name;
         private String description;
         private String experience;
@@ -67,6 +68,7 @@ public class Game implements Transferable<Game.Transfer> {
         private String meeting;
 
 		public Transfer(Game g) {
+            this.id = g.getId();
             this.name = g.getName();
             this.description = g.getDescription();
             this.experience = g.getExperience();
@@ -80,7 +82,7 @@ public class Game implements Transferable<Game.Transfer> {
     
 	@Override
 	public Transfer toTransfer() {
-		return new Transfer(name, description, experience,
+		return new Transfer(id, name, description, experience,
         DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(date),
         gamesystem, owner.getUsername(), type, meeting
         );

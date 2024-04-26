@@ -280,4 +280,45 @@ public class GameController {
 		messagingTemplate.convertAndSend("/user/"+game.getId()+"/queue/updates", json);
 		return "{\"result\": \"message sent.\"}";
 	}	
+
+    @PostMapping("/deleteGame")
+    @Transactional
+    public String deleteGame(Model model, @RequestParam("gameId") long gameId) {
+        // TypedQuery<Game> gameQuery = entityManager.createQuery("select g from Game g where g.id = :gameId", Game.class);
+        // gameQuery.setParameter("gameId", gameId);
+        // gameQuery.setMaxResults(1);
+        
+        // Game game;
+        // try {
+        //     game = gameQuery.getSingleResult();
+        // } catch (NoResultException e) {
+        //     return "game";
+        // } catch (Exception e) {
+        //     log.error("Error: " + e);
+        //     return "game";
+        // }
+
+        // long userId;
+        // try {
+        //     userId = ((User) httpSession.getAttribute("u")).getId();
+        // } catch (Exception e) {
+        //     log.error("Error retrieving user from session: " + e);
+        //     return "game";
+        // }
+
+        // if (game.getOwner().getId() != userId) {
+        //     return "game";
+        // }
+
+        // entityManager.remove(game);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/report")
+    @Transactional
+    public String getReportPage(Model model, @RequestParam("questID") Long questID) {
+        int mamerto = 2;
+        return "redirect:/newreport?questID=" + questID;
+    }
 }

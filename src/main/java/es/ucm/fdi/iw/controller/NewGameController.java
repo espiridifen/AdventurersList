@@ -12,12 +12,12 @@ public class NewGameController {
     
     @GetMapping("/newGame")
     public String newGame(Model model) {
-        return "newGame";
+        return "newGame.html";
     }
 
-    @PostMapping("/createNewGame")
+    @PostMapping("/generateNewGame")
     @Transactional
-    public String createNewGame(Model model) {
-        return "newGame";
+    public String generateNewGame(Model model) {
+        return ":redirect:/game";
     }
 }

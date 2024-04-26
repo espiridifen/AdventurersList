@@ -65,6 +65,13 @@
                 <ul class="list">
                     <li>
                         <button id="joinLeaveButton" onclick="joinOrLeaveGame()">Unirte a la partida</button>
+                        <form th:action="@{/deleteGame}" method="post">
+                            <button id="deleteGameButton">Borrar partida</button>
+                        </form>
+                        <form th:action="@{/report}" method="post">
+                            <input type="hidden" name="questID" th:value="${game.id}" style="display: none;"/>
+                            <button id="reportGameButton">Reportar partida</button>
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -79,7 +86,7 @@
                 </li>
             </ul> 
         </div>
-        <div id="sendMessageForm">
+        <div id="sendMessageForm" class="sendMessageButtonClass">
             <input type="text" id="message" name="message"/>
             <button id="sendMessageButton">Enviar</button>
         </div>
@@ -206,11 +213,13 @@
         function updateButtonText(isJoined) {
             if (isJoined) {
                 $(".messageBoard").show();
+                $("#sendMessageForm").show();
                 getAllMessages();
                 var buttonText = "Salir de la partida";
             }
             else {
                 $(".messageBoard").hide();
+                $("#sendMessageForm").hide();
                 var buttonText = "Unirte a la partida";
             }
             $("#joinLeaveButton").text(buttonText);

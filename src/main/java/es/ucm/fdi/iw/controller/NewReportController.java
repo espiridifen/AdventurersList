@@ -18,7 +18,7 @@ public class NewReportController {
     @Autowired
     EntityManager entityManager;
 
-    @GetMapping("/newReport")
+    @GetMapping("/newreport")
     public String newReport(Model model, @RequestParam("questID") Long questID) {
         TypedQuery<Game> gameSearchQuery = entityManager.createQuery("select g from Game g where g.id = :questID", Game.class);
         gameSearchQuery.setParameter("questID", questID);
@@ -26,7 +26,7 @@ public class NewReportController {
 
         model.addAttribute("game", gameSearchQuery.getSingleResult());
 
-        return "newReport.html";
+        return "newreport.html";
     }
 
     @PostMapping("/createNewReport")

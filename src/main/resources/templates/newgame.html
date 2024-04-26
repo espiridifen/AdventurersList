@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventurer's List: Nombre de la Partida</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include the meta tag for CSRF token -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<link rel="stylesheet" href="../static/game.css" th:href="@{/css/game.css}">
+<link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
+<link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
+<body class="background">
+    <div class="missions-table">
+        <form th:action="createNewGame" method="post">
+            Nombre de la partida<br/>
+            <input type="text" /><br/>
+            Sistema<br/>
+            <input type="text" /><br/>
+            Fecha de la primera sesión<br/>
+            <input type="date"/><br/>
+            Dónde la vas a hacer?<br/>
+            <input type="text"/><br/>
+            Nivel de experiencia<br/>
+            <input type="text"/><br/>
+            Descripción<br/>
+            <input type="text" style="height: 300px;"/><br/>
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Submit
+            </button>
+            
+        </form>
+    </div>
+
+</body>
+
+</html>

@@ -66,7 +66,6 @@ public class Game implements Transferable<Game.Transfer> {
         private String owner;
         private String type;
         private String meeting;
-        private Long id;
 
 		public Transfer(Game g) {
             this.id = g.getId();
@@ -86,7 +85,7 @@ public class Game implements Transferable<Game.Transfer> {
 	public Transfer toTransfer() {
 		return new Transfer(id, name, description, experience,
         DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(date),
-        gamesystem, owner.getUsername(), type, meeting, id
+        gamesystem, owner.getUsername(), type, meeting
         );
     }
 }

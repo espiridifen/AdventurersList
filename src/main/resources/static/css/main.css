@@ -69,3 +69,8 @@ margin-bottom: 20px;
     list-style-type: none;
     
 }
+
+.createQuest{
+    min-width: 200px;
+    height: 100%; 
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventurer's List: Nombre de la Partida</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include the meta tag for CSRF token -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<link rel="stylesheet" href="../static/game.css" th:href="@{/css/game.css}">
+<link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
+<link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
+<body class="background">
+    <div class="missions-table" style="align-content: center;">
+        <form th:action="leave" method="post">
+            Reporte enviado con éxito<br/>
+            <button
+                type="submit"
+                class="btn btn-primary">
+                Volver
+            </button>
+            
+        </form>
+    </div>
+
+</body>
+
+</html>

@@ -32,6 +32,6 @@ public class NewReportController {
     @PostMapping("/createNewReport")
     @Transactional
     public String createNewReport(Model model) {
-        return ":redirect:/";
+        return "reportsent";
     }
 }

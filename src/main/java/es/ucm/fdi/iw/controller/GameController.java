@@ -173,16 +173,11 @@ public class GameController {
         TypedQuery<Game> g_query = entityManager.createQuery("select g from Game g where g.id = :gameId", Game.class);
         g_query.setParameter("gameId", gameId);
         g_query.setMaxResults(1);
-        long userId = ((User)httpSession.getAttribute("u")).getId();
-        TypedQuery<User> u_query = entityManager.createQuery("select u from User u where u.id = :userId", User.class);
-        u_query.setParameter("userId", userId);
-        u_query.setMaxResults(1);
+        User u = (User)httpSession.getAttribute("u");
         Game g;
-        User u;
 
         try {
             g = g_query.getSingleResult();
-            u = u_query.getSingleResult();
         }
         catch (NoResultException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game not found");
@@ -228,8 +223,6 @@ public class GameController {
 	@ResponseBody  // para indicar que no devuelve vista, sino un objeto (jsonizado)
 	public List<Message.Transfer> retrieveMessages(HttpSession session, @RequestParam("gameId") long gameId) {	
 		Game game = entityManager.find(Game.class, gameId);
-		log.info("Generating message list for game {} ({} messages)", 
-            game.getId(), game.getReceived().size());
 		return game.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
 	}
 

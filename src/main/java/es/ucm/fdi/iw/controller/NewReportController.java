@@ -46,15 +46,9 @@ public class NewReportController {
         TypedQuery<Game> g_query = entityManager.createQuery("select g from Game g where g.id = :gameId", Game.class);
         g_query.setParameter("gameId", questID);
         g_query.setMaxResults(1);
-        long userId = ((User)httpSession.getAttribute("u")).getId();
-        TypedQuery<User> u_query = entityManager.createQuery("select u from User u where u.id = :userId", User.class);
-        u_query.setParameter("userId", userId);
-        u_query.setMaxResults(1);
-        User u;
         Game g;
 
         try {
-            u = u_query.getSingleResult();
             g = g_query.getSingleResult();
         }
         catch (NoResultException e) {
@@ -65,6 +59,8 @@ public class NewReportController {
             log.error("Error: " +e);
             return "error";
         }
+        
+        User u = (User)httpSession.getAttribute("u");
 
         Report r = new Report(null, u, null, g, null, text);
         entityManager.persist(r);

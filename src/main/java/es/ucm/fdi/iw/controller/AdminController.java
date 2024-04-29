@@ -2,7 +2,6 @@ package es.ucm.fdi.iw.controller;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.swing.text.html.parser.Entity;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import es.ucm.fdi.iw.model.Game;
 import es.ucm.fdi.iw.model.Report;
 
 /**

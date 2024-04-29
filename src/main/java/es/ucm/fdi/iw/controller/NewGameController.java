@@ -37,23 +37,7 @@ public class NewGameController {
                                 @RequestParam String experience,
                                 @RequestParam String description) {
         
-        long userId = ((User)httpSession.getAttribute("u")).getId();
-        TypedQuery<User> u_query = entityManager.createQuery("select u from User u where u.id = :userId", User.class);
-        u_query.setParameter("userId", userId);
-        u_query.setMaxResults(1);
-        User u;
-
-        try {
-            u = u_query.getSingleResult();
-        }
-        catch (NoResultException e) {
-            log.error("Error: " +e);
-            return "error";
-        }
-        catch (Exception e) {
-            log.error("Error: " +e);
-            return "error";
-        }
+        User u = (User)httpSession.getAttribute("u");
 
         Game g = new Game(null, name, description, experience, LocalDateTime.parse(date + "T00:00:00"), 
                         gamesystem, 0, u, gamesystem, meeting, null);

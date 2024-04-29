@@ -172,7 +172,7 @@ public class UserController {
      */
     @GetMapping("{id}/pic")
     public StreamingResponseBody getPic(@PathVariable long id) throws IOException {
-        File f = localData.getFile("user", ""+id+".jpg");
+        File f = localData.getFile("user", ""+id+".png");
         InputStream in = new BufferedInputStream(f.exists() ?
             new FileInputStream(f) : UserController.defaultPic());
         return os -> FileCopyUtils.copy(in, os);
@@ -201,7 +201,7 @@ public class UserController {
 		}
 		
 		log.info("Updating photo for user {}", id);
-		File f = localData.getFile("user", ""+id+".jpg");
+		File f = localData.getFile("user", ""+id+".png");
 		if (photo.isEmpty()) {
 			log.info("failed to upload photo: emtpy file?");
 		} else {

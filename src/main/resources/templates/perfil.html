@@ -6,11 +6,14 @@
     <link rel="stylesheet" href="perfil.css" th:href="@{/css/perfil.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <title>Perfil de Usuario</title>
+    <!-- Include the meta tag for CSRF token -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 <body class="background">
     <div class="container">
         <div class="profile-module">
-            <img src="img/gatoque.jpg" alt="Profile Picture" class="profile-picture">
+            <img th:src="@{'user/' + ${userId} + '/pic'}" alt="Profile Picture" class="profile-picture">
             <div class="username" th:text="${username}">Nombre de Usuario</div>
         </div>
         <div class="missions-table">
@@ -23,7 +26,15 @@
             <div class="sidebar">
                 <h3>Opciones de Configuración</h3>
                 <ul class="options">
-                    <li class="option">Configuración 1</li>
+                    <li class="option">
+                        <div>
+                            Cambiar foto de perfil
+                            <form th:action="@{ 'user/' + ${userId} + '/pic'}" method="post" enctype="multipart/form-data">
+                                <input type="file" name="photo" accept=".png">
+                                <button type="submit">Subir</button>
+                            </form>
+                        </div>
+                    </li>
                     <li class="option">Configuración 2</li>
                     <li class="option">Configuración 3</li>
                 </ul>

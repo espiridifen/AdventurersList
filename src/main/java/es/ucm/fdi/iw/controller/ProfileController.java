@@ -32,6 +32,7 @@ public class ProfileController {
         User u = (User)httpSession.getAttribute("u");
         
         model.addAttribute("username", u.getUsername());
+        model.addAttribute("userId", u.getId());
 
         // Now add the user's games
         List<Game> games = entityManager.createQuery("select g from Game g where g.owner.id = :userId", Game.class)

@@ -106,12 +106,23 @@
         function connectWebsocket() {
             if (isJoined) {
                 ws.subscribe("/game/"+parsedGameId+"/queue/updates")
+                ws.receive = (text) => {
+                    console.log("Mensaje recibido:")
+                    console.log(text);
+                    getAllMessages();
+                }
             }
         }
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(connectWebsocket, 1000);
             setTimeout(getAllMessages, 1000);
+            setTimeout(refreshMessages, 1000);
         });
+
+        function refreshMessages() {
+            getAllMessages();
+            setTimeout(refreshMessages, 1000);
+        }
 
         $(document).ready(function() {
             updateButtonText(isJoined);

@@ -13,6 +13,17 @@
         <div class="container">
             <h1 class="mt-5">Administración</h1>
         </div>
+
+        <ul>
+            <li th:each= "report:${reports}">
+                <div th:text="${report.reportedGame.name}">
+                </div>
+                <div th:text="${report.reportedGame.description}">
+                </div>
+                <div thth:text="${report.reason}" >
+                </div>
+            </li>
+        </ul>
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />

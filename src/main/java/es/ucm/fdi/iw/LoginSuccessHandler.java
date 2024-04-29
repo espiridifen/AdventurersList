@@ -90,7 +90,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			u.getUsername(), u.getId(), session.getId(), ws, nextUrl);
 
 		// note that this is a 302, and will result in a new request
-		response.sendRedirect(nextUrl);
+		response.sendRedirect("/");
 	}
 
 	/**

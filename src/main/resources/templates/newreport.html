@@ -16,16 +16,14 @@
 <link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
 <body class="background">
     <div class="missions-table">
-        <div thth:text="${game.name}"></div>
+        <div th:text="${game.name}"></div>
         <form th:action="createNewReport" method="post">
-            <input type="text"/><br/>
             Dinos unas palabras de por qué quieres reportar esta partida<br/>
             <input type="text" style="height: 300px;"/><br/>
             <button
                 type="submit"
-                class="btn btn-primary"
-            >
-                Submit
+                class="btn btn-primary">
+                Enviar
             </button>
             
         </form>

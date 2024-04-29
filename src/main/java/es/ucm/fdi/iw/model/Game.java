@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "games")
 public class Game implements Transferable<Game.Transfer> {
     private @GeneratedValue(strategy = GenerationType.IDENTITY) @Id Long id;

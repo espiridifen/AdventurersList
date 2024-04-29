@@ -69,7 +69,7 @@ public class RootController {
         return "redirect:/game?questID=" + questID;
     }
 
-    @PostMapping("/createNewGame")
+    @GetMapping("/newGame")
     public String getGamePage(Model model) {
         return "newgame";
     }

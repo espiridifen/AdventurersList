@@ -1,5 +1,8 @@
 package es.ucm.fdi.iw.controller;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import es.ucm.fdi.iw.model.Game;
+import es.ucm.fdi.iw.model.Quest;
 import es.ucm.fdi.iw.model.User;
 
 @Controller
@@ -45,6 +50,24 @@ public class ProfileController {
         }
         
         model.addAttribute("username", u.getUsername());
+
+        // Now add the user's games
+        List<Game> games = entityManager.createQuery("select g from Game g where g.owner.id = :userId", Game.class)
+                                        .setParameter("userId", userId)
+                                        .getResultList();
+        List<Quest> quests = new ArrayList<>(); // Initialize the quests variable
+
+        for (Game game : games) {
+            Quest q = new Quest();
+            q.setName(game.getName());
+            q.setSystem(game.getGamesystem());
+            q.setDate(game.getDate().toString());
+            q.setId(game.getId());
+            quests.add(q);
+        }
+
+        model.addAttribute("availableQuests", quests);
+
 
         return "perfil";
     }

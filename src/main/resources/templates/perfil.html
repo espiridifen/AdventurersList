@@ -30,9 +30,11 @@
             </div>
             <div >
                 <h2>Partidas Activas</h2>
-                <div class="game-list">
-                    <!-- TODO: coger lista de todas las partidas de las que el usuario es propietario -->
-                </div>
+                <ul class="mission-list">
+                    <li th:each="quest : ${availableQuests}">
+                        <div th:replace="fragments/quest :: form(quest=${quest})"></div>
+                    </li>
+                </ul>
             </div>
         </div>
         </div>

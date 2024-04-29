@@ -18,8 +18,9 @@
     <div class="missions-table">
         <div th:text="${game.name}"></div>
         <form th:action="createNewReport" method="post">
+            <input type="hidden" name="questID" th:value="${game.id}" style="display: none;"/>
             Dinos unas palabras de por qué quieres reportar esta partida<br/>
-            <input type="text" style="height: 300px;"/><br/>
+            <input type="text" style="height: 300px;" name="text"/><br/>
             <button
                 type="submit"
                 class="btn btn-primary">

@@ -130,9 +130,8 @@ public class GameController {
         gameQuery.setParameter("gameId", gameId);
         gameQuery.setMaxResults(1);
         
-        Game game;
         try {
-            game = gameQuery.getSingleResult();
+            gameQuery.getSingleResult();
         } catch (NoResultException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game not found");
         } catch (Exception e) {
@@ -313,12 +312,5 @@ public class GameController {
         // entityManager.remove(game);
 
         return "redirect:/";
-    }
-
-    @PostMapping("/report")
-    @Transactional
-    public String getReportPage(Model model, @RequestParam("questID") Long questID) {
-        int mamerto = 2;
-        return "redirect:/newreport?questID=" + questID;
     }
 }

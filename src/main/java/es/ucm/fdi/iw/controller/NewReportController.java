@@ -29,7 +29,7 @@ public class NewReportController {
     @Autowired
     HttpSession httpSession;
 
-    @GetMapping("/newreport")
+    @GetMapping("/newGameReport")
     public String newReport(Model model, @RequestParam("questID") Long questID) {
         TypedQuery<Game> gameSearchQuery = entityManager.createQuery("select g from Game g where g.id = :questID", Game.class);
         gameSearchQuery.setParameter("questID", questID);
@@ -40,9 +40,9 @@ public class NewReportController {
         return "newreport.html";
     }
 
-    @PostMapping("/createNewReport")
+    @PostMapping("/createNewGameReport")
     @Transactional
-    public String createNewReport(@RequestParam Long questID, @RequestParam String text) {
+    public String createNewGameReport(@RequestParam Long questID, @RequestParam String text) {
         TypedQuery<Game> g_query = entityManager.createQuery("select g from Game g where g.id = :gameId", Game.class);
         g_query.setParameter("gameId", questID);
         g_query.setMaxResults(1);
@@ -69,6 +69,6 @@ public class NewReportController {
         Report r = new Report(null, u, null, g, null, text);
         entityManager.persist(r);
 
-        return "redirect:/";
+        return "reportsent.html";
     }
 }

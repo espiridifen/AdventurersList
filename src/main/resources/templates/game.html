@@ -68,7 +68,7 @@
                         <form th:action="@{/deleteGame}" method="post">
                             <button id="deleteGameButton">Borrar partida</button>
                         </form>
-                        <form th:action="@{/newreport}" method="get">
+                        <form th:action="@{/newGameReport}" method="get">
                             <input type="hidden" name="questID" th:value="${game.id}" style="display: none;"/>
                             <button id="reportGameButton">Reportar partida</button>
                         </form>

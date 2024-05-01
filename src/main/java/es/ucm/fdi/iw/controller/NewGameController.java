@@ -29,12 +29,13 @@ public class NewGameController {
                                 @RequestParam String gamesystem,
                                 @RequestParam String date,
                                 @RequestParam String meeting,
-                                @RequestParam ExperienceEnum experience,
+                                @RequestParam String experience,
                                 @RequestParam String description) {
         
-        User u = (User)httpSession.getAttribute("u");
+        long userId = ((User)httpSession.getAttribute("u")).getId();
+        User u = entityManager.find(User.class, userId);
 
-        Game g = new Game(null, name, description, experience, LocalDateTime.parse(date + "T00:00:00"), 
+        Game g = new Game(null, name, description, ExperienceEnum.valueOf(experience), LocalDateTime.parse(date + "T00:00:00"), 
                         gamesystem, 0, u, gamesystem, meeting, null);
         entityManager.persist(g);
 

@@ -1,14 +1,10 @@
 package es.ucm.fdi.iw.controller;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +16,6 @@ import es.ucm.fdi.iw.model.User;
 
 @Controller
 public class NewGameController {
-	private static final Logger log = LogManager.getLogger(NewGameController.class);
-    
     @Autowired
     EntityManager entityManager;
 

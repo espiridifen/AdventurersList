@@ -27,7 +27,7 @@
             </div>
             <div class="gamedata"><ul class="list">
                 <li><h1 th:text="${game.name}">Title</h1></li>
-                <li><h2 th:text="${game.gamesystem}">System</h2></li>
+                <li><h2 th:text="${game.gamesystem.getName()}">System</h2></li>
                 <li><h3 th:text="${game.meeting}">Schedules</h3></li>
             </ul>
         </div>

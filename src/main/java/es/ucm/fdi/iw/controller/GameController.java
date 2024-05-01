@@ -81,8 +81,9 @@ public class GameController {
             users.add(join.getUser().getUsername());
         }
         
+        Game g = gameSearchQuery.getSingleResult();
         model.addAttribute("users", users);
-        model.addAttribute("game", gameSearchQuery.getSingleResult());
+        model.addAttribute("game", g);
         model.addAttribute("userIsJoined", !gj.isEmpty()); // User has joined the game if there is some result in the query
 
         return "game.html";

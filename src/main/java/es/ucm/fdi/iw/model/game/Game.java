@@ -41,7 +41,7 @@ public class Game implements Transferable<Game.Transfer> {
 
     private @NotNull LocalDateTime date;
 
-    private @NotNull String gamesystem;
+    private @NotNull GameSystemEnum gamesystem;
 
     @Column(name = "sessionquantity", columnDefinition = "INTEGER")
     private int sessionQuantity;
@@ -66,7 +66,7 @@ public class Game implements Transferable<Game.Transfer> {
         private String description;
         private ExperienceEnum experience;
         private String date;
-        private String gamesystem;
+        private GameSystemEnum gamesystem;
         private String owner;
         private String type;
         private String meeting;

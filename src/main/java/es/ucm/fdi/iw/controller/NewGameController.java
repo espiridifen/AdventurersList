@@ -14,6 +14,7 @@ import es.ucm.fdi.iw.model.GameJoin;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.game.ExperienceEnum;
 import es.ucm.fdi.iw.model.game.Game;
+import es.ucm.fdi.iw.model.game.GameSystemEnum;
 
 @Controller
 public class NewGameController {
@@ -36,7 +37,7 @@ public class NewGameController {
         User u = entityManager.find(User.class, userId);
 
         Game g = new Game(null, name, description, ExperienceEnum.valueOf(experience), LocalDateTime.parse(date + "T00:00:00"), 
-                        gamesystem, 0, u, gamesystem, meeting, null);
+                            GameSystemEnum.valueOf(gamesystem), 0, u, gamesystem, meeting, null);
         entityManager.persist(g);
 
         // Join the user to his own game

@@ -44,7 +44,7 @@ public class RootController {
         for (Game game : games) {
             Quest q = new Quest();
             q.setName(game.getName());
-            q.setSystem(game.getGamesystem());
+            q.setSystem(game.getGamesystem().getName());
             q.setDate(game.getDate().toString());
             q.setId(game.getId());
             quests.add(q);

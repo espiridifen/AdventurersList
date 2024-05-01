@@ -2,6 +2,7 @@ package es.ucm.fdi.iw.model;
 
 import javax.persistence.*;
 
+import es.ucm.fdi.iw.model.game.Game;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

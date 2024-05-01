@@ -7,10 +7,10 @@ VALUES (2, TRUE, 'USER', 'user',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', 'user2', 'apellido2');
 
 INSERT INTO games (name, description, experience, date, gamesystem, sessionquantity, owner, type, meeting)
-VALUES ('Marberto', 'Descripcion1', 'Beginner', '2007-03-17T16:00:00', 'Dungeons and Dragons 5th Edition', 1, 2, 'One-shot', 'Online');
+VALUES ('Marberto', 'Descripcion1', 0, '2007-03-17T16:00:00', 'Dungeons and Dragons 5th Edition', 1, 2, 'One-shot', 'Online');
 
 INSERT INTO games (name, description, experience, date, gamesystem, sessionquantity, owner, type, meeting)
-VALUES ('Juego2', 'Descripcion2', 'Beginner', '2020-04-20T16:00:00', 'Dungeons and Dragons 5th Edition', 3, 1, 'One-shot', 'Online');
+VALUES ('Juego2', 'Descripcion2', 1, '2020-04-20T16:00:00', 'Dungeons and Dragons 5th Edition', 3, 1, 'One-shot', 'Online');
 
 INSERT INTO joins (user_id, game_id)
 VALUES (1, 1);

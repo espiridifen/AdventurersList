@@ -1,4 +1,4 @@
-package es.ucm.fdi.iw.model;
+package es.ucm.fdi.iw.model.game;
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import es.ucm.fdi.iw.model.Message;
+import es.ucm.fdi.iw.model.Transferable;
+import es.ucm.fdi.iw.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -34,7 +37,7 @@ public class Game implements Transferable<Game.Transfer> {
 
     private @NotNull String description;
 
-    private @NotNull String experience;
+    private @NotNull ExperienceEnum experience;
 
     private @NotNull LocalDateTime date;
 
@@ -61,7 +64,7 @@ public class Game implements Transferable<Game.Transfer> {
         private long id;
         private String name;
         private String description;
-        private String experience;
+        private ExperienceEnum experience;
         private String date;
         private String gamesystem;
         private String owner;

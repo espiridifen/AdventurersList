@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import es.ucm.fdi.iw.model.game.Game;
 import lombok.Data;
 import lombok.Getter;
 import lombok.AllArgsConstructor;

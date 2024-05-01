@@ -10,9 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import es.ucm.fdi.iw.model.Game;
 import es.ucm.fdi.iw.model.GameJoin;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.game.ExperienceEnum;
+import es.ucm.fdi.iw.model.game.Game;
 
 @Controller
 public class NewGameController {
@@ -28,7 +29,7 @@ public class NewGameController {
                                 @RequestParam String gamesystem,
                                 @RequestParam String date,
                                 @RequestParam String meeting,
-                                @RequestParam String experience,
+                                @RequestParam ExperienceEnum experience,
                                 @RequestParam String description) {
         
         User u = (User)httpSession.getAttribute("u");

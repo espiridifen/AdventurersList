@@ -13,9 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import es.ucm.fdi.iw.model.Game;
 import es.ucm.fdi.iw.model.Quest;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.game.Game;
 
 @Controller
 public class ProfileController {

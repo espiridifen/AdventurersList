@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import es.ucm.fdi.iw.model.Game;
+import es.ucm.fdi.iw.model.game.Game;
 
 @Controller
 @RequestMapping("/busqueda")

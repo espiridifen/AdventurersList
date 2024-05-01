@@ -45,8 +45,23 @@
                     </li>
                 </ul>
             </div>
-            <div class="description" th:text="${game.description}">
-                desc
+            <div class="description">
+                <div th:text="${game.description}">
+                    desc
+                </div>
+                <div>
+                    Nivel de experiencia deseado:
+                    <div th:if="${game.experience == T(es.ucm.fdi.iw.model.game.ExperienceEnum).BEGINNER}">
+                        Principiante
+                    </div>
+                    <div th:if="${game.experience  == T(es.ucm.fdi.iw.model.game.ExperienceEnum).INTERMEDIATE}">
+                        Intermedio
+                    </div>
+                    <div th:if="${game.experience  == T(es.ucm.fdi.iw.model.game.ExperienceEnum).ADVANCED}">
+                        Avanzado
+                    </div>
+                    
+                </div>
             </div>
             <div class="location">
                 Dónde se juega

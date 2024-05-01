@@ -3,8 +3,8 @@ package es.ucm.fdi.iw.model.compositepks;
 import java.io.Serializable;
 import java.util.Objects;
 
-import es.ucm.fdi.iw.model.Game;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.game.Game;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 

@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import es.ucm.fdi.iw.model.compositepks.ReviewId;
+import es.ucm.fdi.iw.model.game.Game;
 import lombok.Data;
 
 @Entity

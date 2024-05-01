@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import es.ucm.fdi.iw.model.Game;
 import es.ucm.fdi.iw.model.Report;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.game.Game;
 
 @Controller
 public class NewReportController {

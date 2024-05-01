@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import es.ucm.fdi.iw.model.Game;
 import es.ucm.fdi.iw.model.Quest;
+import es.ucm.fdi.iw.model.game.Game;
 
 import java.util.ArrayList;
 import java.util.List;

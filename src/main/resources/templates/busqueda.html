@@ -15,6 +15,11 @@
     <div class="missions-table" style="max-width: 90%; margin: 5%;">
     
         <div class="container">
+            <div id="viewButtons">
+                <div th:replace="~{fragments/missionsButtons.html :: missionsButtons}">
+                    no funcó :(
+                </div>
+            </div>
             <div class="search-bar">
                 <h1>Buscador de Partidas</h1>
                 <div class="search-form">
@@ -22,49 +27,49 @@
                     <button onclick="search()">Buscar</button>
                 </div>
             </div>
-            <div id="viewButtons">
-                <div th:replace="~{fragments/missionsButtons.html :: missionsButtons}">
-                    no funcó :(
-                </div>
-            </div>
             <div class="sidebar">
                 <h2>Filtros</h2>
-                <ul>
+                <h4>Experiencia requerida</h4>
+                <ul id="experienceCheckboxes">
                     <li>
-                        <input type="checkbox" id="priceRange0-50" value="0-50">
-                        <label for="priceRange0-50">opcion</label>
+                        <input type="checkbox" id="exp-beginner" value="BEGINNER">
+                        <label for="exp-beginner">Principiante</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="priceRange50-100" value="50-100">
-                        <label for="priceRange50-100">opcion</label>
+                        <input type="checkbox" id="exp-intermediate" value="INTERMEDIATE">
+                        <label for="exp-intermediate">Intermedio</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="priceRange100-150" value="100-150">
-                        <label for="priceRange100-150">opcion</label>
+                        <input type="checkbox" id="exp-advanced" value="ADVANCED">
+                        <label for="exp-advanced">Avanzado</label>
                     </li>
-                    <!-- Agrega más opciones de rango de precios según tu necesidad -->
                 </ul>
-                <br>
-                <ul>
+
+                <h4>Versión</h4>
+                <ul id="versionCheckboxes">
                     <li>
-                        <input type="checkbox" id="starRating1" value="1">
-                        <label for="starRating1">opcion</label>
+                        <input type="checkbox" id="version-1" value="FIRST_VERSION">
+                        <label for="version-1">DnD 1st Edition</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="starRating2" value="2">
-                        <label for="starRating2">opcion</label>
+                        <input type="checkbox" id="version-2" value="SECOND_VERSION">
+                        <label for="version-2">DnD 2nd Edition</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="starRating3" value="3">
-                        <label for="starRating3">opcion</label>
+                        <input type="checkbox" id="version-3" value="THIRD_VERSION">
+                        <label for="version-3">DnD 3rd Edition</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="starRating4" value="4">
-                        <label for="starRating4">opcion</label>
+                        <input type="checkbox" id="version-3.5" value="THIRD_VERSION_ADVANCED">
+                        <label for="version-3.5">DnD 3.5th Edition</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="starRating5" value="5">
-                        <label for="starRating5">opcion</label>
+                        <input type="checkbox" id="version-4" value="FOURTH_VERSION">
+                        <label for="version-4">DnD 4th Edition</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="version-5" value="FIFTH_VERSION">
+                        <label for="version-5">DnD 5th Edition</label>
                     </li>
                 </ul>
                 <!-- Agrega más filtros según tu necesidad -->
@@ -81,12 +86,29 @@
     <script th:inline="javascript">
         var token = /*[[${_csrf.token}]]*/ '';
         var header = "_csrf";
+
+        function getCheckboxValues(checkboxGroup) {
+            var values = [];
+
+            // Iterate over the checkboxes in the specified group
+            $('#' + checkboxGroup + ' input[type="checkbox"]:checked').each(function() {
+                values.push($(this).val());
+            });
+
+            return values.join(",");
+        }
+
         function search() {
+            var experienceValues = getCheckboxValues('experienceCheckboxes');
+            var versionValues = getCheckboxValues('versionCheckboxes');
+
             $.ajax({
                 type: "GET",
                 url: "/busqueda/gamequery",
                 data: { 
                     searchQuery: document.getElementById("searchInput").value,
+                    experienceFilter: experienceValues,
+                    versionFilter: versionValues,
                     [header]: token
                 },
                 success: function(data) {

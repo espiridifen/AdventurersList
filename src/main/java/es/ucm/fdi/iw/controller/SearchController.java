@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import es.ucm.fdi.iw.model.game.ExperienceEnum;
 import es.ucm.fdi.iw.model.game.Game;
+import es.ucm.fdi.iw.model.game.GameSystemEnum;
 
 @Controller
 @RequestMapping("/busqueda")
 public class SearchController {
+	private static final Logger log = LogManager.getLogger(SearchController.class);
     
     @Autowired
     EntityManager entityManager;
@@ -33,12 +38,38 @@ public class SearchController {
     @GetMapping("/gamequery")
     @Transactional
     @ResponseBody
-    public List<Game.Transfer> search(@RequestParam("searchQuery") String query) {
-        // Create a JPQL query to retrieve games containing the query string in their title (case insensitive)
+    public List<Game.Transfer> search(
+        @RequestParam("searchQuery") String query,
+        @RequestParam List<ExperienceEnum> experienceFilter,
+        @RequestParam List<GameSystemEnum> versionFilter) {
+
+        // Create a JPQL query to retrieve games containing the query string in their title
         String jpql = "SELECT g FROM Game g WHERE LOWER(g.name) LIKE LOWER(:query)";
-        List<Game> filteredGames = entityManager.createQuery(jpql, Game.class)
-                .setParameter("query", "%" + query.toLowerCase() + "%")
-                .getResultList();
+
+        // Add condition to filter games based on experience level
+        if (experienceFilter != null && !experienceFilter.isEmpty()) {
+            jpql += " AND g.experience IN :experience";
+        }
+        // Add condition to filter games based on gamesystem
+        if (versionFilter != null && !versionFilter.isEmpty()) {
+            jpql += " AND g.gamesystem IN :gamesystem";
+        }
+
+        // Create query and set parameters
+        TypedQuery<Game> jpqlquery = entityManager.createQuery(jpql, Game.class)
+                .setParameter("query", "%" + query.toLowerCase() + "%");
+
+        // Set experience filter parameter if provided
+        if (experienceFilter != null && !experienceFilter.isEmpty()) {
+            jpqlquery.setParameter("experience", experienceFilter);
+        }
+        // Set gamesystem filter parameter if provided
+        if (versionFilter != null && !versionFilter.isEmpty()) {
+            jpqlquery.setParameter("gamesystem", versionFilter);
+        }
+
+        // Execute query
+        List<Game> filteredGames = jpqlquery.getResultList();
 
         // Convert filtered games to transfer objects
         List<Game.Transfer> result = filteredGames.stream()
@@ -47,6 +78,8 @@ public class SearchController {
 
         return result;
     }
+
+
 
     @PostMapping("/quest")
     @Transactional

@@ -67,4 +67,5 @@ public class NewReportController {
 
         return "reportsent.html";
     }
+
 }

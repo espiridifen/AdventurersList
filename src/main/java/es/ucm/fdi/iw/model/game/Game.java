@@ -66,7 +66,7 @@ public class Game implements Transferable<Game.Transfer> {
         private String description;
         private ExperienceEnum experience;
         private String date;
-        private GameSystemEnum gamesystem;
+        private String gamesystem;
         private String owner;
         private String type;
         private String meeting;
@@ -77,7 +77,7 @@ public class Game implements Transferable<Game.Transfer> {
             this.description = g.getDescription();
             this.experience = g.getExperience();
             this.date = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(g.getDate());
-            this.gamesystem = g.getGamesystem();
+            this.gamesystem = g.getGamesystem().getName();
             this.owner = g.getOwner().getUsername();
             this.type = g.getType();
             this.meeting = g.getMeeting();
@@ -89,7 +89,7 @@ public class Game implements Transferable<Game.Transfer> {
 	public Transfer toTransfer() {
 		return new Transfer(id, name, description, experience,
         DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(date),
-        gamesystem, owner.getUsername(), type, meeting
+        gamesystem.getName(), owner.getUsername(), type, meeting
         );
     }
 }

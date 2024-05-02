@@ -132,12 +132,13 @@
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(connectWebsocket, 1000);
             setTimeout(getAllMessages, 1000);
-            setTimeout(refreshMessages, 1000);
+            //setTimeout(refreshMessages, 1000);
         });
 
         function refreshMessages() {
             getAllMessages();
-            setTimeout(refreshMessages, 1000);
+            console.log("Refreshing messages...");
+            setTimeout(refreshMessages, 30000);
         }
 
         $(document).ready(function() {
@@ -213,13 +214,13 @@
                     console.log("Received the following messages:");
                     cleanMessageBoard();
                     data.forEach(function(message) {
-                        console.log("From:", message.from);
-                        console.log("To:", message.to);
-                        console.log("Sent:", message.sent);
-                        console.log("Received:", message.received);
-                        console.log("Text:", message.text);
-                        console.log("ID:", message.id);
-                        console.log("---");
+                        // console.log("From:", message.from);
+                        // console.log("To:", message.to);
+                        // console.log("Sent:", message.sent);
+                        // console.log("Received:", message.received);
+                        // console.log("Text:", message.text);
+                        // console.log("ID:", message.id);
+                        // console.log("---");
                         
                         
                         var messageDiv = createMessageHTML(message);

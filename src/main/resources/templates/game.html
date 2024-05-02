@@ -117,6 +117,7 @@
         var token = /*[[${_csrf.token}]]*/ '';
         var header = "_csrf";
         var parsedGameId = parseInt(gameId);
+        var currentMessageCount = 0;
 
         function connectWebsocket() {
             if (isJoined) {
@@ -203,6 +204,11 @@
                     [header]: token
                 },
                 success: function(data) {
+                    
+                    console.log(data.length);
+                    if (data.length == currentMessageCount) {
+                        return;
+                    }
                     // Handle success
                     console.log("Received the following messages:");
                     cleanMessageBoard();

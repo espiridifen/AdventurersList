@@ -86,7 +86,7 @@ public class GameController {
         model.addAttribute("users", users);
         model.addAttribute("game", g);
         model.addAttribute("userIsJoined", !gj.isEmpty()); // User has joined the game if there is some result in the query
-
+        model.addAttribute("userId", userId);
         //get the earliest gameSession
         TypedQuery<GameSession> sessionQuery = entityManager.createQuery(
             "select gs from GameSession gs where gs.game.id = :gameId order by gs.date asc",

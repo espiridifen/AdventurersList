@@ -1,4 +1,4 @@
-<div th:fragment= "div(attendancedata)" class="attendancetab">
+<div th:fragment= "div(attendancedata, userId)" class="attendancetab">
     <link rel="stylesheet" href="../static/attendance.css" th:href="@{@{/css/attendance.css}}">
     <ul>
         <li class="attendancetitle">
@@ -8,7 +8,7 @@
             <div th:text="${attendanceData.date}"></div>
         </li>
         <ul th:each="attendanceuser : ${attendanceData.attendeesResponses}">
-
+            
             <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).CONFIRMED}">
                 <div th:if="${attendanceuser.user.id != userId}">
                     <li class="attendanceuser_confirmed">
@@ -26,29 +26,29 @@
             </div>
 
             <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).PENDING}" >
-                <div th:if="${attendanceuser.user.id != userId}">
-                    <li class="attendanceuser_pending">
-                        <div th:text="${attendanceuser.user.username}"></div>
-                    </li>
-                </div>
-            </div>
+                
 
-            <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).PENDING}">
                 <div  th:if="${attendanceuser.user.id == userId}">
                     <li class="attendanceuser_select">
                         <form action="accept" method="post">
                             <button>
-                                <img src="../static/accept.png" alt="Accept" class="accept">
+                                <img src="img\accept.png" alt="Accept" class="accept">
                             </button>
                         </form>
                         <div th:text="${attendanceuser.user.username}"></div>
                         <form action="deny" method="post">
                             <button>
-                                <img src="../static/cancel.png" alt="Accept" class="accept">
+                                <img src="img\cancel.png" alt="Accept" class="deny">
                             </button>
                         </form>
                     </li>
                 </div>
+            </div>
+
+            <div th:if="${attendanceuser.user.id != userId}">
+                <li class="attendanceuser_pending">
+                    <div th:text="${attendanceuser.user.username}"></div>
+                </li>
             </div>
 
         </ul>

@@ -63,9 +63,11 @@
                     
                 </div>
             </div>
-            <div class="attendanceslot" th:if="${arethereAnySessions}">
-                <div th:replace="~{fragments/attendancetab.html :: div(attendancedata = ${attendanceData})}">
-
+            <div class="attendanceslot" th:if="${userIsJoined}">
+                <div th:if="${arethereAnySessions}">
+                    <div th:replace="~{fragments/attendancetab.html :: div(attendancedata = ${attendanceData}, userId = ${userId})}">
+    
+                    </div>
                 </div>
             </div>
             <div class="location">

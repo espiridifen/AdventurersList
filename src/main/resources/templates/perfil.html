@@ -39,6 +39,13 @@
                     <li class="option">Configuración 3</li>
                 </ul>
             </div>
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                var yourAttributeValue = /*[[${chatLogs}]]*/ 'default value';
+                console.log('Your attribute value:', yourAttributeValue);
+                /*]]>*/
+            </script>
+            
             <div >
                 <h2>Partidas Activas</h2>
                 <ul class="mission-list">
@@ -46,6 +53,24 @@
                         <div th:replace="fragments/quest :: form(quest=${quest})"></div>
                     </li>
                 </ul>
+            </div>
+            <div >
+                <li th:each="chatlog : ${chatLogs}">
+                    <div>
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        var yourAttributeValue = /*[[${chatlog}]]*/ 'default value';
+                        console.log('Your attribute value:', yourAttributeValue);
+                        var messages = /*[[${chatlog.messages}]]*/ 'default value';
+                        console.log('Your attribute value:', messages);
+                        /*]]>*/
+                    </script>
+                        <div th:text = ${chatlog.game.name}>Nombre de la partida</div>
+                        <li th:each= "message : ${chatlog.messages}">
+                            <div th:text = ${message.text}>Mensaje</div>
+                        </li>
+                    </div>
+                </li>
             </div>
         </div>
         </div>

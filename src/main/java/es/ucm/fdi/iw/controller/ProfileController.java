@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import es.ucm.fdi.iw.model.ChatLog;
+import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Quest;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.game.Game;
@@ -48,6 +50,20 @@ public class ProfileController {
             q.setId(game.getId());
             quests.add(q);
         }
+
+        // Get the users messages in each of the games they are in
+        List<ChatLog> chatLogs = new ArrayList<>();
+        for (Game game : games) {
+            ChatLog chatLog = new ChatLog();
+            chatLog.setGame(game);
+            chatLog.setMessages(entityManager.createQuery("select m from Message m where m.gameRecipient.id = :gameId and m.sender.id = :userId", Message.class)
+                                            .setParameter("gameId", game.getId())
+                                            .setParameter("userId", u.getId())
+                                            .getResultList().toArray(new Message[0]));
+            chatLogs.add(chatLog);
+        }
+
+        model.addAttribute("chatLogs", chatLogs);
 
         model.addAttribute("availableQuests", quests);
 

@@ -25,8 +25,6 @@ import es.ucm.fdi.iw.model.game.GameSystemEnum;
 @Controller
 @RequestMapping("/busqueda")
 public class SearchController {
-	private static final Logger log = LogManager.getLogger(SearchController.class);
-    
     @Autowired
     EntityManager entityManager;
 

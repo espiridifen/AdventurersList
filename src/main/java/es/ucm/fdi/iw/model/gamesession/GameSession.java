@@ -1,4 +1,4 @@
-package es.ucm.fdi.iw.model;
+package es.ucm.fdi.iw.model.gamesession;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,17 +16,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import es.ucm.fdi.iw.model.GameJoin;
+import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.compositepks.GameSessionId;
 import es.ucm.fdi.iw.model.game.Game;
+import es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum;
 import es.ucm.fdi.iw.model.sessionattendance.SessionAttendance;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "gamesession")
 @IdClass(GameSessionId.class)
 public class GameSession {
@@ -48,5 +47,12 @@ public class GameSession {
         @JoinColumn(name = "game_session_game_id", referencedColumnName = "game_id"), // Specify game_id
         @JoinColumn(name = "game_session_id", referencedColumnName = "id")
     })	
-	private List<SessionAttendance> attendeesResponses = new ArrayList<>();	
+	private List<SessionAttendance> attendeesResponses = new ArrayList<>();
+
+    public GameSession(Game game, String title, LocalDateTime date, String location) {
+        this.game = game;
+        this.title = title;
+        this.date = date;
+        this.location = location;
+    }
 }

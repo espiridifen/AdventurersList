@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import es.ucm.fdi.iw.model.GameJoin;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
@@ -53,6 +54,9 @@ public class Game implements Transferable<Game.Transfer> {
     private @NotNull String type;
 
     private @NotNull String meeting;
+
+	@OneToMany(mappedBy = "game")
+    private List<GameJoin> joins = new ArrayList<>();
     
 	@OneToMany(mappedBy = "gameRecipient")
 	private List<Message> received = new ArrayList<>();

@@ -37,7 +37,7 @@ public class NewGameController {
         User u = entityManager.find(User.class, userId);
 
         Game g = new Game(null, name, description, ExperienceEnum.valueOf(experience), LocalDateTime.parse(date + "T00:00:00"), 
-                            GameSystemEnum.valueOf(gamesystem), 0, u, gamesystem, meeting, null);
+                            GameSystemEnum.valueOf(gamesystem), 0, u, gamesystem, meeting, null, null);
         entityManager.persist(g);
 
         // Join the user to his own game

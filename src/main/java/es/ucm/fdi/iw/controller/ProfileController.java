@@ -21,8 +21,6 @@ import es.ucm.fdi.iw.model.game.Game;
 
 @Controller
 public class ProfileController {
-	private static final Logger log = LogManager.getLogger(ProfileController.class);
-    
     @Autowired
     EntityManager entityManager;
 

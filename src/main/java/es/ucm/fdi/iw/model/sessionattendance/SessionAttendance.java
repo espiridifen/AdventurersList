@@ -8,9 +8,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import es.ucm.fdi.iw.model.GameSession;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.compositepks.SessionAttendanceId;
+import es.ucm.fdi.iw.model.gamesession.GameSession;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

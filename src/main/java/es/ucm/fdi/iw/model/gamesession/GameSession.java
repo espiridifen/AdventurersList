@@ -16,16 +16,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import es.ucm.fdi.iw.model.GameJoin;
-import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.compositepks.GameSessionId;
 import es.ucm.fdi.iw.model.game.Game;
-import es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum;
 import es.ucm.fdi.iw.model.sessionattendance.SessionAttendance;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "gamesession")
 @IdClass(GameSessionId.class)
 public class GameSession {

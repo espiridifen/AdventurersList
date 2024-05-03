@@ -23,6 +23,10 @@ VALUES (0, '2024-04-01T23:55:56', 'hola', 1, 1);
 INSERT INTO gamesession (id, date, location, title, game_id)
 VALUES (1, '2024-04-01T23:55:56', 'online!', 'Sesion numero 1',1);
 
+-- SessionAttendance
+INSERT INTO sessionatendance (user_id, game_session_game_id, game_session_id, response)
+VALUES (1, 1, 1, 2);
+
 
 INSERT INTO message (id, date_sent, text, game_recipient_id, sender_id)
 VALUES (1, '2024-04-01T23:58:56', 'que tal', 1, 2);

@@ -54,23 +54,29 @@
                     </li>
                 </ul>
             </div>
-            <div >
-                <li th:each="chatlog : ${chatLogs}">
-                    <div>
-                    <script th:inline="javascript">
+            <div th:if="${isAdmin}"> <!-- aqui va el check de si es admin -->
+                Mensajes enviados en <br/>
+                <ul th:each="chatlog : ${chatLogs}">
+                    <li>
+
+                        <div>
+                            <script th:inline="javascript">
                         /*<![CDATA[*/
                         var yourAttributeValue = /*[[${chatlog}]]*/ 'default value';
                         console.log('Your attribute value:', yourAttributeValue);
                         var messages = /*[[${chatlog.messages}]]*/ 'default value';
                         console.log('Your attribute value:', messages);
                         /*]]>*/
-                    </script>
-                        <div th:text = ${chatlog.game.name}>Nombre de la partida</div>
-                        <li th:each= "message : ${chatlog.messages}">
-                            <div th:text = ${message.text}>Mensaje</div>
-                        </li>
-                    </div>
-                </li>
+                        </script>
+                        <div th:text = '${chatlog.game.name}'>Nombre de la partida</div>
+                            <ul th:each="msg : ${chatlog.messages}">
+                                <li>
+                                    <div th:replace="~{fragments/message.html :: div(message=${msg})}"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
         </div>

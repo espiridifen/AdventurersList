@@ -35,6 +35,7 @@ public class ProfileController {
         
         model.addAttribute("username", u.getUsername());
         model.addAttribute("userId", u.getId());
+        model.addAttribute("isAdmin", u.hasRole(User.Role.ADMIN));
 
         // Now add the user's games
         List<Game> games = entityManager.createQuery("select g from Game g where g.owner.id = :userId", Game.class)

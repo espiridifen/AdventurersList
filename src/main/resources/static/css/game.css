@@ -122,7 +122,7 @@ margin-bottom: 20px;
 }
 
 .description {
-    grid-area: 3 / 2 / 6 / 6;
+    grid-area: 3 / 2 / 6 / 5;
     background-image: url(../img/wood_texture_kuwahara_dark.png); 
     background-size: cover;
     
@@ -132,6 +132,11 @@ margin-bottom: 20px;
     margin: 20px 20px 20px 20px;
 }
 
+.attendanceslot {
+    grid-area: 3/2/6/7;
+    background-image: url(../img/wood_texture_kuwahara_dark.png); 
+    background-size: cover;
+}
 
 .location {
     grid-area: 6 / 1 / 8 / 3;

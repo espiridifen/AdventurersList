@@ -39,12 +39,7 @@
                     <li class="option">Configuración 3</li>
                 </ul>
             </div>
-            <script th:inline="javascript">
-                /*<![CDATA[*/
-                var yourAttributeValue = /*[[${chatLogs}]]*/ 'default value';
-                console.log('Your attribute value:', yourAttributeValue);
-                /*]]>*/
-            </script>
+            
             
             <div >
                 <h2>Partidas Activas</h2>
@@ -60,14 +55,6 @@
                     <li>
 
                         <div>
-                            <script th:inline="javascript">
-                        /*<![CDATA[*/
-                        var yourAttributeValue = /*[[${chatlog}]]*/ 'default value';
-                        console.log('Your attribute value:', yourAttributeValue);
-                        var messages = /*[[${chatlog.messages}]]*/ 'default value';
-                        console.log('Your attribute value:', messages);
-                        /*]]>*/
-                        </script>
                         <div th:text = '${chatlog.game.name}'>Nombre de la partida</div>
                             <ul th:each="msg : ${chatlog.messages}">
                                 <li>

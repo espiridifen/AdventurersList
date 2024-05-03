@@ -40,6 +40,7 @@ import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.game.Game;
+import es.ucm.fdi.iw.model.gamesession.GameSession;
 
 @Controller
 @RequestMapping("/game")
@@ -85,6 +86,24 @@ public class GameController {
         model.addAttribute("users", users);
         model.addAttribute("game", g);
         model.addAttribute("userIsJoined", !gj.isEmpty()); // User has joined the game if there is some result in the query
+
+        //get the earliest gameSession
+        TypedQuery<GameSession> sessionQuery = entityManager.createQuery(
+            "select gs from GameSession gs where gs.game.id = :gameId order by gs.date asc",
+            GameSession.class);
+        sessionQuery.setParameter("gameId", questID);
+        sessionQuery.setMaxResults(1);
+        try
+        {
+            GameSession gs = sessionQuery.getSingleResult();
+            model.addAttribute("sessionData", gs);
+            model.addAttribute("arethereAnySessions", true);
+        }
+        catch (NoResultException e)
+        {
+            model.addAttribute("arethereAnySessions", false);
+        }
+
 
         return "game.html";
     }

@@ -2,39 +2,39 @@
     <link rel="stylesheet" href="../static/attendance.css" th:href="@{@{/css/attendance.css}}">
     <ul>
         <li class="attendancetitle">
-            <div thth:text="${attendancedata.title}"></div>
+            <div th:text="${attendanceData.title}"></div>
         </li>
         <li class="attendancedate">
-            <div thth:text="${attendancedata.date}"></div>
+            <div th:text="${attendanceData.date}"></div>
         </li>
-        <ul th:each="attendanceuser : ${attendancedata.attendeesResponses}">
+        <ul th:each="attendanceuser : ${attendanceData.attendeesResponses}">
 
-            <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AtendanceResponseEnum).CONFIRMED}">
-                <div th:if="${attendanceuser.id != userId}">
+            <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).CONFIRMED}">
+                <div th:if="${attendanceuser.user.id != userId}">
                     <li class="attendanceuser_confirmed">
                         <div th:text="${attendanceuser.user.username}"></div>
                     </li>
                 </div>      
             </div>
 
-            <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AtendanceResponseEnum).DENIED}">
-                <div th:if="${attendanceuser.id != userId}">
+            <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).DENIED}">
+                <div th:if="${attendanceuser.user.id != userId}">
                     <li class="attendanceuser_denied">
                         <div th:text="${attendanceuser.user.username}"></div>
                     </li>
                 </div>
             </div>
 
-            <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AtendanceResponseEnum).PENDING}" >
-                <div th:if="${attendanceuser.id != userId}">
+            <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).PENDING}" >
+                <div th:if="${attendanceuser.user.id != userId}">
                     <li class="attendanceuser_pending">
                         <div th:text="${attendanceuser.user.username}"></div>
                     </li>
                 </div>
             </div>
 
-            <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AtendanceResponseEnum).PENDING}">
-                <div  th:if="${attendanceuser.id == userId}">
+            <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).PENDING}">
+                <div  th:if="${attendanceuser.user.id == userId}">
                     <li class="attendanceuser_select">
                         <form action="accept" method="post">
                             <button>

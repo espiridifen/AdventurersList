@@ -96,7 +96,7 @@ public class GameController {
         try
         {
             GameSession gs = sessionQuery.getSingleResult();
-            model.addAttribute("sessionData", gs);
+            model.addAttribute("attendanceData", gs);
             model.addAttribute("arethereAnySessions", true);
         }
         catch (NoResultException e)

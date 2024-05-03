@@ -19,12 +19,14 @@ import javax.validation.constraints.NotNull;
 import es.ucm.fdi.iw.model.compositepks.GameSessionId;
 import es.ucm.fdi.iw.model.game.Game;
 import es.ucm.fdi.iw.model.sessionattendance.SessionAttendance;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "gamesession")
 @IdClass(GameSessionId.class)
 public class GameSession {

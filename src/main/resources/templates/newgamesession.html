@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventurer's List: Nombre de la Partida</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include the meta tag for CSRF token -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<link rel="stylesheet" href="../static/game.css" th:href="@{/css/game.css}">
+<link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
+<link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
+<body class="background">
+    <div class="missions-table">
+        <div th:text="${game.name}"></div>
+        <form th:action="createNewGameReport" method="post">
+            <input type="hidden" name="gameId" th:value="${gameId}" style="display: none;"/>
+            Nombre de la sesión<br/>
+            <input type="text" name="title"/><br/>
+            Cuándo va a ser la nueva sesión?<br/>
+            <input type="date" name="date"/><br/>
+            <button
+                type="submit"
+                class="btn btn-primary">
+                Enviar
+            </button>
+            
+        </form>
+    </div>
+
+</body>
+
+</html>

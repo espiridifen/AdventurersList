@@ -86,6 +86,10 @@
             <div class="button_container">
                 <ul class="list">
                     <li>
+                        <form th:action="@{/newgamesession}" method="get">
+                            <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
+                            <button id="newSessionButton">Crear nueva sesión</button>
+                        </form>
                         <button id="joinLeaveButton" onclick="joinOrLeaveGame()">Unirte a la partida</button>
                         <form th:action="@{/deleteGame}" method="post">
                             <button id="deleteGameButton">Borrar partida</button>

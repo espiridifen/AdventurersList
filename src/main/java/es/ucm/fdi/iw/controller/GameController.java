@@ -104,6 +104,7 @@ public class GameController {
             model.addAttribute("arethereAnySessions", false);
         }
 
+        model.addAttribute("isAdmin", userId == g.getOwner().getId());
 
         return "game.html";
     }
@@ -326,4 +327,5 @@ public class GameController {
 
         return "redirect:/";
     }
+
 }

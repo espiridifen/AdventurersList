@@ -17,12 +17,14 @@
 <body class="background">
     <div class="missions-table">
         <div th:text="${game.name}"></div>
-        <form th:action="createNewGameReport" method="post">
+        <form th:action="createNewGameSession" method="post">
             <input type="hidden" name="gameId" th:value="${gameId}" style="display: none;"/>
             Nombre de la sesión<br/>
             <input type="text" name="title"/><br/>
             Cuándo va a ser la nueva sesión?<br/>
             <input type="date" name="date"/><br/>
+            Dónde va a ser la sesión?<br/>
+            <input type="text" name="location"/><br/>
             <button
                 type="submit"
                 class="btn btn-primary">

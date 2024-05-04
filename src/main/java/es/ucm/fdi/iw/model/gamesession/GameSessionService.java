@@ -23,6 +23,7 @@ public class GameSessionService {
 
     public void createGameSession(Game game, String title, LocalDateTime date, String location) {
         GameSession gameSession = new GameSession(game, title, date, location);
+        entityManager.persist(gameSession);
 
         // Initialize attendeesResponses for each user in the game
         for (GameJoin gj : game.getJoins()) {
@@ -36,8 +37,6 @@ public class GameSessionService {
             // Persist the SessionAttendance object
             entityManager.persist(attendance);
         }
-
-        entityManager.persist(gameSession);
     }
 }
 

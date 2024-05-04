@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import es.ucm.fdi.iw.model.compositepks.GameSessionId;
 import es.ucm.fdi.iw.model.game.Game;
 import es.ucm.fdi.iw.model.sessionattendance.SessionAttendance;
 import lombok.AllArgsConstructor;
@@ -28,14 +28,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "gamesession")
-@IdClass(GameSessionId.class)
 public class GameSession {
-    
-    @Id
-    @ManyToOne
-    private Game game;
 
     private @GeneratedValue(strategy = GenerationType.IDENTITY) @Id Long id;
+    
+    @ManyToOne
+    private Game game;
 
     private @NotNull String title;
     
@@ -43,11 +41,7 @@ public class GameSession {
 
 	private @NotNull String location;
 
-    @OneToMany
-	@JoinColumns({
-        @JoinColumn(name = "game_session_game_id", referencedColumnName = "game_id"), // Specify game_id
-        @JoinColumn(name = "game_session_id", referencedColumnName = "id")
-    })	
+    @OneToMany(mappedBy = "gameSession", cascade = CascadeType.ALL)
 	private List<SessionAttendance> attendeesResponses = new ArrayList<>();
 
     public GameSession(Game game, String title, LocalDateTime date, String location) {

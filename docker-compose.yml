@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  adventurerslist-db:
+    image: mysql:latest
+    restart: always
+    environment:
+      DB_HOSTNAME: localhost
+      DB_PORT: 3306
+      DB_NAME: adventurerslist
+      DB_USER: adventurer
+      DB_PASS: very_secure_password
+      MYSQL_ROOT_PASSWORD: very_secure_password2
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+  spring-server:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - adventurerslist-db
+
+volumes:
+  mysql_data:

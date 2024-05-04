@@ -1,8 +1,8 @@
 -- insert admin (username a, password aa)
-INSERT INTO IWUser (id, enabled, roles, username, password, first_name, last_name)
+INSERT INTO iwuser (id, enabled, roles, username, password, first_name, last_name)
 VALUES (1, TRUE, 'ADMIN,USER', 'admin',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', 'user1', 'apellido1');
-INSERT INTO IWUser (id, enabled, roles, username, password, first_name, last_name)
+INSERT INTO iwuser (id, enabled, roles, username, password, first_name, last_name)
 VALUES (2, TRUE, 'USER', 'user',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', 'user2', 'apellido2');
 
@@ -33,4 +33,4 @@ VALUES (1, '2024-04-01T23:58:56', 'que tal', 1, 2);
 
 
 -- start id numbering from a value that is larger than any assigned above
-ALTER SEQUENCE "PUBLIC"."GEN" RESTART WITH 1024;
+-- ALTER SEQUENCE "PUBLIC"."GEN" RESTART WITH 1024;

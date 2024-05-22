@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.model.sessionattendance;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -24,11 +25,12 @@ import lombok.NoArgsConstructor;
 public class SessionAttendance {
     @Id
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Id
     @ManyToOne
+    @JoinColumn(name = "game_session_id", nullable = false)
     private GameSession gameSession;
 
     private @NotNull AttendanceResponseEnum response;

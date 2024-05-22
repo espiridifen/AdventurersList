@@ -305,39 +305,51 @@ public class GameController {
 		messagingTemplate.convertAndSend("/user/"+game.getId()+"/queue/updates", json);
 		return "{\"result\": \"message sent.\"}";
 	}	
-
+    
     @PostMapping("/deleteGame")
     @Transactional
     public String deleteGame(Model model, @RequestParam("gameId") long gameId) {
-        // TypedQuery<Game> gameQuery = entityManager.createQuery("select g from Game g where g.id = :gameId", Game.class);
-        // gameQuery.setParameter("gameId", gameId);
-        // gameQuery.setMaxResults(1);
-        
-        // Game game;
-        // try {
-        //     game = gameQuery.getSingleResult();
-        // } catch (NoResultException e) {
-        //     return "game";
-        // } catch (Exception e) {
-        //     log.error("Error: " + e);
-        //     return "game";
-        // }
+        // Get user ID from their HTTP Session
+        long userId = ((User) httpSession.getAttribute("u")).getId();
+    
+        Game game = entityManager.find(Game.class, gameId);
+    
+        if (game != null && game.getOwner().getId() == userId) {
+            // Delete all messages related to this game
+            entityManager.createQuery("DELETE FROM Message m WHERE m.gameRecipient = :game")
+                         .setParameter("game", game)
+                         .executeUpdate();
+    
+            // Find all GameSessions related to this game
+            List<GameSession> gameSessions = entityManager.createQuery("SELECT q FROM GameSession q WHERE q.game = :game", GameSession.class)
+                                                          .setParameter("game", game)
+                                                          .getResultList();
+    
+            // Delete all SessionAttendance entities related to each GameSession
+            for (GameSession gameSession : gameSessions) {
+                entityManager.createQuery("DELETE FROM SessionAttendance sa WHERE sa.gameSession = :gameSession")
+                             .setParameter("gameSession", gameSession)
+                             .executeUpdate();
+            }
+    
+            // Delete all GameSessions related to this game
+            entityManager.createQuery("DELETE FROM GameSession q WHERE q.game = :game")
+                        .setParameter("game", game)
+                        .executeUpdate();
+    
+            // Delete all GameJoin entities related to this game
+            entityManager.createQuery("DELETE FROM GameJoin q WHERE q.game = :game")
+                        .setParameter("game", game)
+                        .executeUpdate();
 
-        // long userId;
-        // try {
-        //     userId = ((User) httpSession.getAttribute("u")).getId();
-        // } catch (Exception e) {
-        //     log.error("Error retrieving user from session: " + e);
-        //     return "game";
-        // }
-
-        // if (game.getOwner().getId() != userId) {
-        //     return "game";
-        // }
-
-        // entityManager.remove(game);
-
+            // Delete the Game
+            entityManager.createQuery("DELETE FROM Game q WHERE q.id = :gameId")
+                        .setParameter("gameId", gameId)
+                        .executeUpdate();
+        }
+        log.info("Deleted game: "+gameId);
+    
         return "redirect:/";
     }
-
+    
 }

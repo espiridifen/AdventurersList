@@ -93,7 +93,8 @@
                             </form>
                         </div>
                         <button id="joinLeaveButton" onclick="joinOrLeaveGame()">Unirte a la partida</button>
-                        <form th:action="@{/deleteGame}" method="post" th:if="${isAdmin}">
+                        <form th:action="@{/game/deleteGame}" method="post" th:if="${isAdmin}">
+                            <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
                             <button id="deleteGameButton">Borrar partida</button>
                         </form>
                         <form th:action="@{/newGameReport}" method="get">

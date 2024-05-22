@@ -41,7 +41,7 @@ public class GameSession {
 
 	private @NotNull String location;
 
-    @OneToMany(mappedBy = "gameSession", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "gameSession", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<SessionAttendance> attendeesResponses = new ArrayList<>();
 
     public GameSession(Game game, String title, LocalDateTime date, String location) {

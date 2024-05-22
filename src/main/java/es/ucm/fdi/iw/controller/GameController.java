@@ -93,10 +93,22 @@ public class GameController {
             GameSession.class);
         sessionQuery.setParameter("gameId", questID);
         sessionQuery.setMaxResults(1);
+        //also get all sessions
+        TypedQuery<GameSession> allsessionQuery = entityManager.createQuery(
+            "select gs from GameSession gs where gs.game.id = :gameId order by gs.date asc",
+            GameSession.class);
+        allsessionQuery.setParameter("gameId", questID);
+        
+
+
         try
         {
             GameSession gs = sessionQuery.getSingleResult();
             model.addAttribute("attendanceData", gs);
+
+            List<GameSession> allSessions = allsessionQuery.getResultList();
+            model.addAttribute("allSessions", allSessions);
+            
             model.addAttribute("arethereAnySessions", true);
         }
         catch (NoResultException e)

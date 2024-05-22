@@ -116,6 +116,13 @@
             <input type="text" id="message" name="message"/>
             <button id="sendMessageButton">Enviar</button>
         </div>
+        <div class="sessionList">
+            <ul>
+                <li th:each="eachsession : ${allSessions}">
+                    <div th:replace="~{fragments/session.html :: div(eachsession=${eachsession})}"></div>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <script th:src="@{/js/stomp.js}" src="js/stomp.js"></script>

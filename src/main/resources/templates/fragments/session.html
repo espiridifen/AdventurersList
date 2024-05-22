@@ -1,0 +1,7 @@
+<div th:fragment="div(eachsession)" class="sessionClass" >
+    <link rel="stylesheet" href="../static/session.css" th:href="@{/css/session.css}">
+
+    <div class="sessionTitle" th:text="${eachsession.title}"> Título </div>
+    <div class="sessionDate" th:text="${eachsession.date}"> Fecha </div>
+    <div class="sessionPlace" th:text="${eachsession.location}"> Localización </div>
+</div>

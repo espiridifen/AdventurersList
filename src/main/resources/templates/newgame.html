@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
 <body class="background">
     <div class="missions-table">
-        <form th:action="createNewGame" method="post">
+        <form th:action="createNewGame" method="post" enctype="multipart/form-data">
             Nombre de la partida<br/>
             <input type="text" name="name"/><br/>
             Sistema<br/>
@@ -40,6 +40,8 @@
             </select><br/>
             Descripción<br/>
             <input type="text" style="height: 300px;" name="description"/><br/>
+            Imágen para el juego (.png)<br/>
+            <input type="file" name="photo" accept=".png"><br/>
             <button
                 type="submit"
                 class="btn btn-primary"

@@ -84,16 +84,18 @@
                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Link a la partida</a>
             </div>
             <div class="button_container">
-                <ul class="list">
-                    <li>
+                
                         <div>
-                            <form th:action="@{/newgamesession}" method="get" th:if="${isAdmin}">
+                            <form th:action="@{/newgamesession}" method="get" th:if="${isAdmin}" style="grid-area: 1 /1 / 2/ 1;">
                                 <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
                                 <button id="newSessionButton">Crear nueva sesión</button>
                             </form>
                         </div>
-                        <button id="joinLeaveButton" onclick="joinOrLeaveGame()">Unirte a la partida</button>
-                        <form th:action="@{/game/deleteGame}" method="post" th:if="${isAdmin}">
+                        <div style="grid-area: 1 /1 / 2/ 2;">
+                            <button id="joinLeaveButton" onclick="joinOrLeaveGame()" style="grid-area: 1 /1 / 2/ 2;">Unirte a la partida</button>
+
+                        </div>
+                        <form th:action="@{/game/deleteGame}" method="post" th:if="${isAdmin}" style="grid-area: 1 /2 / 2/ 2;">
                             <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
                             <button id="deleteGameButton">Borrar partida</button>
                         </form>
@@ -101,8 +103,7 @@
                             <input type="hidden" name="questID" th:value="${game.id}" style="display: none;"/>
                             <button id="reportGameButton">Reportar partida</button>
                         </form>
-                    </li>
-                </ul>
+               
             </div>
         </div>
         <div class="messageBoard">
@@ -118,6 +119,7 @@
             <button id="sendMessageButton">Enviar</button>
         </div>
         <div class="sessionList">
+            <b>Próximas sesiones</b> <br/>
             <ul>
                 <li th:each="eachsession : ${allSessions}">
                     <div th:replace="~{fragments/session.html :: div(eachsession=${eachsession})}"></div>
@@ -151,14 +153,9 @@
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(connectWebsocket, 1000);
             setTimeout(getAllMessages, 1000);
-            //setTimeout(refreshMessages, 1000);
         });
 
-        function refreshMessages() {
-            getAllMessages();
-            console.log("Refreshing messages...");
-            setTimeout(refreshMessages, 30000);
-        }
+        
 
         $(document).ready(function() {
             updateButtonText(isJoined);

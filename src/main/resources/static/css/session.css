@@ -1,7 +1,5 @@
 .sessionClass {
-    background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 5px;
+    background-color: #69371a;
     padding: 10px;
     margin-bottom: 10px;
 }
@@ -9,15 +7,15 @@
 .sessionTitle {
     font-size: 18px;
     font-weight: bold;
-    color: #343a40;
+    color: #d3b3a4;
 }
 
 .sessionDate {
     font-size: 12px;
-    color: #6c757d;
+    color: #af9a90;
 }
 
 .sessionPlace {
     font-size: 12px;
-    color: #6c757d;
+    color: #d3b3a4;
 }

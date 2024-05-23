@@ -110,6 +110,16 @@ margin-bottom: 20px;
     background-color: #777;
 }
 
+.sessionList li {
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+
+.sessionList {
+    margin-top: 50px;
+    padding: 10px;
+}
+
 .genericlist {
     /* background-color: #fff; */
     grid-area: 3 / 1 / 6 / 2;
@@ -153,11 +163,15 @@ margin-bottom: 20px;
     grid-area: 6 / 3 / 8 / 6;
     background-image: url(../img/wood_texture_kuwahara_dark.png); 
     background-size: cover;
-    
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin: 20px 20px 20px 20px;
+    align-items: center;
+    justify-content: center;
 }
 
 .button_container button {
@@ -168,6 +182,8 @@ margin-bottom: 20px;
     padding: 10px 20px;
     cursor: pointer;
     font-size: 16px;
+
+    margin: 10px 10px 10px 10px;
 }
 
 .button_container button:last-child {

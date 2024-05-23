@@ -30,6 +30,7 @@
 }
 
 .username {
+    padding-top: 10px;
     font-weight: bold;
 }
 
@@ -50,4 +51,7 @@
     align-items: center;
     display: flex;
     width: max-content;
+    min-width: 300px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

@@ -203,7 +203,7 @@ public class UserController {
 		log.info("Updating photo for user {}", id);
 		File f = localData.getFile("user", ""+id+".png");
 		if (photo.isEmpty()) {
-			log.info("failed to upload photo: emtpy file?");
+			log.info("failed to upload photo: empty file?");
 		} else {
 			try (BufferedOutputStream stream =
 					new BufferedOutputStream(new FileOutputStream(f))) {

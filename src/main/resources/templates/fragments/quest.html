@@ -1,5 +1,5 @@
 
-    <form th:fragment="form(quest)" th:action="@{/quest}" method="post">
+    <form th:fragment="form(quest)" th:action="@{/quest}" method="get">
         <input type="hidden" name="questID" th:value="${quest.id}"/>
         <button id="partidapreview" class="mission container">
             <div class="absolute-div div1" th:text="${quest.name}"><h2>Nombre de la campaña</h2></div>

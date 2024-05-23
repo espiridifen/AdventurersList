@@ -233,13 +233,14 @@
                     console.log("Received the following messages:");
                     cleanMessageBoard();
                     data.forEach(function(message) {
-                        // console.log("From:", message.from);
-                        // console.log("To:", message.to);
-                        // console.log("Sent:", message.sent);
-                        // console.log("Received:", message.received);
-                        // console.log("Text:", message.text);
-                        // console.log("ID:", message.id);
-                        // console.log("---");
+                        console.log("From:", message.from);
+                        console.log("FromID:", message.fromId);
+                        console.log("To:", message.to);
+                        console.log("Sent:", message.sent);
+                        console.log("Received:", message.received);
+                        console.log("Text:", message.text);
+                        console.log("ID:", message.id);
+                        console.log("---");
                         
                         
                         var messageDiv = createMessageHTML(message);
@@ -284,26 +285,20 @@
             var profilePicture = document.createElement("img");
             profilePicture.setAttribute("alt", "User Profile Picture");
             profilePicture.classList.add("profilePicture");
-            profilePicture.setAttribute("src", "img/gatoque.jpg"); // This line might need adjustment based on your project structure
-            // Set the 'th:src' attribute if needed in your context
-            // profilePicture.setAttribute("th:src", "@{message.user.profilePicture}");
+            profilePicture.id = "profile-picture-" + messageData.fromId;
+            profilePicture.setAttribute("src", "img/gatoque.jpg");
+            fetchUserProfilePicture(messageData.fromId);
 
             var textDiv = document.createElement("div");
             textDiv.classList.add("text");
 
             var username = document.createElement("p");
             username.classList.add("username");
-            // Assuming 'message' is available in your context
             username.textContent = messageData.from;
-            // If you're using Thymeleaf, you might need to use th:text in your HTML template instead
-            username.setAttribute("th:text", "${message.user.name}");
 
             var messageText = document.createElement("p");
             messageText.classList.add("messageText");
-            // Assuming 'message' is available in your context
             messageText.textContent = messageData.text;
-            // If you're using Thymeleaf, you might need to use th:text in your HTML template instead
-            messageText.setAttribute("th:text", "${message.text}");
 
             textDiv.appendChild(username);
             textDiv.appendChild(messageText);
@@ -313,6 +308,20 @@
 
             return messageDiv;
 
+        }
+        function fetchUserProfilePicture(userId) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/user/" + userId + "/pic", true);
+            xhr.responseType = "blob";
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var img = document.getElementById("profile-picture-" + userId);
+                    img.src = URL.createObjectURL(xhr.response);
+                } else {
+                    console.error("Failed to load profile picture for user ID " + userId);
+                }
+            };
+            xhr.send();
         }
 
         function updateMessageBoard(message) {

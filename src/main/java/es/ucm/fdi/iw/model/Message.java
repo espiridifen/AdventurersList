@@ -56,12 +56,14 @@ public class Message implements Transferable<Message.Transfer> {
     @AllArgsConstructor
 	public static class Transfer {
 		private String from;
+		private long fromId;
 		private String to;
 		private String sent;
 		private String text;
 		long id;
 		public Transfer(Message m) {
 			this.from = m.getSender().getUsername();
+			this.fromId = m.getSender().getId();
 			this.to = m.getGameRecipient().getName();
 			this.sent = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(m.getDateSent());
 			this.text = m.getText();
@@ -72,7 +74,7 @@ public class Message implements Transferable<Message.Transfer> {
 	@Override
 	public Transfer toTransfer() {
 		String recip = gameRecipient.getName();
-		return new Transfer(sender.getUsername(), recip, 
+		return new Transfer(sender.getUsername(), sender.getId(), recip, 
 			DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateSent),
 			text, id
         );

@@ -171,8 +171,9 @@
             // Create div2
             var div2 = document.createElement('div');
             div2.setAttribute('class', 'absolute-div div2');
-            div2.innerHTML = '<img src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/>';
+            div2.innerHTML = '<img id=profile-picture-' + quest.id + ' src="img/gatoque.jpg" alt="que" style="width: 100px; height: 100px;"/>';
             button.appendChild(div2);
+            fetchGamePicture(quest.id)
 
             // Create div3
             var div3 = document.createElement('div');
@@ -191,6 +192,20 @@
             form.appendChild(button);
 
             return form.outerHTML;
+        }
+        function fetchGamePicture(gameId) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/game/" + gameId + "/pic", true);
+            xhr.responseType = "blob";
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var img = document.getElementById("profile-picture-" + gameId);
+                    img.src = URL.createObjectURL(xhr.response);
+                } else {
+                    console.error("Failed to load profile picture for game ID " + gameId);
+                }
+            };
+            xhr.send();
         }
     </script>
 </body>

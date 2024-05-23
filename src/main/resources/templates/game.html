@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="image_container">
-                <img src="img/gatoque.jpg"/>
+                <img th:src="@{'game/' + ${game.id} + '/pic'}"/>
             </div>
             <div class="gamedata"><ul class="list">
                 <li><h1 th:text="${game.name}">Title</h1></li>

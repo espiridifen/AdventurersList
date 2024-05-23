@@ -1,8 +1,14 @@
 package es.ucm.fdi.iw.controller;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
@@ -21,6 +27,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -35,6 +43,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.GameJoin;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Transferable;
@@ -56,6 +65,9 @@ public class GameController {
 
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
+
+	@Autowired
+    private LocalData localData;
 
     @GetMapping("")
     @Transactional
@@ -290,5 +302,30 @@ public class GameController {
     
         return "redirect:/";
     }
+
+    /**
+     * Returns the default profile pic
+     * 
+     * @return
+     */
+    private static InputStream defaultPic() {
+	    return new BufferedInputStream(Objects.requireNonNull(
+            UserController.class.getClassLoader().getResourceAsStream(
+                "static/img/default-pic.jpg")));
+    }
     
+    /**
+     * Downloads a profile pic for a game id
+     * 
+     * @param id
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("{id}/pic")
+    public StreamingResponseBody getPic(@PathVariable long id) throws IOException {
+        File f = localData.getFile("game", ""+id+".png");
+        InputStream in = new BufferedInputStream(f.exists() ?
+            new FileInputStream(f) : GameController.defaultPic());
+        return os -> FileCopyUtils.copy(in, os);
+    }
 }

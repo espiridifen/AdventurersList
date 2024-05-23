@@ -55,6 +55,11 @@ margin-bottom: 20px;
       flex-direction: column;
 }
 
+.createQuest {
+    min-height: 157px;
+    margin-top: 20px;
+}
+
 .mission::before {
     content: "";
     display: block;

@@ -12,7 +12,7 @@ function fn() {
     var config = {
         env: env,
         myVarName: 'someValue',
-        baseUrl: 'http://localhost:8080'
+        baseUrl: 'http://localhost:80'
     }
 
     /**
@@ -22,7 +22,8 @@ function fn() {
         type: 'chrome',
         // descomentar para chromium bajo linux
         // executable: '/usr/bin/chromium-browser',
-        executable: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        // executable: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        executable : "C:\\Users\\49leg\\Downloads\\chromedriver-win64(1)\\chromedriver-win64",
         showDriverLog: true
     })
 

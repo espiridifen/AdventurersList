@@ -23,7 +23,8 @@ function fn() {
         // descomentar para chromium bajo linux
         // executable: '/usr/bin/chromium-browser',
         // executable: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-        executable : "C:\\Users\\49leg\\Downloads\\chromedriver-win64(1)\\chromedriver-win64",
+        executable: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        // executable : "C:\\Users\\49leg\\Downloads\\chromedriver-win64(1)\\chromedriver-win64\\chromedriver.exe",
         showDriverLog: true
     })
 

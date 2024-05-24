@@ -25,7 +25,8 @@ function fn() {
         // executable: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
         executable: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
         // executable : "C:\\Users\\49leg\\Downloads\\chromedriver-win64(1)\\chromedriver-win64\\chromedriver.exe",
-        showDriverLog: true
+        showDriverLog: true,
+        addOptions: ["--remote-allow-origins=*"]
     })
 
     if (env == 'dev') {

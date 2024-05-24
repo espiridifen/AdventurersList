@@ -18,7 +18,7 @@
     <div class="missions-table">
         <form th:action="createNewGame" method="post" enctype="multipart/form-data">
             Nombre de la partida<br/>
-            <input type="text" name="name"/><br/>
+            <input type="text" name="name" id="name"/><br/>
             Sistema<br/>
             <select name="gamesystem" id="gamesystem">
                 <option value="FIRST_VERSION">Dungeons and Dragons 1st Edition</option>
@@ -29,9 +29,9 @@
                 <option value="FIFTH_VERSION">Dungeons and Dragons 5th Edition</option>
             </select><br/>
             Fecha de la primera sesión<br/>
-            <input type="date" name="date"/><br/>
+            <input type="date" name="date" id="date"/><br/>
             Dónde la vas a hacer?<br/>
-            <input type="text" name="meeting"/><br/>
+            <input type="text" name="meeting" id="meeting"/><br/>
             Nivel de experiencia<br/>
             <select name="experience" id="experience">
                 <option value="BEGINNER">Principiante</option>
@@ -39,9 +39,9 @@
                 <option value="ADVANCED">Avanzado</option>
             </select><br/>
             Descripción<br/>
-            <input type="text" style="height: 300px;" name="description"/><br/>
+            <input type="text" style="height: 300px;" name="description" id="description"/><br/>
             Imágen para el juego (.png)<br/>
-            <input type="file" name="photo" accept=".png"><br/>
+            <input type="file" name="photo" accept=".png" id="photo"><br/>
             <button
                 type="submit"
                 class="btn btn-primary"

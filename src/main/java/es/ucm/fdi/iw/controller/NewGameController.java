@@ -28,9 +28,9 @@ import es.ucm.fdi.iw.model.game.GameSystemEnum;
 @Controller
 public class NewGameController {
 
-	private static final Logger log = LogManager.getLogger(UserController.class);
+    private static final Logger log = LogManager.getLogger(UserController.class);
 
-	@Autowired
+    @Autowired
     private LocalData localData;
 
     @Autowired
@@ -41,40 +41,40 @@ public class NewGameController {
 
     @PostMapping("/createNewGame")
     @Transactional
-    public String createNewGame(@RequestParam String name, 
-                                @RequestParam String gamesystem,
-                                @RequestParam String date,
-                                @RequestParam String meeting,
-                                @RequestParam String experience,
-                                @RequestParam String description,
-                                @RequestParam("photo") MultipartFile photo,
-                                HttpServletResponse response) {
-        
-        long userId = ((User)httpSession.getAttribute("u")).getId();
+    public String createNewGame(@RequestParam String name,
+            @RequestParam String gamesystem,
+            @RequestParam String date,
+            @RequestParam String meeting,
+            @RequestParam String experience,
+            @RequestParam String description,
+            @RequestParam("photo") MultipartFile photo,
+            HttpServletResponse response) {
+
+        long userId = ((User) httpSession.getAttribute("u")).getId();
         User u = entityManager.find(User.class, userId);
 
-        Game g = new Game(null, name, description, ExperienceEnum.valueOf(experience), LocalDateTime.parse(date + "T00:00:00"), 
-                            GameSystemEnum.valueOf(gamesystem), 0, u, gamesystem, meeting, null, null);
+        Game g = new Game(null, name, description, ExperienceEnum.valueOf(experience),
+                LocalDateTime.parse(date + "T00:00:00"),
+                GameSystemEnum.valueOf(gamesystem), 0, u, gamesystem, meeting, null, null);
         entityManager.persist(g);
 
         // Join the user to his own game
         entityManager.persist(new GameJoin(u, g));
 
         log.info("Updating photo for game {}", g.getId());
-		File f = localData.getFile("game", ""+g.getId()+".png");
-		if (photo.isEmpty()) {
-			log.info("failed to upload photo: empty file?");
-		} else {
-			try (BufferedOutputStream stream =
-					new BufferedOutputStream(new FileOutputStream(f))) {
-				byte[] bytes = photo.getBytes();
-				stream.write(bytes);
+        File f = localData.getFile("game", "" + g.getId() + ".png");
+        if (photo.isEmpty()) {
+            log.info("failed to upload photo: empty file?");
+        } else {
+            try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(f))) {
+                byte[] bytes = photo.getBytes();
+                stream.write(bytes);
                 log.info("Uploaded photo for game {} into {}!", g.getId(), f.getAbsolutePath());
-			} catch (Exception e) {
+            } catch (Exception e) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				log.warn("Error uploading " + g.getId() + " ", e);
-			}
-		}
+                log.warn("Error uploading " + g.getId() + " ", e);
+            }
+        }
 
         return "redirect:/game?questID=" + g.getId().toString();
     }

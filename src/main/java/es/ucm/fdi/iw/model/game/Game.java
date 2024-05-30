@@ -47,24 +47,24 @@ public class Game implements Transferable<Game.Transfer> {
     @Column(name = "sessionquantity", columnDefinition = "INTEGER")
     private int sessionQuantity;
 
-    @ManyToOne(cascade=CascadeType.ALL, targetEntity=User.class)
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
     @JoinColumn(name = "owner") // Specify the column name
     private @NotNull User owner;
-    
+
     private @NotNull String type;
 
     private @NotNull String meeting;
 
-	@OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game")
     private List<GameJoin> joins = new ArrayList<>();
-    
-	@OneToMany(mappedBy = "gameRecipient")
-	private List<Message> received = new ArrayList<>();
-    
+
+    @OneToMany(mappedBy = "gameRecipient")
+    private List<Message> received = new ArrayList<>();
+
     // Transfer, for JSON generation for the Search menu
     @Getter
     @AllArgsConstructor
-	public static class Transfer {
+    public static class Transfer {
         private long id;
         private String name;
         private String description;
@@ -75,7 +75,7 @@ public class Game implements Transferable<Game.Transfer> {
         private String type;
         private String meeting;
 
-		public Transfer(Game g) {
+        public Transfer(Game g) {
             this.id = g.getId();
             this.name = g.getName();
             this.description = g.getDescription();
@@ -87,13 +87,12 @@ public class Game implements Transferable<Game.Transfer> {
             this.meeting = g.getMeeting();
             this.id = g.getId();
         }
-	}
-    
-	@Override
-	public Transfer toTransfer() {
-		return new Transfer(id, name, description, experience,
-        DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(date),
-        gamesystem.getName(), owner.getUsername(), type, meeting
-        );
+    }
+
+    @Override
+    public Transfer toTransfer() {
+        return new Transfer(id, name, description, experience,
+                DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(date),
+                gamesystem.getName(), owner.getUsername(), type, meeting);
     }
 }

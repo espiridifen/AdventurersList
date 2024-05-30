@@ -54,8 +54,8 @@ import es.ucm.fdi.iw.model.gamesession.GameSession;
 @Controller
 @RequestMapping("/game")
 public class GameController {
-    
-	private static final Logger log = LogManager.getLogger(GameController.class);
+
+    private static final Logger log = LogManager.getLogger(GameController.class);
 
     @Autowired
     EntityManager entityManager;
@@ -63,10 +63,10 @@ public class GameController {
     @Autowired
     HttpSession httpSession;
 
-	@Autowired
-	private SimpMessagingTemplate messagingTemplate;
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
-	@Autowired
+    @Autowired
     private LocalData localData;
 
     @GetMapping("")
@@ -75,15 +75,17 @@ public class GameController {
         Game g = entityManager.find(Game.class, gameId);
 
         // Get user ID from their HTTP Session
-        long userId = ((User)httpSession.getAttribute("u")).getId();
+        long userId = ((User) httpSession.getAttribute("u")).getId();
 
-        TypedQuery<GameJoin> gameJoinedSearchQuery = entityManager.createQuery("select j from GameJoin j where j.user.id = :userId and j.game.id = :gameId", GameJoin.class);
+        TypedQuery<GameJoin> gameJoinedSearchQuery = entityManager.createQuery(
+                "select j from GameJoin j where j.user.id = :userId and j.game.id = :gameId", GameJoin.class);
         gameJoinedSearchQuery.setParameter("userId", userId);
         gameJoinedSearchQuery.setParameter("gameId", gameId);
         gameJoinedSearchQuery.setMaxResults(1);
         List<GameJoin> gj = gameJoinedSearchQuery.getResultList();
-        
-        TypedQuery<GameJoin> gameJoins = entityManager.createQuery("select j from GameJoin j where j.game.id = :gameId", GameJoin.class);
+
+        TypedQuery<GameJoin> gameJoins = entityManager.createQuery("select j from GameJoin j where j.game.id = :gameId",
+                GameJoin.class);
         gameJoins.setParameter("gameId", gameId);
         List<GameJoin> joinlist = gameJoins.getResultList();
 
@@ -91,35 +93,33 @@ public class GameController {
         for (GameJoin join : joinlist) {
             users.add(join.getUser().getUsername());
         }
-        
+
         model.addAttribute("users", users);
         model.addAttribute("game", g);
-        model.addAttribute("userIsJoined", !gj.isEmpty()); // User has joined the game if there is some result in the query
+        model.addAttribute("userIsJoined", !gj.isEmpty()); // User has joined the game if there is some result in the
+                                                           // query
         model.addAttribute("userId", userId);
-        //get the earliest gameSession
+        // get the earliest gameSession
         TypedQuery<GameSession> sessionQuery = entityManager.createQuery(
-            "select gs from GameSession gs where gs.game.id = :gameId order by gs.date asc",
-            GameSession.class);
+                "select gs from GameSession gs where gs.game.id = :gameId order by gs.date asc",
+                GameSession.class);
         sessionQuery.setParameter("gameId", gameId);
         sessionQuery.setMaxResults(1);
-        //also get all sessions
+        // also get all sessions
         TypedQuery<GameSession> allsessionQuery = entityManager.createQuery(
-            "select gs from GameSession gs where gs.game.id = :gameId order by gs.date asc",
-            GameSession.class);
+                "select gs from GameSession gs where gs.game.id = :gameId order by gs.date asc",
+                GameSession.class);
         allsessionQuery.setParameter("gameId", gameId);
 
-        try
-        {
+        try {
             GameSession gs = sessionQuery.getSingleResult();
             model.addAttribute("attendanceData", gs);
 
             List<GameSession> allSessions = allsessionQuery.getResultList();
             model.addAttribute("allSessions", allSessions);
-            
+
             model.addAttribute("arethereAnySessions", true);
-        }
-        catch (NoResultException e)
-        {
+        } catch (NoResultException e) {
             model.addAttribute("arethereAnySessions", false);
         }
 
@@ -130,10 +130,10 @@ public class GameController {
 
     @PostMapping("/join")
     @Transactional
-	@ResponseBody
+    @ResponseBody
     public ResponseEntity<String> joinGameString(HttpServletResponse response, @RequestParam("gameId") long gameId) {
         Game g = entityManager.find(Game.class, gameId);
-        long userId = ((User)httpSession.getAttribute("u")).getId();
+        long userId = ((User) httpSession.getAttribute("u")).getId();
         User u = entityManager.find(User.class, userId);
 
         entityManager.persist(new GameJoin(u, g));
@@ -146,10 +146,12 @@ public class GameController {
     @ResponseBody
     public ResponseEntity<String> leaveGame(HttpServletResponse response, @RequestParam("gameId") long gameId) {
         Game g = entityManager.find(Game.class, gameId);
-        long userId = ((User)httpSession.getAttribute("u")).getId();
+        long userId = ((User) httpSession.getAttribute("u")).getId();
 
-        if (g == null) return ResponseEntity.status(400).body("Game does not exist");
-        TypedQuery<GameJoin> joinQuery = entityManager.createQuery("select j from GameJoin j where j.user.id = :userId and j.game.id = :gameId", GameJoin.class);
+        if (g == null)
+            return ResponseEntity.status(400).body("Game does not exist");
+        TypedQuery<GameJoin> joinQuery = entityManager.createQuery(
+                "select j from GameJoin j where j.user.id = :userId and j.game.id = :gameId", GameJoin.class);
         joinQuery.setParameter("userId", userId);
         joinQuery.setParameter("gameId", gameId);
         joinQuery.setMaxResults(1);
@@ -165,9 +167,10 @@ public class GameController {
 
     @PostMapping("/sendMessage")
     @Transactional
-    public ResponseEntity<String> sendMessage(HttpServletResponse response, @RequestParam("gameId") long gameId, @RequestParam("message") String message) {
+    public ResponseEntity<String> sendMessage(HttpServletResponse response, @RequestParam("gameId") long gameId,
+            @RequestParam("message") String message) {
         Game g = entityManager.find(Game.class, gameId);
-        User u = (User)httpSession.getAttribute("u");
+        User u = (User) httpSession.getAttribute("u");
 
         if (g == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game not found");
@@ -187,119 +190,124 @@ public class GameController {
             mapper.registerModule(new JavaTimeModule());
             mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             json = mapper.writeValueAsString(m);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.info(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
         }
-        log.info("Sending message to websocket "+ "/game/"+gameId+"/queue/updates"+ ": " + json);
-        messagingTemplate.convertAndSend("/game/"+gameId+"/queue/updates", json);
+        log.info("Sending message to websocket " + "/game/" + gameId + "/queue/updates" + ": " + json);
+        messagingTemplate.convertAndSend("/game/" + gameId + "/queue/updates", json);
 
         return ResponseEntity.ok("Message sent successfully");
     }
-    
-    
+
     /**
      * Returns JSON with all received messages
      */
     @GetMapping(path = "received", produces = "application/json")
-	@Transactional // para no recibir resultados inconsistentes
-	@ResponseBody  // para indicar que no devuelve vista, sino un objeto (jsonizado)
-	public List<Message.Transfer> retrieveMessages(HttpSession session, @RequestParam("gameId") long gameId) {	
-		Game game = entityManager.find(Game.class, gameId);
-		return game.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
-	}
+    @Transactional // para no recibir resultados inconsistentes
+    @ResponseBody // para indicar que no devuelve vista, sino un objeto (jsonizado)
+    public List<Message.Transfer> retrieveMessages(HttpSession session, @RequestParam("gameId") long gameId) {
+        Game game = entityManager.find(Game.class, gameId);
+        return game.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
+    }
 
     /**
      * Posts a message to a game.
+     * 
      * @param id of target user (source user is from ID)
-     * @param o JSON-ized message, similar to {"message": "text goes here"}
+     * @param o  JSON-ized message, similar to {"message": "text goes here"}
      * @throws JsonProcessingException
      */
     @PostMapping("/{id}/msg")
-	@ResponseBody
-	@Transactional
-	public String postMsg(@PathVariable long id, 
-			@RequestBody JsonNode o, Model model, HttpSession session) 
-		throws JsonProcessingException {
-		
-		String text = o.get("message").asText();
-		Game game = entityManager.find(Game.class, id);
-		User sender = entityManager.find(
-				User.class, ((User)session.getAttribute("u")).getId());
-		model.addAttribute("user", game);
-		
-		// construye mensaje, lo guarda en BD
-		Message m = new Message();
-		m.setGameRecipient(game);
-		m.setSender(sender);
-		m.setDateSent(LocalDateTime.now());
-		m.setText(text);
-		entityManager.persist(m);
-		entityManager.flush(); // to get Id before commit
-		
-		ObjectMapper mapper = new ObjectMapper();
-		/*
-		// construye json: método manual
-		ObjectNode rootNode = mapper.createObjectNode();
-		rootNode.put("from", sender.getUsername());
-		rootNode.put("to", u.getUsername());
-		rootNode.put("text", text);
-		rootNode.put("id", m.getId());
-		String json = mapper.writeValueAsString(rootNode);
-		*/
-		// persiste objeto a json usando Jackson
-		String json = mapper.writeValueAsString(m.toTransfer());
+    @ResponseBody
+    @Transactional
+    public String postMsg(@PathVariable long id,
+            @RequestBody JsonNode o, Model model, HttpSession session)
+            throws JsonProcessingException {
 
-		log.info("Sending a message to {} with contents '{}'", id, json);
+        String text = o.get("message").asText();
+        Game game = entityManager.find(Game.class, id);
+        User sender = entityManager.find(
+                User.class, ((User) session.getAttribute("u")).getId());
+        model.addAttribute("user", game);
 
-		messagingTemplate.convertAndSend("/user/"+game.getId()+"/queue/updates", json);
-		return "{\"result\": \"message sent.\"}";
-	}	
-    
+        // construye mensaje, lo guarda en BD
+        Message m = new Message();
+        m.setGameRecipient(game);
+        m.setSender(sender);
+        m.setDateSent(LocalDateTime.now());
+        m.setText(text);
+        entityManager.persist(m);
+        entityManager.flush(); // to get Id before commit
+
+        ObjectMapper mapper = new ObjectMapper();
+        /*
+         * // construye json: método manual
+         * ObjectNode rootNode = mapper.createObjectNode();
+         * rootNode.put("from", sender.getUsername());
+         * rootNode.put("to", u.getUsername());
+         * rootNode.put("text", text);
+         * rootNode.put("id", m.getId());
+         * String json = mapper.writeValueAsString(rootNode);
+         */
+        // persiste objeto a json usando Jackson
+        String json = mapper.writeValueAsString(m.toTransfer());
+
+        log.info("Sending a message to {} with contents '{}'", id, json);
+
+        messagingTemplate.convertAndSend("/user/" + game.getId() + "/queue/updates", json);
+        return "{\"result\": \"message sent.\"}";
+    }
+
     @PostMapping("/deleteGame")
     @Transactional
     public String deleteGame(Model model, @RequestParam("gameId") long gameId) {
         // Get user ID from their HTTP Session
         long userId = ((User) httpSession.getAttribute("u")).getId();
-    
+
         Game game = entityManager.find(Game.class, gameId);
-    
+
         if (game != null && game.getOwner().getId() == userId) {
             // Delete all messages related to this game
             entityManager.createQuery("DELETE FROM Message m WHERE m.gameRecipient = :game")
-                         .setParameter("game", game)
-                         .executeUpdate();
-    
+                    .setParameter("game", game)
+                    .executeUpdate();
+
             // Find all GameSessions related to this game
-            List<GameSession> gameSessions = entityManager.createQuery("SELECT q FROM GameSession q WHERE q.game = :game", GameSession.class)
-                                                          .setParameter("game", game)
-                                                          .getResultList();
-    
+            List<GameSession> gameSessions = entityManager
+                    .createQuery("SELECT q FROM GameSession q WHERE q.game = :game", GameSession.class)
+                    .setParameter("game", game)
+                    .getResultList();
+
             // Delete all SessionAttendance entities related to each GameSession
             for (GameSession gameSession : gameSessions) {
                 entityManager.createQuery("DELETE FROM SessionAttendance sa WHERE sa.gameSession = :gameSession")
-                             .setParameter("gameSession", gameSession)
-                             .executeUpdate();
+                        .setParameter("gameSession", gameSession)
+                        .executeUpdate();
             }
-    
+
+            // Delete all GameSessions related to this game
+            entityManager.createQuery("DELETE FROM Report q WHERE q.reportedGame = :game")
+                    .setParameter("game", game)
+                    .executeUpdate();
+
             // Delete all GameSessions related to this game
             entityManager.createQuery("DELETE FROM GameSession q WHERE q.game = :game")
-                        .setParameter("game", game)
-                        .executeUpdate();
-    
+                    .setParameter("game", game)
+                    .executeUpdate();
+
             // Delete all GameJoin entities related to this game
             entityManager.createQuery("DELETE FROM GameJoin q WHERE q.game = :game")
-                        .setParameter("game", game)
-                        .executeUpdate();
+                    .setParameter("game", game)
+                    .executeUpdate();
 
             // Delete the Game
             entityManager.createQuery("DELETE FROM Game q WHERE q.id = :gameId")
-                        .setParameter("gameId", gameId)
-                        .executeUpdate();
+                    .setParameter("gameId", gameId)
+                    .executeUpdate();
         }
-        log.info("Deleted game: "+gameId);
-    
+        log.info("Deleted game: " + gameId);
+
         return "redirect:/";
     }
 
@@ -309,11 +317,11 @@ public class GameController {
      * @return
      */
     private static InputStream defaultPic() {
-	    return new BufferedInputStream(Objects.requireNonNull(
-            UserController.class.getClassLoader().getResourceAsStream(
-                "static/img/default-pic.jpg")));
+        return new BufferedInputStream(Objects.requireNonNull(
+                UserController.class.getClassLoader().getResourceAsStream(
+                        "static/img/default-pic.jpg")));
     }
-    
+
     /**
      * Downloads a profile pic for a game id
      * 
@@ -323,9 +331,8 @@ public class GameController {
      */
     @GetMapping("{id}/pic")
     public StreamingResponseBody getPic(@PathVariable long id) throws IOException {
-        File f = localData.getFile("game", ""+id+".png");
-        InputStream in = new BufferedInputStream(f.exists() ?
-            new FileInputStream(f) : GameController.defaultPic());
+        File f = localData.getFile("game", "" + id + ".png");
+        InputStream in = new BufferedInputStream(f.exists() ? new FileInputStream(f) : GameController.defaultPic());
         return os -> FileCopyUtils.copy(in, os);
     }
 }

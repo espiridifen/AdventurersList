@@ -31,23 +31,26 @@ import lombok.NoArgsConstructor;
 public class GameSession {
 
     private @GeneratedValue(strategy = GenerationType.IDENTITY) @Id Long id;
-    
+
     @ManyToOne
     private Game game;
 
     private @NotNull String title;
-    
-	private @NotNull LocalDateTime date;
 
-	private @NotNull String location;
+    private @NotNull LocalDateTime date;
+
+    private @NotNull String location;
+
+    private String linkToGame;
 
     @OneToMany(mappedBy = "gameSession", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<SessionAttendance> attendeesResponses = new ArrayList<>();
+    private List<SessionAttendance> attendeesResponses = new ArrayList<>();
 
-    public GameSession(Game game, String title, LocalDateTime date, String location) {
+    public GameSession(Game game, String title, LocalDateTime date, String location, String linkToGame) {
         this.game = game;
         this.title = title;
         this.date = date;
         this.location = location;
+        this.linkToGame = linkToGame;
     }
 }

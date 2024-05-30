@@ -193,3 +193,20 @@ margin-bottom: 20px;
 .button_container button:hover {
     background-color: #777;
 }
+
+#appTitle {
+    grid-column: 1 / span 2;
+    text-align: center;
+    background-color: rgb(102,51,0,1);
+    color: #fff;
+    padding: 20px 0;
+    border-radius: 8px;
+}
+
+#appTitle button {
+    background-color: rgb(102,51,0,1);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 48px;
+}

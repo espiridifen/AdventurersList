@@ -16,6 +16,11 @@
 <link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
 <body class="background">
     <div class="missions-table" style="width: 90%; margin-left: 5%; margin-top: 5%;">
+        <div id="appTitle">
+            <a href="landingpage.html" th:href="@{/}">
+                <button>Adventurer's List</button>
+            </a>
+        </div>
         <div class="game_container">
             <div id="viewButtons">
                 <div th:replace="~{fragments/missionsButtons.html :: missionsButtons}">
@@ -80,8 +85,6 @@
                 <div class="location" th:text="${game.meeting}">
                     loc
                 </div>
-                <!-- Esto si el usuario es jugador de la partida, se saca desde th -->
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Link a la partida</a>
             </div>
             <div class="button_container">
                 
@@ -107,7 +110,6 @@
             </div>
         </div>
         <div class="messageBoard">
-            
             <ul>
                 <li th:each="message : ${messageLog}" id="messageBoard">
                     <div th:replace="~{fragments/message.html :: div(message=${message})}"></div>
@@ -115,8 +117,10 @@
             </ul> 
         </div>
         <div id="sendMessageForm" class="sendMessageButtonClass">
-            <input type="text" id="message" name="message"/>
-            <button id="sendMessageButton">Enviar</button>
+            <form id="actualSendMessageForm" method="post"action="/game/sendMessage">
+                <input type="text" id="message" name="message"/>
+                <button id="sendMessageButton" type="submit">Enviar</button>
+            </form>
         </div>
         <div class="sessionList">
             <b>Próximas sesiones</b> <br/>
@@ -159,8 +163,12 @@
 
         $(document).ready(function() {
             updateButtonText(isJoined);
+            
+            var form = document.getElementById("actualSendMessageForm");
+            form.addEventListener("submit", sendMessageFunction, true);
 
-            $("#sendMessageButton").click(function() {
+            function sendMessageFunction() {
+                event.preventDefault();
                 var message = $("#message").val();
 
                 $.ajax({
@@ -181,7 +189,7 @@
                         console.error("Error sending message: " + xhr.statusText);
                     }
                 });
-            });
+            };
         });
 
         function joinOrLeaveGame() {
@@ -282,9 +290,9 @@
             var profilePicture = document.createElement("img");
             profilePicture.setAttribute("alt", "User Profile Picture");
             profilePicture.classList.add("profilePicture");
-            profilePicture.id = "profile-picture-" + messageData.fromId;
+            profilePicture.id = "profile-picture-" + messageData.id;
             profilePicture.setAttribute("src", "img/gatoque.jpg");
-            fetchUserProfilePicture(messageData.fromId);
+            fetchUserProfilePicture(messageData.fromId, messageData.id);
 
             var textDiv = document.createElement("div");
             textDiv.classList.add("text");
@@ -306,13 +314,13 @@
             return messageDiv;
 
         }
-        function fetchUserProfilePicture(userId) {
+        function fetchUserProfilePicture(userId, id) {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "/user/" + userId + "/pic", true);
             xhr.responseType = "blob";
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    var img = document.getElementById("profile-picture-" + userId);
+                    var img = document.getElementById("profile-picture-" + id);
                     img.src = URL.createObjectURL(xhr.response);
                 } else {
                     console.error("Failed to load profile picture for user ID " + userId);

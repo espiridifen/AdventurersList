@@ -32,44 +32,53 @@
                 <h4>Experiencia requerida</h4>
                 <ul id="experienceCheckboxes">
                     <li>
-                        <input type="checkbox" id="exp-beginner" value="BEGINNER">
+                        <input type="checkbox" id="exp-beginner" value="BEGINNER" onchange="search()">
                         <label for="exp-beginner">Principiante</label>
+                        <a>(</a><a th:text="${cantidadBeginner}">Cantidad</a><a>)</a>
                     </li>
                     <li>
-                        <input type="checkbox" id="exp-intermediate" value="INTERMEDIATE">
+                        <input type="checkbox" id="exp-intermediate" value="INTERMEDIATE" onchange="search()">
                         <label for="exp-intermediate">Intermedio</label>
+                        <a>(</a><a th:text="${cantidadIntermediate}">Cantidad</a><a>)</a>
                     </li>
                     <li>
-                        <input type="checkbox" id="exp-advanced" value="ADVANCED">
+                        <input type="checkbox" id="exp-advanced" value="ADVANCED" onchange="search()">
                         <label for="exp-advanced">Avanzado</label>
+                        <a>(</a><a th:text="${cantidadAdvanced}">Cantidad</a><a>)</a>
                     </li>
                 </ul>
 
                 <h4>Versión</h4>
                 <ul id="versionCheckboxes">
                     <li>
-                        <input type="checkbox" id="version-1" value="FIRST_VERSION">
+                        <input type="checkbox" id="version-1" value="FIRST_VERSION" onchange="search()">
                         <label for="version-1">DnD 1st Edition</label>
+                        <a>(</a><a th:text="${cantidadV1}">Cantidad</a><a>)</a>
                     </li>
                     <li>
-                        <input type="checkbox" id="version-2" value="SECOND_VERSION">
+                        <input type="checkbox" id="version-2" value="SECOND_VERSION" onchange="search()">
                         <label for="version-2">DnD 2nd Edition</label>
+                        <a>(</a><a th:text="${cantidadV2}">Cantidad</a><a>)</a>
                     </li>
                     <li>
-                        <input type="checkbox" id="version-3" value="THIRD_VERSION">
+                        <input type="checkbox" id="version-3" value="THIRD_VERSION" onchange="search()">
                         <label for="version-3">DnD 3rd Edition</label>
+                        <a>(</a><a th:text="${cantidadV3}">Cantidad</a><a>)</a>
                     </li>
                     <li>
-                        <input type="checkbox" id="version-3.5" value="THIRD_VERSION_ADVANCED">
+                        <input type="checkbox" id="version-3.5" value="THIRD_VERSION_ADVANCED" onchange="search()">
                         <label for="version-3.5">DnD 3.5th Edition</label>
+                        <a>(</a><a th:text="${cantidadV35}">Cantidad</a><a>)</a>
                     </li>
                     <li>
-                        <input type="checkbox" id="version-4" value="FOURTH_VERSION">
+                        <input type="checkbox" id="version-4" value="FOURTH_VERSION" onchange="search()">
                         <label for="version-4">DnD 4th Edition</label>
+                        <a>(</a><a th:text="${cantidadV4}">Cantidad</a><a>)</a>
                     </li>
                     <li>
-                        <input type="checkbox" id="version-5" value="FIFTH_VERSION">
+                        <input type="checkbox" id="version-5" value="FIFTH_VERSION" onchange="search()">
                         <label for="version-5">DnD 5th Edition</label>
+                        <a>(</a><a th:text="${cantidadV5}">Cantidad</a><a>)</a>
                     </li>
                 </ul>
                 <!-- Agrega más filtros según tu necesidad -->
@@ -124,7 +133,13 @@
                         console.log("---");
                         addQuestToResults(game);
                     });
-                    
+                    if (data.length == 0) {
+                        console.log("No hay partidas")
+                        var searchResults = document.getElementById("searchResults");
+                        var div = document.createElement('div');
+                        div.textContent = "No hay partidas que cumplan estos requisitos"
+                        searchResults.appendChild(div)
+                    }
                 },
                 error: function(xhr, status, error) {
                     // Handle error

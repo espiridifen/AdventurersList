@@ -21,8 +21,8 @@ public class GameSessionService {
     @Autowired
     EntityManager entityManager;
 
-    public void createGameSession(Game game, String title, LocalDateTime date, String location) {
-        GameSession gameSession = new GameSession(game, title, date, location);
+    public void createGameSession(Game game, String title, LocalDateTime date, String location, String linkToGame) {
+        GameSession gameSession = new GameSession(game, title, date, location, linkToGame);
         entityManager.persist(gameSession);
 
         // Initialize attendeesResponses for each user in the game
@@ -39,4 +39,3 @@ public class GameSessionService {
         }
     }
 }
-

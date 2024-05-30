@@ -107,3 +107,9 @@ body {
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
 }
+
+.mission div {
+    background-color: rgba(128,128,128,0.5);
+    padding: 1px;
+    border-radius: 2px;
+}

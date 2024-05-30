@@ -2,9 +2,9 @@
     <form th:fragment="form(quest)" th:action="@{/quest}" method="get">
         <input type="hidden" name="questID" th:value="${quest.id}"/>
         <button id="partidapreview" class="mission container">
-            <div class="absolute-div div1" th:text="${quest.name}"><h2>Nombre de la campaña</h2></div>
-            <div class="absolute-div div2"><img th:src="@{'game/' + ${quest.id} + '/pic'}" alt="que" style="width: 100px; height: 100px;"/></div>
-            <div class="absolute-div div3" th:text="${quest.system}">Sistema</div>
-            <div class="absolute-div div4" th:text="${quest.Date}">Fecha</div>
+            <div th:text="${quest.name}"><h2>Nombre de la campaña</h2></div>
+            <img th:src="@{'game/' + ${quest.id} + '/pic'}" alt="Imagen partida" style="width: 100px; height: 100px;"/>
+            <div th:text="${quest.system}">Sistema</div>
+            <div th:text="${quest.Date}">Fecha</div>
         </button>
     </form>

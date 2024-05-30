@@ -25,35 +25,37 @@ import lombok.AllArgsConstructor;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Message.countUnread",
-	query="SELECT COUNT(m) FROM Message m "
-			+ "WHERE m.gameRecipient.id = :gameId")
+		@NamedQuery(name = "Message.countUnread", query = "SELECT COUNT(m) FROM Message m "
+				+ "WHERE m.gameRecipient.id = :gameId")
 })
 @Data
 public class Message implements Transferable<Message.Transfer> {
-	
-	// private static Logger log = LogManager.getLogger(Message.class);	
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
-    @SequenceGenerator(name = "gen", sequenceName = "gen")
+
+	// private static Logger log = LogManager.getLogger(Message.class);
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
+	@SequenceGenerator(name = "gen", sequenceName = "gen")
 	private Long id;
 	@ManyToOne
-	@JsonIgnoreProperties({"sent", "password", "enabled", "roles", "received"}) // Exclude sent field to avoid infinite recursion
+	@JsonIgnoreProperties({ "sent", "password", "enabled", "roles", "received" }) // Exclude sent field to avoid
+																					// infinite recursion
 	private User sender;
 	@ManyToOne
-	@JsonIgnoreProperties({"owner", "name", "description", "experience", "date", "gamesystem", "sessionQuantity", "type", "meeting", "received"}) // Exclude sent field to avoid infinite recursion
+	@JsonIgnoreProperties({ "owner", "name", "description", "experience", "date", "gamesystem", "sessionQuantity",
+			"type", "meeting", "received", "joins" }) // Exclude sent field to avoid infinite recursion
 	private Game gameRecipient;
 	private String text;
-	
+
 	private LocalDateTime dateSent;
-	
+
 	/**
 	 * Objeto para persistir a/de JSON
+	 * 
 	 * @author mfreire
 	 */
-    @Getter
-    @AllArgsConstructor
+	@Getter
+	@AllArgsConstructor
 	public static class Transfer {
 		private String from;
 		private long fromId;
@@ -61,6 +63,7 @@ public class Message implements Transferable<Message.Transfer> {
 		private String sent;
 		private String text;
 		long id;
+
 		public Transfer(Message m) {
 			this.from = m.getSender().getUsername();
 			this.fromId = m.getSender().getId();
@@ -74,9 +77,8 @@ public class Message implements Transferable<Message.Transfer> {
 	@Override
 	public Transfer toTransfer() {
 		String recip = gameRecipient.getName();
-		return new Transfer(sender.getUsername(), sender.getId(), recip, 
-			DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateSent),
-			text, id
-        );
-    }
+		return new Transfer(sender.getUsername(), sender.getId(), recip,
+				DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateSent),
+				text, id);
+	}
 }

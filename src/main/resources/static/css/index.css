@@ -11,7 +11,7 @@ body {
 #appTitle {
     grid-column: 1 / span 2;
     text-align: center;
-    background-color: #333;
+    background-color: rgb(102,51,0,1);;
     color: #fff;
     padding: 20px 0;
     border-radius: 8px;
@@ -74,6 +74,12 @@ body {
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mission div {
+    background-color: rgba(128,128,128,0.5);
+    padding: 1px;
+    border-radius: 2px;
 }
 
 .partidaPreview img {

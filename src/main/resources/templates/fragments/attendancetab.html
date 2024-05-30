@@ -12,23 +12,36 @@
             <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).CONFIRMED}">
                 <div th:if="${attendanceuser.user.id != userId}">
                     <li class="attendanceuser_confirmed">
-                        <div th:text="${attendanceuser.user.username}"></div>
+                        <img src="img\accept.png" alt="Accept" class="accept" height="30px">
+                        <a th:text="${attendanceuser.user.username}"></a>
                     </li>
-                </div>      
+                </div>
+                <div th:unless="${attendanceuser.user.id != userId}">
+                    <li class="attendanceuser_denied">
+                        <img src="img\accept.png" alt="Accept" class="accept" height="30px">
+                        <a>Tú</a> <!-- Caso en el que es la respuesta del mismo usuario -->
+                    </li>
+                </div>
             </div>
 
             <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).DENIED}">
                 <div th:if="${attendanceuser.user.id != userId}">
                     <li class="attendanceuser_denied">
-                        <div th:text="${attendanceuser.user.username}"></div>
+                        <img src="img\cancel.png" alt="Cancel" class="deny" height="30px">
+                        <a th:text="${attendanceuser.user.username}"></a>
+                    </li>
+                </div>
+                <div th:unless="${attendanceuser.user.id != userId}">
+                    <li class="attendanceuser_denied">
+                        <img src="img\cancel.png" alt="Cancel" class="deny" height="30px">
+                        <a>Tú</a> <!-- Caso en el que es la respuesta del mismo usuario -->
                     </li>
                 </div>
             </div>
 
             <div th:if="${attendanceuser.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).PENDING}" >
                 
-
-                <div  th:if="${attendanceuser.user.id == userId}">
+                <div th:if="${attendanceuser.user.id == userId}">
                     <li class="attendanceuser_select">
                         <form th:action="@{/set_attendance}" method="post">
                             <input type="hidden" name="gameId" th:value="${gameId}" style="display: none;"/>
@@ -44,18 +57,19 @@
                             <input type="hidden" name="game_session_id" th:value="${attendanceData.id}" style="display: none;"/>
                             <input type="hidden" name="attendance_value" th:value="'false'" style="display: none;"/>
                             <button>
-                                <img src="img\cancel.png" alt="Accept" class="deny">
+                                <img src="img\cancel.png" alt="Cancel" class="deny">
                             </button>
                         </form>
                     </li>
                 </div>
+                <div th:unless="${attendanceuser.user.id == userId}">
+                    <li class="attendanceuser_pending">
+                        <img src="img\gatoque.jpg" alt="Accept" class="deny" height="30px">
+                        <a th:text="${attendanceuser.user.username}"></a>
+                    </li>
+                </div>
             </div>
 
-            <div th:if="${attendanceuser.user.id != userId}">
-                <li class="attendanceuser_pending">
-                    <div th:text="${attendanceuser.user.username}"></div>
-                </li>
-            </div>
 
         </ul>
     </ul>

@@ -70,7 +70,7 @@
             </div>
             <div class="attendanceslot" th:if="${userIsJoined}">
                 <div th:if="${arethereAnySessions}">
-                    <div th:replace="~{fragments/attendancetab.html :: div(attendancedata = ${attendanceData}, userId = ${userId})}">
+                    <div th:replace="~{fragments/attendancetab.html :: div(attendancedata = ${attendanceData}, userId = ${userId}, gameId = ${game.id})}">
     
                     </div>
                 </div>

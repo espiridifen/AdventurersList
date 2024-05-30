@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.game.Game;
 import es.ucm.fdi.iw.model.gamesession.GameSessionService;
+import es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum;
 
 @Controller
-public class NewGameSession {
+public class GameSessionController {
 
     @Autowired
     EntityManager entityManager;
@@ -66,4 +67,27 @@ public class NewGameSession {
         return "redirect:/game?questID=" + g.getId().toString();
     }
 
+
+    @PostMapping("/set_attendance")
+    @Transactional
+    public String setAttendanceToSession(@RequestParam long gameId,
+                                            @RequestParam Long game_session_id,
+                                            @RequestParam boolean attendance_value) {
+
+        User u = (User) httpSession.getAttribute("u");
+        Game g = entityManager.find(Game.class, gameId);
+
+        AttendanceResponseEnum att = attendance_value ? AttendanceResponseEnum.CONFIRMED : AttendanceResponseEnum.DENIED;
+
+        if (g != null) {
+        // Update the PENDING value to CONFIRMED
+        entityManager.createQuery("UPDATE SessionAttendance sa SET sa.response = :confirmedStatus WHERE sa.gameSession.id = :gameSessionId AND sa.user.id = :userId")
+                    .setParameter("confirmedStatus", att)
+                    .setParameter("gameSessionId", game_session_id)
+                    .setParameter("userId", u.getId())
+                    .executeUpdate();
+        }
+
+        return "redirect:/game?questID=" + g.getId().toString();
+    }
 }

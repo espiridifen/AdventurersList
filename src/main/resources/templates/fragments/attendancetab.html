@@ -30,13 +30,19 @@
 
                 <div  th:if="${attendanceuser.user.id == userId}">
                     <li class="attendanceuser_select">
-                        <form action="accept" method="post">
+                        <form th:action="@{/set_attendance}" method="post">
+                            <input type="hidden" name="gameId" th:value="${gameId}" style="display: none;"/>
+                            <input type="hidden" name="game_session_id" th:value="${attendanceData.id}" style="display: none;"/>
+                            <input type="hidden" name="attendance_value" th:value="'true'" style="display: none;"/>
                             <button>
                                 <img src="img\accept.png" alt="Accept" class="accept">
                             </button>
                         </form>
                         <div th:text="${attendanceuser.user.username}"></div>
-                        <form action="deny" method="post">
+                        <form th:action="@{/set_attendance}" method="post">
+                            <input type="hidden" name="gameId" th:value="${gameId}" style="display: none;"/>
+                            <input type="hidden" name="game_session_id" th:value="${attendanceData.id}" style="display: none;"/>
+                            <input type="hidden" name="attendance_value" th:value="'false'" style="display: none;"/>
                             <button>
                                 <img src="img\cancel.png" alt="Accept" class="deny">
                             </button>

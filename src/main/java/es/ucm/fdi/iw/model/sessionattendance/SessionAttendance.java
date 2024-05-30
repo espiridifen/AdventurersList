@@ -1,6 +1,5 @@
 package es.ucm.fdi.iw.model.sessionattendance;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;

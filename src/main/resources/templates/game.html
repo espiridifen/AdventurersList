@@ -89,7 +89,7 @@
             <div class="button_container">
                 
                         <div>
-                            <form th:action="@{/newgamesession}" method="get" th:if="${isAdmin}" style="grid-area: 1 /1 / 2/ 1;">
+                            <form th:action="@{/newgamesession}" method="get" th:if="${isOwner}" style="grid-area: 1 /1 / 2/ 1;">
                                 <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
                                 <button id="newSessionButton">Crear nueva sesión</button>
                             </form>
@@ -98,7 +98,7 @@
                             <button id="joinLeaveButton" onclick="joinOrLeaveGame()" style="grid-area: 1 /1 / 2/ 2;">Unirte a la partida</button>
 
                         </div>
-                        <form th:action="@{/game/deleteGame}" method="post" th:if="${isAdmin}" style="grid-area: 1 /2 / 2/ 2;">
+                        <form th:action="@{/game/deleteGame}" method="post" th:if="${isOwner}" style="grid-area: 1 /2 / 2/ 2;">
                             <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
                             <button id="deleteGameButton">Borrar partida</button>
                         </form>
@@ -126,7 +126,7 @@
             <b>Próximas sesiones</b> <br/>
             <ul>
                 <li th:each="eachsession : ${allSessions}">
-                    <div th:replace="~{fragments/session.html :: div(eachsession=${eachsession})}"></div>
+                    <div th:replace="~{fragments/session.html :: div(eachsession=${eachsession}, isOwner=${isOwner})}"></div>
                 </li>
             </ul>
         </div>

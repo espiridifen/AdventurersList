@@ -5,6 +5,7 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.game.Game;
+import es.ucm.fdi.iw.model.gamesession.GameSession;
 import es.ucm.fdi.iw.model.gamesession.GameSessionService;
 import es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum;
 
@@ -23,6 +25,12 @@ public class GameSessionController {
 
     @Autowired
     EntityManager entityManager;
+
+    @Autowired
+    HttpSession httpSession;
+
+    @Autowired
+    private GameSessionService gameSessionService;
 
     @GetMapping("/newgamesession")
     @Transactional
@@ -37,12 +45,6 @@ public class GameSessionController {
 
         return "newgamesession.html";
     }
-
-    @Autowired
-    HttpSession httpSession;
-
-    @Autowired
-    private GameSessionService gameSessionService;
 
     @PostMapping("/createNewGameSession")
     @Transactional
@@ -67,7 +69,6 @@ public class GameSessionController {
         return "redirect:/game?questID=" + g.getId().toString();
     }
 
-
     @PostMapping("/set_attendance")
     @Transactional
     public String setAttendanceToSession(@RequestParam long gameId,
@@ -89,5 +90,50 @@ public class GameSessionController {
         }
 
         return "redirect:/game?questID=" + g.getId().toString();
+    }
+
+    @GetMapping("/editSession")
+    @Transactional
+    public String getModifySession(Model model, @RequestParam long sessionId) {
+
+        User u = (User) httpSession.getAttribute("u");
+        GameSession gs = entityManager.find(GameSession.class, sessionId);
+        long ownerId = gs.getGame().getOwner().getId();
+
+        if (ownerId != u.getId()) return "error";
+
+        model.addAttribute("session", gs);
+
+        return "editsession.html";
+    }
+
+    @PostMapping("/editSession")
+    @Transactional
+    public String postModifySession(@RequestParam Long id,
+                                @RequestParam String title,
+                                @RequestParam String date,
+                                @RequestParam String location,
+                                @RequestParam String linkToGame) {
+
+        User u = (User) httpSession.getAttribute("u");
+        GameSession gs = entityManager.find(GameSession.class, id);
+        long ownerId = gs.getGame().getOwner().getId();
+
+        if (ownerId != u.getId()) return "error";
+
+        LocalDateTime parsedDate;
+        try {
+            parsedDate = LocalDateTime.parse(date);
+        } catch (DateTimeParseException e) {
+            return "error";
+        }
+
+        // Update the GameSession entity
+        gs.setTitle(title);
+        gs.setDate(parsedDate);
+        gs.setLocation(location);
+        gs.setLinkToGame(linkToGame);
+
+        return "redirect:/game?questID=" + gs.getGame().getId().toString();
     }
 }

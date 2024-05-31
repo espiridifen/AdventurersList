@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventurer's List: Nombre de la Partida</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include the meta tag for CSRF token -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
+<link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
+<body class="background">
+    <div>
+        <a>Modificando sesión: <a th:text="${session.name}"></a></a>
+        <form th:action="editSession" method="post">
+            <input type="hidden" name="id" th:field="${session.id}" style="display: none;"/>
+            Nombre de la sesión<br/>
+            <input type="text" name="title" th:field="${session.title}"/><br/>
+            Cuándo va a ser la nueva sesión?<br/>
+            <input type="datetime-local" name="date" th:field="${session.date}"/><br/>
+            Dónde va a ser la sesión?<br/>
+            <input type="text" name="location" th:field="${session.location}"/><br/>
+            URL de la sesión<br/>
+            <input type="text" name="linkToGame" th:field="${session.linkToGame}"/><br/>
+            <button
+                type="submit"
+                class="btn btn-primary">
+                Enviar
+            </button>
+            
+        </form>
+    </div>
+
+</body>
+
+</html>

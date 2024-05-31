@@ -123,7 +123,7 @@ public class GameController {
             model.addAttribute("arethereAnySessions", false);
         }
 
-        model.addAttribute("isAdmin", userId == g.getOwner().getId());
+        model.addAttribute("isOwner", userId == g.getOwner().getId());
 
         return "game.html";
     }

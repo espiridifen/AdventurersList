@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import es.ucm.fdi.iw.model.game.Game;
 import es.ucm.fdi.iw.model.sessionattendance.SessionAttendance;
 import lombok.AllArgsConstructor;
@@ -34,6 +36,7 @@ public class GameSession {
 
     private @NotNull String title;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private @NotNull LocalDateTime date;
 
     private @NotNull String location;

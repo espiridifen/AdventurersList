@@ -5,4 +5,8 @@
     <div class="sessionDate" th:text="${eachsession.date}"> Fecha </div>
     <div class="sessionPlace" th:text="${eachsession.location}"> Localización </div>
     <div class="sessionPlace" th:if="${eachsession.linkToGame}"> <a>URL: </a> <a th:text="${eachsession.linkToGame}"> TextoURL </a> </div>
+    <form th:if="${isOwner}" th:action="@{/editSession}" method="get">
+        <input type="hidden" name="sessionId" th:value="${eachsession.id}" style="display: none;"/>
+        <button>Modificar</button>
+    </form>
 </div>

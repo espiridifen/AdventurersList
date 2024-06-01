@@ -22,12 +22,18 @@ VALUES (0, '2024-04-01T23:55:56', 'hola', 1, 1);
 -- GameSessions
 INSERT INTO gamesession (date, location, title, game_id, link_to_game)
 VALUES ('2024-04-01T23:55:56', 'online!', 'Sesion numero 1',1, 'example.com');
+INSERT INTO gamesession (date, location, title, game_id)
+VALUES ('2024-07-01T13:30:00', 'online!', 'La segunda sesion!',1);
 
--- SessionAttendance - Add both users to the first game
+-- SessionAttendance - Add both users to the first and second sessions
 INSERT INTO sessionatendance (user_id, game_session_id, response)
-VALUES (1, 1, 2);
+VALUES (1, 1, 0);
 INSERT INTO sessionatendance (user_id, game_session_id, response)
-VALUES (2, 1, 2);
+VALUES (2, 1, 0);
+INSERT INTO sessionatendance (user_id, game_session_id, response)
+VALUES (1, 2, 2);
+INSERT INTO sessionatendance (user_id, game_session_id, response)
+VALUES (2, 2, 2);
 
 INSERT INTO message (id, date_sent, text, game_recipient_id, sender_id)
 VALUES (1, '2024-04-01T23:58:56', 'que tal', 1, 2);

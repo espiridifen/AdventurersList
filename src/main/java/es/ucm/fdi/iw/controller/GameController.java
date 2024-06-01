@@ -99,29 +99,28 @@ public class GameController {
         model.addAttribute("userIsJoined", !gj.isEmpty()); // User has joined the game if there is some result in the
                                                            // query
         model.addAttribute("userId", userId);
-        // get the earliest gameSession
-        TypedQuery<GameSession> sessionQuery = entityManager.createQuery(
-                "select gs from GameSession gs where gs.game.id = :gameId order by gs.date asc",
-                GameSession.class);
-        sessionQuery.setParameter("gameId", gameId);
-        sessionQuery.setMaxResults(1);
-        // also get all sessions
-        TypedQuery<GameSession> allsessionQuery = entityManager.createQuery(
-                "select gs from GameSession gs where gs.game.id = :gameId order by gs.date asc",
-                GameSession.class);
-        allsessionQuery.setParameter("gameId", gameId);
+        
+        // Query for past sessions
+        TypedQuery<GameSession> prevSessionsQuery = entityManager.createQuery(
+            "select gs from GameSession gs where gs.game.id = :gameId and gs.date < CURRENT_TIMESTAMP order by gs.date asc",
+            GameSession.class);
+        prevSessionsQuery.setParameter("gameId", gameId);
+        List<GameSession> prevSessions = prevSessionsQuery.getResultList();
 
-        try {
-            GameSession gs = sessionQuery.getSingleResult();
-            model.addAttribute("attendanceData", gs);
+        // Query for upcoming sessions
+        TypedQuery<GameSession> upcomingSessionsQuery = entityManager.createQuery(
+            "select gs from GameSession gs where gs.game.id = :gameId and gs.date >= CURRENT_TIMESTAMP order by gs.date asc",
+            GameSession.class);
+        upcomingSessionsQuery.setParameter("gameId", gameId);
+        List<GameSession> upcomingSessions = upcomingSessionsQuery.getResultList();
 
-            List<GameSession> allSessions = allsessionQuery.getResultList();
-            model.addAttribute("allSessions", allSessions);
+        model.addAttribute("prev_sessions", prevSessions);
+        model.addAttribute("upcoming_sessions", upcomingSessions);
 
-            model.addAttribute("arethereAnySessions", true);
-        } catch (NoResultException e) {
-            model.addAttribute("arethereAnySessions", false);
-        }
+        if (prevSessions.size() > 0) model.addAttribute("arethereAnyPrevSessions", true);
+        else model.addAttribute("arethereAnyPrevSessions", false);
+        if (upcomingSessions.size() > 0) model.addAttribute("arethereAnyUpcomingSessions", true);
+        else model.addAttribute("arethereAnyUpcomingSessions", false);
 
         model.addAttribute("isOwner", userId == g.getOwner().getId());
 

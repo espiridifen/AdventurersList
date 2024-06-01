@@ -100,7 +100,7 @@ public class GameSessionController {
         GameSession gs = entityManager.find(GameSession.class, sessionId);
         long ownerId = gs.getGame().getOwner().getId();
 
-        if (ownerId != u.getId()) return "error";
+        if (ownerId != u.getId() || gs.getDate().isBefore(LocalDateTime.now())) return "error";
 
         model.addAttribute("session", gs);
 
@@ -119,7 +119,7 @@ public class GameSessionController {
         GameSession gs = entityManager.find(GameSession.class, id);
         long ownerId = gs.getGame().getOwner().getId();
 
-        if (ownerId != u.getId()) return "error";
+        if (ownerId != u.getId() || gs.getDate().isBefore(LocalDateTime.now())) return "error";
 
         LocalDateTime parsedDate;
         try {

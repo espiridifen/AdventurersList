@@ -68,12 +68,9 @@
                     
                 </div>
             </div>
-            <div class="attendanceslot" th:if="${userIsJoined}">
-                <div th:if="${arethereAnySessions}">
-                    <div th:replace="~{fragments/attendancetab.html :: div(attendancedata = ${attendanceData}, userId = ${userId}, gameId = ${game.id})}">
-    
-                    </div>
-                </div>
+            <!-- Sesion proxima -->
+            <div class="attendanceslot" th:if="${userIsJoined and arethereAnyUpcomingSessions}">
+                <div th:replace="~{fragments/attendancetab.html :: div(attendancedata=${upcoming_sessions[0]}, userId=${userId}, gameId=${game.id})}"></div>
             </div>
             <div class="location">
                 Dónde se juega
@@ -88,28 +85,28 @@
             </div>
             <div class="button_container">
                 
-                        <div>
-                            <form th:action="@{/newgamesession}" method="get" th:if="${isOwner}" style="grid-area: 1 /1 / 2/ 1;">
-                                <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
-                                <button id="newSessionButton">Crear nueva sesión</button>
-                            </form>
-                        </div>
-                        <div style="grid-area: 1 /1 / 2/ 2;">
-                            <button id="joinLeaveButton" onclick="joinOrLeaveGame()" style="grid-area: 1 /1 / 2/ 2;">Unirte a la partida</button>
+                <div>
+                    <form th:action="@{/newgamesession}" method="get" th:if="${isOwner}" style="grid-area: 1 /1 / 2/ 1;">
+                        <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
+                        <button id="newSessionButton">Crear nueva sesión</button>
+                    </form>
+                </div>
+                <div style="grid-area: 1 /1 / 2/ 2;">
+                    <button id="joinLeaveButton" onclick="joinOrLeaveGame()" style="grid-area: 1 /1 / 2/ 2;">Unirte a la partida</button>
 
-                        </div>
-                        <form th:action="@{/game/deleteGame}" method="post" th:if="${isOwner}" style="grid-area: 1 /2 / 2/ 2;">
-                            <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
-                            <button id="deleteGameButton">Borrar partida</button>
-                        </form>
-                        <form th:action="@{/newGameReport}" method="get">
-                            <input type="hidden" name="questID" th:value="${game.id}" style="display: none;"/>
-                            <button id="reportGameButton">Reportar partida</button>
-                        </form>
-                        <form th:action="@{/editGame}" method="get" th:if="${isOwner}">
-                            <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
-                            <button>Editar partida</button>
-                        </form>
+                </div>
+                <form th:action="@{/game/deleteGame}" method="post" th:if="${isOwner}" style="grid-area: 1 /2 / 2/ 2;">
+                    <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
+                    <button id="deleteGameButton">Borrar partida</button>
+                </form>
+                <form th:action="@{/newGameReport}" method="get">
+                    <input type="hidden" name="questID" th:value="${game.id}" style="display: none;"/>
+                    <button id="reportGameButton">Reportar partida</button>
+                </form>
+                <form th:action="@{/editGame}" method="get" th:if="${isOwner}">
+                    <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
+                    <button>Editar partida</button>
+                </form>
                
             </div>
         </div>
@@ -126,13 +123,23 @@
                 <button id="sendMessageButton" type="submit">Enviar</button>
             </form>
         </div>
-        <div class="sessionList">
-            <b>Próximas sesiones</b> <br/>
-            <ul>
-                <li th:each="eachsession : ${allSessions}">
-                    <div th:replace="~{fragments/session.html :: div(eachsession=${eachsession}, isOwner=${isOwner})}"></div>
-                </li>
-            </ul>
+        <div class="sessionList" th:if="${userIsJoined}">
+            <div th:if="${arethereAnyUpcomingSessions}">
+                <b>Próximas sesiones</b> <br/>
+                <ul>
+                    <li th:each="eachsession : ${upcoming_sessions}">
+                        <div th:replace="~{fragments/session.html :: div(eachsession=${eachsession}, isOwner=${isOwner}, modifiable=${true})}"></div>
+                    </li>
+                </ul>
+            </div>
+            <div th:if="${arethereAnyPrevSessions}">
+                <b>Sesiones previas</b> <br/>
+                <ul>
+                    <li th:each="eachsession : ${prev_sessions}">
+                        <div th:replace="~{fragments/session.html :: div(eachsession=${eachsession}, isOwner=${isOwner}, modifiable=${false})}"></div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 

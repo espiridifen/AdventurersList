@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import es.ucm.fdi.iw.model.GameJoin;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Transferable;
@@ -40,6 +42,7 @@ public class Game implements Transferable<Game.Transfer> {
 
     private @NotNull ExperienceEnum experience;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private @NotNull LocalDateTime date;
 
     private @NotNull GameSystemEnum gamesystem;

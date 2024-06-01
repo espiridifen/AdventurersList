@@ -106,6 +106,10 @@
                             <input type="hidden" name="questID" th:value="${game.id}" style="display: none;"/>
                             <button id="reportGameButton">Reportar partida</button>
                         </form>
+                        <form th:action="@{/editGame}" method="get" th:if="${isOwner}">
+                            <input type="hidden" name="gameId" th:value="${game.id}" style="display: none;"/>
+                            <button>Editar partida</button>
+                        </form>
                
             </div>
         </div>

@@ -120,12 +120,14 @@
                 </li>
             </ul> 
         </div>
+
         <div id="sendMessageForm" class="sendMessageButtonClass">
-            <form id="actualSendMessageForm" method="post"action="/game/sendMessage">
-                <input type="text" id="message" name="message"/>
-                <button id="sendMessageButton" type="submit">Enviar</button>
+            <form id="sendForm" action="/game/sendMessage" method="post">
+                <input type="text" id="message" name="message" />
+                <button type="submit" id="sendMessageButton">Enviar</button>
             </form>
         </div>
+
         <div class="sessionList">
             <b>Próximas sesiones</b> <br/>
             <ul>
@@ -150,11 +152,11 @@
 
         function connectWebsocket() {
             if (isJoined) {
-                ws.subscribe("/game/"+parsedGameId+"/queue/updates")
+                ws.subscribe("/game/" + parsedGameId + "/queue/updates")
                 ws.receive = (text) => {
                     console.log("Mensaje recibido:")
                     console.log(text);
-                    getAllMessages();
+                    addNewMessage(text);
                 }
             }
         }
@@ -163,64 +165,74 @@
             setTimeout(getAllMessages, 1000);
         });
 
+        const messageForm = document.getElementById('sendForm');
+        console.log(messageForm)
+
+
+        var sendMessage = function () {
+
+                    var message = $("#message").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/game/sendMessage",
+                        data: {
+                            gameId: parsedGameId,
+                            message: message,
+                            [header]: token
+                        },
+                        success: function (data) {
+                            console.log("Message sent successfully");
+                            $("#message").val(""); // Clear the textbox
+                            // Optionally update the message board with the new message
+                            //getAllMessages();
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error sending message: " + xhr.statusText);
+                        }
+                    });
+                }
+
         
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             updateButtonText(isJoined);
             
-            var form = document.getElementById("actualSendMessageForm");
-            form.addEventListener("submit", sendMessageFunction, true);
-
-            function sendMessageFunction() {
-                event.preventDefault();
-                var message = $("#message").val();
-
-                $.ajax({
-                    type: "POST",
-                    url: "/game/sendMessage",
-                    data: {
-                        gameId: parsedGameId,
-                        message: message,
-                        [header]: token
-                    },
-                    success: function(data) {
-                        console.log("Message sent successfully");
-                        $("#message").val(""); // Clear the textbox
-                        // Optionally update the message board with the new message
-                        getAllMessages();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error sending message: " + xhr.statusText);
-                    }
-                });
-            };
+            messageForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log("i tried to stop this!");
+            sendMessage();
+            return false;
+            });
+            //$("#sendMessageButton").click( sendMessage );
         });
 
         function joinOrLeaveGame() {
             var url = isJoined ? "/game/leave" : "/game/join";
-            
+
             $.ajax({
                 type: "POST",
                 url: url,
-                data: { 
+                data: {
                     gameId: parsedGameId,
                     [header]: token
                 },
-                success: function(data) {
+                success: function (data) {
                     // Handle success
                     isJoined = !isJoined; // Toggle join status
                     updateButtonText(isJoined);
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     // Handle error
                 }
             });
-            
+
             if (!isJoined) {
-                ws.subscribe("/game/"+parsedGameId+"/queue/updates")
+                ws.subscribe("/game/" + parsedGameId + "/queue/updates")
             }
             else {
-                ws.stompClient.unsubscribe("/game/"+parsedGameId+"/queue/updates")
+                ws.stompClient.unsubscribe("/game/" + parsedGameId + "/queue/updates")
             }
         }
 
@@ -228,12 +240,12 @@
             $.ajax({
                 type: "GET",
                 url: "/game/received",
-                data: { 
+                data: {
                     gameId: parsedGameId,
                     [header]: token
                 },
-                success: function(data) {
-                    
+                success: function (data) {
+
                     console.log(data.length);
                     if (data.length == currentMessageCount) {
                         return;
@@ -241,7 +253,7 @@
                     // Handle success
                     console.log("Received the following messages:");
                     cleanMessageBoard();
-                    data.forEach(function(message) {
+                    data.forEach(function (message) {
                         // console.log("From:", message.from);
                         // console.log("FromID:", message.fromId);
                         // console.log("To:", message.to);
@@ -250,8 +262,8 @@
                         // console.log("Text:", message.text);
                         // console.log("ID:", message.id);
                         // console.log("---");
-                        
-                        
+
+
                         var messageDiv = createMessageHTML(message);
                         updateMessageBoard(messageDiv);
                         // var messageDiv =
@@ -265,12 +277,18 @@
                         // ;
                     });
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     // Handle error
                 }
             });
         }
 
+        function addNewMessage(text){
+            console.log("adding new:")
+            console.log(text);
+            var newMessage = createMessageHTML(text);
+            updateMessageBoard(newMessage);
+        }
 
         function updateButtonText(isJoined) {
             if (isJoined) {
@@ -287,16 +305,16 @@
             $("#joinLeaveButton").text(buttonText);
         }
 
-        function createMessageHTML(messageData){
+        function createMessageHTML(messageData) {
             var messageDiv = document.createElement("div");
             messageDiv.classList.add("messageContainer");
 
             var profilePicture = document.createElement("img");
             profilePicture.setAttribute("alt", "User Profile Picture");
             profilePicture.classList.add("profilePicture");
-            profilePicture.id = "profile-picture-" + messageData.id;
+            profilePicture.id = "profile-picture-" + messageData.fromId;
             profilePicture.setAttribute("src", "img/gatoque.jpg");
-            fetchUserProfilePicture(messageData.fromId, messageData.id);
+            fetchUserProfilePicture(messageData.fromId);
 
             var textDiv = document.createElement("div");
             textDiv.classList.add("text");
@@ -318,13 +336,13 @@
             return messageDiv;
 
         }
-        function fetchUserProfilePicture(userId, id) {
+        function fetchUserProfilePicture(userId) {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "/user/" + userId + "/pic", true);
             xhr.responseType = "blob";
-            xhr.onload = function() {
+            xhr.onload = function () {
                 if (xhr.status === 200) {
-                    var img = document.getElementById("profile-picture-" + id);
+                    var img = document.getElementById("profile-picture-" + userId);
                     img.src = URL.createObjectURL(xhr.response);
                 } else {
                     console.error("Failed to load profile picture for user ID " + userId);

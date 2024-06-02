@@ -1,11 +1,19 @@
-<div th:fragment="div(eachsession)" class="sessionClass" >
+<div th:fragment="div(eachsession, isOwner, modifiable)" class="sessionClass" >
     <link rel="stylesheet" href="../static/session.css" th:href="@{/css/session.css}">
 
     <div class="sessionTitle" th:text="${eachsession.title}"> Título </div>
     <div class="sessionDate" th:text="${eachsession.date}"> Fecha </div>
     <div class="sessionPlace" th:text="${eachsession.location}"> Localización </div>
     <div class="sessionPlace" th:if="${eachsession.linkToGame}"> <a>URL: </a> <a th:text="${eachsession.linkToGame}"> TextoURL </a> </div>
-    <form th:if="${isOwner}" th:action="@{/editSession}" method="get">
+    <div th:if="${not modifiable}">
+        <h4>Usuarios que asistieron:</h4>
+        <div th:each="attendee : ${eachsession.attendeesResponses}">
+            <div th:if="${attendee.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).CONFIRMED}">
+                <p th:text="${attendee.user.username}">Attendee Name</p>
+            </div>
+        </div>
+    </div>
+    <form th:if="${isOwner and modifiable}" th:action="@{/editSession}" method="get">
         <input type="hidden" name="sessionId" th:value="${eachsession.id}" style="display: none;"/>
         <button>Modificar</button>
     </form>

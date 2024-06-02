@@ -135,7 +135,6 @@ public class NewGameController {
                 log.warn("Error uploading " + g.getId() + " ", e);
             }
         }
-        
 
         return "redirect:/game?questID=" + g.getId().toString();
     }

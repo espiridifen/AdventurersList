@@ -64,7 +64,7 @@
                 </div>
                 <div th:unless="${attendanceuser.user.id == userId}">
                     <li class="attendanceuser_pending">
-                        <img src="img\gatoque.jpg" alt="Accept" class="deny" height="30px">
+                        <img src="img\pending.png" alt="Accept" class="deny" height="30px">
                         <a th:text="${attendanceuser.user.username}"></a>
                     </li>
                 </div>

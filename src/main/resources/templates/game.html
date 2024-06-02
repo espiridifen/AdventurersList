@@ -229,6 +229,7 @@
                     // Handle success
                     isJoined = !isJoined; // Toggle join status
                     updateButtonText(isJoined);
+                    connectWebsocket();
                 },
                 error: function (xhr, status, error) {
                     // Handle error

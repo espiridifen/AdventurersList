@@ -319,9 +319,9 @@
             var profilePicture = document.createElement("img");
             profilePicture.setAttribute("alt", "User Profile Picture");
             profilePicture.classList.add("profilePicture");
-            profilePicture.id = "profile-picture-" + messageData.fromId;
-            profilePicture.setAttribute("src", "img/gatoque.jpg");
-            fetchUserProfilePicture(messageData.fromId);
+            profilePicture.id = "profile-picture-" + messageData.id + "-" + messageData.fromId;
+            // profilePicture.setAttribute("src", "img/gatoque.jpg");
+            fetchUserProfilePicture(messageData.id, messageData.fromId);
 
             var textDiv = document.createElement("div");
             textDiv.classList.add("text");
@@ -343,13 +343,14 @@
             return messageDiv;
 
         }
-        function fetchUserProfilePicture(userId) {
+        function fetchUserProfilePicture(messageId, userId) {
             var xhr = new XMLHttpRequest();
+            console.log("Pidiendo imagen del user " + userId);
             xhr.open("GET", "/user/" + userId + "/pic", true);
             xhr.responseType = "blob";
             xhr.onload = function () {
                 if (xhr.status === 200) {
-                    var img = document.getElementById("profile-picture-" + userId);
+                    var img = document.getElementById("profile-picture-" + messageId + "-" + userId);
                     img.src = URL.createObjectURL(xhr.response);
                 } else {
                     console.error("Failed to load profile picture for user ID " + userId);

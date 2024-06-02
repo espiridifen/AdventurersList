@@ -188,7 +188,7 @@ public class GameController {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-            json = mapper.writeValueAsString(m);
+            json = mapper.writeValueAsString(m.toTransfer());
         } catch (Exception e) {
             log.info(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");

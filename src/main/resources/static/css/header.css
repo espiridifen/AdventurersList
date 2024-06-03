@@ -1,0 +1,21 @@
+.navprofile {
+    max-height: 50px;
+    max-width: 50px;
+}
+
+.navBG {
+    background-image: url("../img/wood_texture_kuwahara_dark.png");
+    color: bisque;
+}
+
+.navText {
+    color: bisque;
+}
+
+.navButton {
+    background-image: url("../img/wood_texture_kuwahara.png");
+    border-color: black;
+    border-width: 3px;
+    color: bisque;
+    margin: 0 10px 0 10px;
+}

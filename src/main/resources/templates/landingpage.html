@@ -5,21 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/index.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="../static/css/bootstrap-5.1.3.css" th:href="@{/css/bootstrap-5.1.3.css}">
     <title>Página Principal</title>
 </head>
 <body class="background">
 
-    
+<header th:replace="fragments/header :: header"></header>
 
 <div class = "container">
     
-    <div id="contentBox" class="missions-table">
-        <div id="appTitle">
-            <h1>Adventurer's List</h1>
+    
+
+
+<div id="contentBox" class="missions-table">
+        
+        <div id="landingContainer">
+            
+            <h1 class="landingTitle">Mis Partidas</h1>
+                
+            <form th:action="@{/newGame}" method="get" class="landingCreateGame">
+                <!-- <input type="hidden" name="userID" value="${user.id}"/> --> 
+                <button  name="createGame" >
+                    <div class="absolute-div div1"><h3>Crear nueva campaña</h3></div>
+                </button>
+            </form>
+
         </div>
-        <div th:replace="~{fragments/missionsButtons.html :: missionsButtons}">
-            no funcó :(
-        </div>
+    
         <ul class="mission-list">
             <li th:each="quest : ${availableQuests}">
                 <div th:replace="fragments/quest :: form(quest=${quest})"></div>
@@ -33,14 +45,7 @@
                     </button>
                 </form> -->
             </li>
-            <li>
-                <form th:action="@{/newGame}" method="get">
-                    <!-- <input type="hidden" name="userID" value="${user.id}"/> --> 
-                    <button id="partidapreview" name="createGame" class="mission createQuest">
-                        <div class="absolute-div div1"><h3>Crear nueva <br/> campaña</h3></div>
-                    </button>
-                </form>
-            </li>
+            
         </ul>
         </div>
     </div>

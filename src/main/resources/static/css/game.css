@@ -210,3 +210,16 @@ margin-bottom: 20px;
     cursor: pointer;
     font-size: 48px;
 }
+
+#landingContainer{
+    display: grid;
+    grid-template-columns: 40% auto 20%;
+}
+
+.landingTitle {
+    grid-column: 1 / 2;
+}
+
+.landingCreateGame {
+    grid-column: 3 / 4;
+}

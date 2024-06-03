@@ -89,3 +89,16 @@ body {
     height: 100px;
     border-radius: 8px;
 }
+
+#landingContainer{
+    display: grid;
+    grid-template-columns: 40% auto 20%;
+}
+
+.landingTitle {
+    grid-column: 1 / 2;
+}
+
+.landingCreateGame {
+    grid-column: 3 / 4;
+}

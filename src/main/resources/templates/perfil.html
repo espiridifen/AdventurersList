@@ -1,72 +1,73 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
+    <th:block th:replace="fragments/head :: header" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="perfil.css" th:href="@{/css/perfil.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
     <title>Perfil de Usuario</title>
     <!-- Include the meta tag for CSRF token -->
     <meta name="_csrf" th:content="${_csrf.token}" />
     <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
+
 <body class="background">
-    <div class="container">
-        <div class="profile-module">
-            <img th:src="@{'user/' + ${userId} + '/pic'}" alt="Profile Picture" class="profile-picture">
-            <div class="username" th:text="${username}">Nombre de Usuario</div>
-        </div>
-        <div class="missions-table">
+    <header th:replace="fragments/header :: header"></header>
+    <div class="profilecontainer">
 
-            <div id="viewButtons">
-                <div th:replace="~{fragments/missionsButtons.html :: missionsButtons}">
-                    no funcó :(
-                </div>
-            </div>
-            <div class="sidebar">
-                <h3>Opciones de Configuración</h3>
-                <ul class="options">
-                    <li class="option">
-                        <div>
-                            Cambiar foto de perfil
-                            <form th:action="@{ 'user/' + ${userId} + '/pic'}" method="post" enctype="multipart/form-data">
-                                <input type="file" name="photo" accept=".png">
-                                <button type="submit">Subir</button>
-                            </form>
-                        </div>
-                    </li>
-                    <!-- <li class="option">Configuración 2</li>
+
+        <img th:src="@{'user/' + ${userId} + '/pic'}" alt="Profile Picture" class="profile-picture profilepic">
+        <div class="profilename" th:text="${username}">Nombre de Usuario</div>
+
+
+
+        <div class="sidebar profilesettings">
+            <h3>Opciones de Configuración</h3>
+            <ul class="options">
+                <li class="option">
+                    <div>
+                        Cambiar foto de perfil
+                        <form th:action="@{ 'user/' + ${userId} + '/pic'}" method="post" enctype="multipart/form-data">
+                            <input type="file" name="photo" accept=".png">
+                            <button type="submit">Subir</button>
+                        </form>
+                    </div>
+                </li>
+                <!-- <li class="option">Configuración 2</li>
                     <li class="option">Configuración 3</li> -->
-                </ul>
-            </div>
-            
-            
-            <div >
-                <h2>Partidas Activas</h2>
-                <ul class="mission-list">
-                    <li th:each="quest : ${availableQuests}">
-                        <div th:replace="fragments/quest :: form(quest=${quest})"></div>
-                    </li>
-                </ul>
-            </div>
-            <div th:if="${isAdmin}"> <!-- aqui va el check de si es admin -->
-                Mensajes enviados en <br/>
-                <ul th:each="chatlog : ${chatLogs}">
-                    <li>
+            </ul>
+        </div>
 
-                        <div>
-                        <div th:text = '${chatlog.game.name}'>Nombre de la partida</div>
-                            <ul th:each="msg : ${chatlog.messages}">
-                                <li>
-                                    <div th:replace="~{fragments/message.html :: div(message=${msg})}"></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+
+        <div>
+            <h2>Partidas Activas</h2>
+            <ul class="mission-list">
+                <li th:each="quest : ${availableQuests}">
+                    <div th:replace="fragments/quest :: form(quest=${quest})"></div>
+                </li>
+            </ul>
         </div>
+        <div th:if="${isAdmin}"> <!-- aqui va el check de si es admin -->
+            Mensajes enviados en <br />
+            <ul th:each="chatlog : ${chatLogs}">
+                <li>
+
+                    <div>
+                        <div th:text='${chatlog.game.name}'>Nombre de la partida</div>
+                        <ul th:each="msg : ${chatlog.messages}">
+                            <li>
+                                <div th:replace="~{fragments/message.html :: div(message=${msg})}"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </body>
-    </html>
-    
+
+    </div>
+</body>
+
+</html>

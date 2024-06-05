@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
 <link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
 <body class="background">
+    <header th:replace="fragments/header :: header"></header>
     <div class="missions-table">
         <form th:action="createNewGame" method="post" enctype="multipart/form-data">
             Nombre de la partida<br/>

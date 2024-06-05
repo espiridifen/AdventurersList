@@ -16,18 +16,14 @@
 <link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
 
 <body class="background">
-    <div class="missions-table" style="width: 90%; margin-left: 5%; margin-top: 5%;">
+    <header th:replace="fragments/header :: header"></header>
         <div id="appTitle">
             <a href="landingpage.html" th:href="@{/}">
                 <button>Adventurer's List</button>
             </a>
         </div>
         <div class="game_container">
-            <div id="viewButtons">
-                <div th:replace="~{fragments/missionsButtons.html :: missionsButtons}">
-                    no funcó :(
-                </div>
-            </div>
+            
             <div class="image_container">
                 <img th:src="@{'game/' + ${game.id} + '/pic'}"/>
             </div>

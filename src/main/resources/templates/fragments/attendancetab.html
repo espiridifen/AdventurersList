@@ -1,5 +1,6 @@
 <div th:fragment= "div(attendancedata, userId, gameId)" class="attendancetab">
-    <link rel="stylesheet" href="../static/attendance.css" th:href="@{@{/css/attendance.css}}">
+    <div class="attendancepaper">
+        <link rel="stylesheet" href="../static/attendance.css" th:href="@{@{/css/attendance.css}}">
     <ul>
         <li class="attendancetitle">
             <div th:text="${attendancedata.title}"></div>
@@ -73,4 +74,6 @@
 
         </ul>
     </ul>
+    </div>
+    
 </div>

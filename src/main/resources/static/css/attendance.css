@@ -1,9 +1,14 @@
+.attendancepaper{
+    background: url(../img/quest.png) no-repeat center ;
+    background-size: contain;
+}
+
 .attendancetitle {
     text-align: center;
     font-size: 30px;
     font-weight: bold;
     margin-top: 20px;
-    color: beige;
+    /* color: beige; */
     list-style-type: none;
 }
 
@@ -12,7 +17,7 @@
     font-size: 20px;
     font-weight: bold;
     margin-top: 20px;
-    color: beige;
+    /* color: beige; */
     list-style-type: none;
 }
 
@@ -40,7 +45,7 @@
     font-size: 20px;
     font-weight: bold;
     margin-top: 20px;
-    color: gainsboro;
+    /* color: gainsboro; */
 }
 
 .attendanceuser_select {
@@ -49,7 +54,7 @@
     font-size: 20px;
     font-weight: bold;
     margin-top: 20px;
-    color: gainsboro;    
+    /* color: gainsboro;     */
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

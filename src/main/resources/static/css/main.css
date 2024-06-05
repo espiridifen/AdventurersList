@@ -1,6 +1,11 @@
 .background {
     background-image: url(../img/stone_texture_kuwahara.png);
 }
+
+.lighttext {
+    color: #f1f1dc;
+}
+
 .missions-table {
     width: 100%;
     border: 10px solid;

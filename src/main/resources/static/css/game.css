@@ -41,7 +41,7 @@ margin-bottom: 20px;
     grid-row-gap: 0px;
     max-width: 90%;
     max-height: 1000px;
-    margin: 50px auto 50px auto;
+    
 }
 
 .image_container {
@@ -222,4 +222,13 @@ margin-bottom: 20px;
 
 .landingCreateGame {
     grid-column: 3 / 4;
+}
+
+.page_background {
+    background-image: url(../img/wood_texture_kuwahara.png);
+    margin: 5% 5% 5% 5%;
+}
+
+.message_container {
+    margin-left: 5%;
 }

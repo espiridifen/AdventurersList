@@ -2,3 +2,6 @@
 
 - Ahora se pueden editar las partidas y las sesiones (incluyendo horarios, imágenes, etc). Solo el Owner del game puede realizar esta acción.
 - Las sesiones ahora se listan según si ya han ocurrido o si son próximas. Las próximas son editables por el Owner mientras que las previas no (lo cual también se verifica en los GET/POST mappings). Están ordenadas según fecha, para que sea más intuitivo de ver. Además, las sesiones previas ahora muestran las personas que han asistido a ella.
+- Ahora hay una cabecera unificada para todas las páginas.
+- En la página de partida, la fuente se ha hecho más clara y ahora hay mejor fondo para la siguiente sesión. Se han añadido también los cambios a los websockets del examen.
+- Ahora hay iconos para los jugadores que todavía no hayan decidido si atenderán o no a la próxima sesión

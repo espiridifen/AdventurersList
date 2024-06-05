@@ -19,13 +19,14 @@
                 Buscar partidas
             </button>
         </a>
-
-        <th:block th:if="${session.u.hasRole('ADMIN')}" class="navAdmin">
-            <a href="admin.html" th:href="@{/admin/}" class="navAdmin">
-                <button th:text="Administrar" class="navButton">
-                    Administrar
-                </button>
-            </a>
+        <th:block th:if="${session.u}" class="navLogin">
+            <th:block th:if="${session.u.hasRole('ADMIN')}" class="navAdmin">
+                <a href="admin.html" th:href="@{/admin/}" class="navAdmin">
+                    <button th:text="Administrar" class="navButton">
+                        Administrar
+                    </button>
+                </a>
+            </th:block>
         </th:block>
         <th:block th:if="${session.u}" class="navLogin">
             <div class="nav-item mx-2 navlogin">

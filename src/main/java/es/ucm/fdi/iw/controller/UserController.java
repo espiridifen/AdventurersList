@@ -89,15 +89,15 @@ public class UserController {
         return Base64.getUrlEncoder().withoutPadding().encodeToString(token); //base64 encoding
     }
 
-    /**
-     * Landing page for a user profile
-     */
-	@GetMapping("{id}")
-    public String index(@PathVariable long id, Model model, HttpSession session) {
-        User target = entityManager.find(User.class, id);
-        model.addAttribute("user", target);
-        return "user";
-    }
+    // /**
+    //  * Landing page for a user profile
+    //  */
+	// @GetMapping("{id}")
+    // public String index(@PathVariable long id, Model model, HttpSession session) {
+    //     User target = entityManager.find(User.class, id);
+    //     model.addAttribute("user", target);
+    //     return "user";
+    // }
 
     /**
      * Alter or create a user

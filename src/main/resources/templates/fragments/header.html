@@ -5,7 +5,7 @@
         <!-- nombre del sitio; es un enlace que lleva a la página ppal -->
         <a class="navbar-brand navTitle" th:href="@{/}" href="/">
             <img th:src="@{/img/gatoque.jpg}" src="/img/gatoque.jpg" alt="Logo AL" width="32" height="32"
-                class="d-inline-block align-text-top navText"> Adventurers List
+                class="d-inline-block align-text-top navText"> Adventurer's List
         </a>
         <!-- menu hamburguesa si no cabe todo -->
         <a th:href="@{/}" href="/" class="navInicio">
@@ -30,7 +30,7 @@
         </th:block>
         <th:block th:if="${session.u}" class="navLogin">
             <div class="nav-item mx-2 navlogin">
-                <a class="nav-link" href="perfil.html" th:href="@{perfil}">
+                <a class="nav-link" th:href="@{'/user/' + ${session.u.id}}">
                     <img class="iwthumb rounded navprofile" th:src="@{/user/{id}/pic(id=${session.u.id})}">
                     <span th:text="${session.u.username}">Pepe</span>
                 </a>

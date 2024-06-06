@@ -1,10 +1,18 @@
-
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="form(quest)">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">  
+</head>
+<body>
     <form th:fragment="form(quest)" th:action="@{/quest}" method="get">
         <input type="hidden" name="questID" th:value="${quest.id}"/>
         <button id="partidapreview" class="mission container">
-            <div th:text="${quest.name}"><h2>Nombre de la campaña</h2></div>
-            <img th:src="@{'game/' + ${quest.id} + '/pic'}" alt="Imagen partida" style="width: 100px; height: 100px;"/>
+            <h2><div th:text="${quest.name}">Nombre de la campaña</div></h2>
+            <img th:src="@{'/game/' + ${quest.id} + '/pic'}" alt="Imagen partida" style="width: 100px; height: 100px;"/>
             <div th:text="${quest.system}">Sistema</div>
             <div th:text="${quest.Date}">Fecha</div>
         </button>
     </form>
+</body>
+</html>

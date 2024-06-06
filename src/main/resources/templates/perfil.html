@@ -19,7 +19,7 @@
     <div class="profilecontainer">
 
 
-        <img th:src="@{'user/' + ${userId} + '/pic'}" alt="Profile Picture" class="profile-picture profilepic">
+        <img th:src="@{'/user/' + ${userId} + '/pic'}" alt="Profile Picture" class="profile-picture profilepic">
         <div class="profilename" th:text="${username}">Nombre de Usuario</div>
 
 
@@ -30,7 +30,7 @@
                 <li class="option">
                     <div>
                         Cambiar foto de perfil
-                        <form th:action="@{ 'user/' + ${userId} + '/pic'}" method="post" enctype="multipart/form-data">
+                        <form th:action="@{'/user/' + ${userId} + '/pic'}" method="post" enctype="multipart/form-data">
                             <input type="file" name="photo" accept=".png">
                             <button type="submit">Subir</button>
                         </form>

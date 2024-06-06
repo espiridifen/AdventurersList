@@ -13,19 +13,32 @@
 </head>
 <link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
 <link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
+<link rel="stylesheet" href="../static/session.css" th:href="@{/css/session.css}">
+
 <body class="background">
-    <div>
-        <a>Modificando sesión: <a th:text="${session.name}"></a></a>
+    <header th:replace="fragments/header :: header"></header>
+
+
+    <div class="missions-table">
+        <div th:text="@{'Modificando sesión: ' + ${session.title}}" class="lighttext"></div>
         <form th:action="editSession" method="post">
             <input type="hidden" name="id" th:field="${session.id}" style="display: none;"/>
-            Nombre de la sesión<br/>
-            <input type="text" name="title" th:field="${session.title}"/><br/>
-            Cuándo va a ser la nueva sesión?<br/>
-            <input type="datetime-local" name="date" th:field="${session.date}"/><br/>
-            Dónde va a ser la sesión?<br/>
-            <input type="text" name="location" th:field="${session.location}"/><br/>
-            URL de la sesión<br/>
-            <input type="text" name="linkToGame" th:field="${session.linkToGame}"/><br/>
+            <div class="lighttext">
+                Nombre de la sesión
+            </div>
+            <input  type="text" name="title" th:field="${session.title}"/><br/>
+            <div class="lighttext">
+                Cuándo va a ser la nueva sesión?
+            </div>
+            <input  type="datetime-local" name="date" th:field="${session.date}"/><br/>
+            <div class="lighttext">
+                Dónde va a ser la sesión?
+            </div>
+            <input  type="text" name="location" th:field="${session.location}"/><br/>
+            <div class="lighttext">
+            URL de la sesión
+            </div>
+            <input  type="text" name="linkToGame" th:field="${session.linkToGame}"/><br/>
             <button
                 type="submit"
                 class="btn btn-primary">

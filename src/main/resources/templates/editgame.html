@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <th:block th:replace="fragments/head :: header" />
     <meta charset="UTF-8">
@@ -13,14 +14,23 @@
 </head>
 <link rel="stylesheet" href="../static/main.css" th:href="@{/css/main.css}">
 <link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
+<link rel="stylesheet" href="../static/game.css" th:href="@{/css/game.css}">
+
 <body class="background">
-    <div>
-        <a>Modificando partida: <a th:text="${game.name}"></a></a>
+    <header th:replace="fragments/header :: header"></header>
+    <div class="missions-table">
+        <div class="lighttext" th:text="@{'Modificando partida: ' + ${game.name}}"></div>
         <form th:action="editGame" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="id" th:field="${game.id}" style="display: none;"/>
-            Nombre de la partida<br/>
-            <input type="text" name="name" id="name" th:field="${game.name}"/><br/>
-            Sistema<br/>
+            <input type="hidden" name="id" th:field="${game.id}" style="display: none;" />
+            <div class="lighttext">
+                Nombre de la partida
+            </div>
+            
+            <input type="text" name="name" id="name" th:field="${game.name}" /><br />
+            <div class="lighttext">
+                Sistema
+
+            </div>
             <select name="gamesystem" id="gamesystem" th:field="${game.gamesystem}">
                 <option value="FIRST_VERSION">Dungeons and Dragons 1st Edition</option>
                 <option value="SECOND_VERSION">Dungeons and Dragons 2nd Edition</option>
@@ -28,27 +38,41 @@
                 <option value="THIRD_VERSION_ADVANCED">Dungeons and Dragons 3.5th Edition</option>
                 <option value="FOURTH_VERSION">Dungeons and Dragons 4th Edition</option>
                 <option value="FIFTH_VERSION">Dungeons and Dragons 5th Edition</option>
-            </select><br/>
-            Fecha de la primera sesión<br/>
-            <input type="datetime-local" name="date" id="date" th:field="${game.date}"/><br/>
-            Dónde la vas a hacer?<br/>
-            <input type="text" name="meeting" id="meeting" th:field="${game.meeting}"/><br/>
-            Nivel de experiencia<br/>
+            </select>
+            <div class="lighttext">
+                Fecha de la primera sesión
+            </div>
+
+            <input type="datetime-local" name="date" id="date" th:field="${game.date}" /><br />
+            <div class="lighttext">
+
+                Dónde la vas a hacer?
+            </div>
+            <input type="text" name="meeting" id="meeting" th:field="${game.meeting}" /><br />
+            <div class="lighttext">
+
+                Nivel de experiencia
+            </div>
             <select name="experience" id="experience" th:field="${game.experience}">
                 <option value="BEGINNER">Principiante</option>
                 <option value="INTERMEDIATE">Intermedio</option>
                 <option value="ADVANCED">Avanzado</option>
-            </select><br/>
-            Descripción<br/>
-            <input type="text" style="height: 300px;" name="description" id="description" th:field="${game.description}"/><br/>
-            Imágen para el juego (.png). Si no pones ninguna, se deja la que ya estaba.<br/>
-            <input type="file" name="photo" accept=".png" id="photo"><br/>
-            <button
-                type="submit"
-                class="btn btn-primary">
+            </select><br />
+            <div class="lighttext">
+
+                Descripción
+            </div>
+            <input type="text" style="height: 300px;" name="description" id="description"
+                th:field="${game.description}" /><br />
+            <div class="lighttext">
+
+                Imágen para el juego (.png). Si no pones ninguna, se deja la que ya estaba.
+            </div>
+            <input class="lighttext" type="file" name="photo" accept=".png" id="photo"><br />
+            <button type="submit" class="btn btn-primary">
                 Enviar
             </button>
-            
+
         </form>
     </div>
 

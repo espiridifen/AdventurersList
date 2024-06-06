@@ -115,25 +115,26 @@
                 </form>
 
             </div>
-        </div>
-        <div class="message_container">
+            <div class="message_container">
 
-            <div class="messageBoard">
-                <ul>
-                    <li th:each="message : ${messageLog}" id="messageBoard">
-                        <div th:replace="~{fragments/message.html :: div(message=${message})}"></div>
-                    </li>
-                </ul>
+                <div class="messageBoard">
+                    <ul>
+                        <li th:each="message : ${messageLog}" id="messageBoard">
+                            <div th:replace="~{fragments/message.html :: div(message=${message})}"></div>
+                        </li>
+                    </ul>
+                </div>
+    
+    
+                <div id="sendMessageForm" class="sendMessageButtonClass">
+                    <form id="sendForm" action="/game/sendMessage" method="post">
+                        <input type="text" id="message" name="message" />
+                        <button type="submit" id="sendMessageButton">Enviar</button>
+                    </form>
+                </div>
             </div>
-
-
-            <div id="sendMessageForm" class="sendMessageButtonClass">
-                <form id="sendForm" action="/game/sendMessage" method="post">
-                    <input type="text" id="message" name="message" />
-                    <button type="submit" id="sendMessageButton">Enviar</button>
-                </form>
-            </div>
         </div>
+        
 
         <div class="sessionList" th:if="${userIsJoined}">
             <div th:if="${arethereAnyUpcomingSessions}">

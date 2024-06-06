@@ -6,10 +6,10 @@
     <div class="sessionPlace" th:text="${eachsession.location}"> Localización </div>
     <div class="sessionPlace" th:if="${eachsession.linkToGame}"> <a>URL: </a> <a th:text="${eachsession.linkToGame}"> TextoURL </a> </div>
     <div th:if="${not modifiable}">
-        <h4>Usuarios que asistieron:</h4>
+        <h4 class="lighttext">Usuarios que asistieron:</h4>
         <div th:each="attendee : ${eachsession.attendeesResponses}">
             <div th:if="${attendee.response == T(es.ucm.fdi.iw.model.sessionattendance.AttendanceResponseEnum).CONFIRMED}">
-                <p th:text="${attendee.user.username}">Attendee Name</p>
+                <p th:text="${attendee.user.username}" class="lighttext">Attendee Name</p>
             </div>
         </div>
     </div>

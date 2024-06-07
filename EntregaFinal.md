@@ -6,3 +6,4 @@
 - En la página de partida, la fuente se ha hecho más clara y ahora hay mejor fondo para la siguiente sesión. Se han añadido también los cambios a los websockets del examen. A mayores, se ha renovado la organización de la página, y ahora el chat es scrolleable y está a la izquierda del todo.
 - Ahora hay iconos para los jugadores que todavía no hayan decidido si atenderán o no a la próxima sesión.
 - Ahora se pueden visualizar bien los perfiles de los otros usuarios, y si eres admin, se pueden ver los mensajes del usuario.
+- Hacer click en la imagen de perfil de un usuario, te lleva a su perfil.

@@ -4,15 +4,20 @@ import java.util.List;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import es.ucm.fdi.iw.model.ChatLog;
 import es.ucm.fdi.iw.model.Message;
@@ -77,5 +82,26 @@ public class ProfileController {
         model.addAttribute("availableQuests", quests);
 
         return "perfil";
+    }
+
+    @PostMapping("/deleteMessage")
+    @Transactional
+    public String deleteMessage(@RequestParam("messageId") Long messageId, @RequestParam("senderId") Long senderId) {
+        // Find the message entity by ID
+        Message message = entityManager.find(Message.class, messageId);
+
+        User u = (User)httpSession.getAttribute("u");
+
+        // Only admins
+        if (!u.hasRole(User.Role.ADMIN)) return "/error";
+
+        // Check if the message exists and the user matches (por las dudas, es basicamente un assert(senderId == message.sender.id))
+        if (message != null && message.getSender().getId() == senderId) {
+            // Delete the message
+            entityManager.remove(message);
+        }
+
+        // Redirect back to the current page
+        return "redirect:/user/" + senderId.toString();
     }
 }

@@ -169,6 +169,7 @@
 
     <script th:inline="javascript">
         var isJoined = /*[[${userIsJoined}]]*/ false;
+        var isInWS = false;
         var gameId = /*[[${game.id}]]*/ '';
         var token = /*[[${_csrf.token}]]*/ '';
         var header = "_csrf";
@@ -176,7 +177,8 @@
         var currentMessageCount = 0;
 
         function connectWebsocket() {
-            if (isJoined) {
+            console.log("Joining websocket");
+            if (isJoined && !isInWS) {
                 ws.subscribe("/game/" + parsedGameId + "/queue/updates")
                 ws.receive = (text) => {
                     console.log("Mensaje recibido:")
@@ -184,10 +186,10 @@
                     addNewMessage(text);
                 }
             }
+            isInWS = true;
         }
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(connectWebsocket, 1000);
-            setTimeout(getAllMessages, 1000);
         });
 
         const messageForm = document.getElementById('sendForm');
@@ -209,8 +211,6 @@
                 success: function (data) {
                     console.log("Message sent successfully");
                     $("#message").val(""); // Clear the textbox
-                    // Optionally update the message board with the new message
-                    //getAllMessages();
                 },
                 error: function (xhr, status, error) {
                     console.error("Error sending message: " + xhr.statusText);
@@ -226,7 +226,6 @@
             messageForm.addEventListener("submit", (event) => {
                 event.preventDefault();
                 event.stopPropagation();
-                console.log("i tried to stop this!");
                 sendMessage();
                 return false;
             });
@@ -253,13 +252,6 @@
                     // Handle error
                 }
             });
-
-            if (!isJoined) {
-                ws.subscribe("/game/" + parsedGameId + "/queue/updates")
-            }
-            else {
-                ws.stompClient.unsubscribe("/game/" + parsedGameId + "/queue/updates")
-            }
         }
 
         function getAllMessages() {
@@ -332,9 +324,13 @@
         }
 
         function createMessageHTML(messageData) {
+            console.log("creando html!!!! " + messageData.text)
             var messageDiv = document.createElement("div");
             messageDiv.classList.add("messageContainer");
-
+            
+            var profileLink = document.createElement("a");
+            profileLink.href = "/user/" + messageData.fromId;
+            
             var profilePicture = document.createElement("img");
             profilePicture.setAttribute("alt", "User Profile Picture");
             profilePicture.classList.add("profilePicture");
@@ -342,6 +338,7 @@
             // profilePicture.setAttribute("src", "img/gatoque.jpg");
             fetchUserProfilePicture(messageData.id, messageData.fromId);
 
+            profileLink.appendChild(profilePicture);
             var textDiv = document.createElement("div");
             textDiv.classList.add("text");
 
@@ -356,7 +353,7 @@
             textDiv.appendChild(username);
             textDiv.appendChild(messageText);
 
-            messageDiv.appendChild(profilePicture);
+            messageDiv.appendChild(profileLink);
             messageDiv.appendChild(textDiv);
 
             return messageDiv;

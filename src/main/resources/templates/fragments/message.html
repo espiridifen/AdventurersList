@@ -1,10 +1,20 @@
-    <div th:fragment="div(message)" class="messageContainer">
-        <link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
-        <!-- <img alt="User Profile Picture" class="profilePicture" src="img/gatoque.jpg"/> -->
+
+<!-- Este fragment se usa solo en el perfil del user cuando el que entra al perfil es ADMIN -->
+<div th:fragment="div(message)" class="messageContainer">
+    <link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
+    
+    <a th:href="@{'/user/' + ${message.sender.id}}">
         <img alt="User Profile Picture" class="profilePicture" th:src="@{/user/{id}/pic(id=${message.sender.id})}">
-        <div class="text">
-            <p th:text="${message.sender.username}" class="username" >Mamertín</p>
-            <p th:text="${message.text}" class="messageText">Una mamertada, probablemente</p>
-        </div>
-        
+    </a>
+    
+    <div class="text">
+        <p th:text="${message.sender.username}" class="username">Mamertín</p>
+        <p th:text="${message.text}" class="messageText">Una mamertada, probablemente</p>
     </div>
+
+    <form th:action="@{/deleteMessage}" method="post" style="display:inline;">
+        <input type="hidden" name="messageId" th:value="${message.id}" />
+        <input type="hidden" name="senderId" th:value="${message.sender.id}" />
+        <button type="submit" class="delete-button">X</button>
+    </form>    
+</div>

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="perfil.css" th:href="@{/css/perfil.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/profile.css}">
+    <link rel="stylesheet" th:href="@{/css/gamepreview.css}">
     <title>Perfil de Usuario</title>
     <!-- Include the meta tag for CSRF token -->
     <meta name="_csrf" th:content="${_csrf.token}" />
@@ -42,7 +43,7 @@
         </div>
 
 
-        <div>
+        <div class="activegames">
             <h2>Partidas Activas</h2>
             <ul class="mission-list">
                 <li th:each="quest : ${availableQuests}">
@@ -50,7 +51,7 @@
                 </li>
             </ul>
         </div>
-        <div th:if="${isAdmin}"> <!-- aqui va el check de si es admin -->
+        <div th:if="${isAdmin}" class="admindata"> <!-- aqui va el check de si es admin -->
             Mensajes enviados en <br />
             <ul th:each="chatlog : ${chatLogs}">
                 <li>

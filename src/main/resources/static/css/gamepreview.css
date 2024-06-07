@@ -1,9 +1,9 @@
-.mission{
+.mission_container{
     background-color: wheat;
     background: url(../img/quest.png) no-repeat center center;
     background-size: contain;
-    /* max-width: 20%; */
-    min-width: 250px;
+    max-width: 160px;
+    min-width: 160px;
     display: flex;
       justify-content: center;
       align-items: center;

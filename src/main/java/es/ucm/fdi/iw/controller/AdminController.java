@@ -27,13 +27,13 @@ public class AdminController {
 	// private static final Logger log = LogManager.getLogger(AdminController.class);
 
 
-	@GetMapping("/")
+    @GetMapping("/")
     @Transactional
     public String index(Model model) {
-        TypedQuery<Report> reportQuery = entityManager.createQuery("select g from Report", Report.class);
+        TypedQuery<Report> reportQuery = entityManager.createQuery("select r from Report r", Report.class);
         var reports = reportQuery.getResultList();
         model.addAttribute("reports", reports);
-
+    
         return "admin";
-    }
+    }    
 }

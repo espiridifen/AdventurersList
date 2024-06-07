@@ -3,7 +3,7 @@
 
 <head>
     <th:block th:replace="fragments/head :: header" />
-    <title>IW: Admin</title>
+    <title>Adventurer's List: Admin</title>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -14,16 +14,22 @@
             <h1 class="mt-5">Administración</h1>
         </div>
 
-        <ul>
-            <li th:each= "report:${reports}">
-                <div th:text="${report.reportedGame.name}">
-                </div>
-                <div th:text="${report.reportedGame.description}">
-                </div>
-                <div thth:text="${report.reason}" >
-                </div>
-            </li>
-        </ul>
+        <div th:if="${reports}">
+            <ul>
+                <li th:each= "report:${reports}">
+                    <div th:text="${report.reportedGame.name}">
+                    </div>
+                    <div th:text="${report.reportedGame.description}">
+                    </div>
+                    <div thth:text="${report.reason}" >
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${reports.empty}">
+            <h2>No hay reportes que gestionar!</h2>
+        </div>
+        
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />

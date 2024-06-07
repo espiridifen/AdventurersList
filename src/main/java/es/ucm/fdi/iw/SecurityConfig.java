@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Security configuration.
@@ -33,6 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		}
     }
 
+    @Autowired
+    private BannedUserFilter bannedUserFilter;
 	/**
 	 * Main security configuration.
 	 * 
@@ -45,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.addFilterBefore(bannedUserFilter, UsernamePasswordAuthenticationFilter.class);
+
 	    http
 			.csrf()
 				.ignoringAntMatchers("/api/**")

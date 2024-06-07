@@ -20,26 +20,39 @@
     <div class="profilecontainer">
 
 
-        <img th:src="@{'/user/' + ${userId} + '/pic'}" alt="Profile Picture" class="profile-picture profilepic">
-        <div class="profilename" th:text="${username}">Nombre de Usuario</div>
+        <img th:src="@{'/user/' + ${thisUser.id} + '/pic'}" alt="Profile Picture" class="profile-picture profilepic">
+        <div class="profilename" th:text="${thisUser.username}">Nombre de Usuario</div>
 
 
 
-        <div class="sidebar profilesettings">
-            <h3>Opciones de Configuración</h3>
-            <ul class="options">
-                <li class="option">
-                    <div>
-                        Cambiar foto de perfil
-                        <form th:action="@{'/user/' + ${userId} + '/pic'}" method="post" enctype="multipart/form-data">
-                            <input type="file" name="photo" accept=".png">
-                            <button type="submit">Subir</button>
-                        </form>
-                    </div>
-                </li>
-                <!-- <li class="option">Configuración 2</li>
-                    <li class="option">Configuración 3</li> -->
-            </ul>
+        <div class="sidebar profilesettings" th:if="${thisUser.id == session.u.id || isAdmin}">
+            <div th:if="${thisUser.id == session.u.id}"><h3>Opciones de Configuración</h3>
+                <ul class="options">
+                    <li class="option">
+                        <div>
+                            Cambiar foto de perfil
+                            <form th:action="@{'/user/' + ${thisUser.id} + '/pic'}" method="post" enctype="multipart/form-data">
+                                <input type="file" name="photo" accept=".png">
+                                <button type="submit">Subir</button>
+                            </form>
+                        </div>
+                    </li>
+                    <!-- <li class="option">Configuración 2</li>
+                        <li class="option">Configuración 3</li> -->
+                </ul>
+            </div>
+            <div th:if="${isAdmin && thisUser.id != session.u.id && thisUser.enabled}"><h3>Banear al jugador</h3>
+                <form th:action="@{/banUser}" method="post">
+                    <input type="hidden" name="userId" th:value="${thisUser.id}" style="display: none;" />
+                    <button id="banButton">Banear</button>
+                </form>
+            </div>
+            <div th:if="${isAdmin && thisUser.id != session.u.id && !thisUser.enabled}"><h3>Este usuario ha sido baneado</h3>
+                <form th:action="@{/unbanUser}" method="post">
+                    <input type="hidden" name="userId" th:value="${thisUser.id}" style="display: none;" />
+                    <button id="banButton">Desbanear</button>
+                </form>
+            </div>
         </div>
 
 

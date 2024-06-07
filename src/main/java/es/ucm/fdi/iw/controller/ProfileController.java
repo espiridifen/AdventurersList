@@ -40,8 +40,7 @@ public class ProfileController {
         User viewer = (User)httpSession.getAttribute("u");
         User u = entityManager.find(User.class, id);
         
-        model.addAttribute("username", u.getUsername());
-        model.addAttribute("userId", u.getId());
+        model.addAttribute("thisUser", u);
         model.addAttribute("isAdmin", viewer.hasRole(User.Role.ADMIN));
 
         // Now add the user's games
@@ -103,5 +102,47 @@ public class ProfileController {
 
         // Redirect back to the current page
         return "redirect:/user/" + senderId.toString();
+    }
+
+    @PostMapping("/banUser")
+    @Transactional
+    public String banUser(@RequestParam("userId") Long userId) {
+        // Find the message entity by ID
+        User user_to_ban = entityManager.find(User.class, userId);
+
+        User u = (User)httpSession.getAttribute("u");
+
+        // Only admins, and you cannot ban yourself...
+        if (!u.hasRole(User.Role.ADMIN) || u.getId() == user_to_ban.getId()) return "/error";
+
+        // Check if the user exists
+        if (user_to_ban != null) {
+            // Delete the user
+            user_to_ban.setEnabled(false);
+        }
+
+        // Redirect back to the current page
+        return "redirect:/user/" + user_to_ban.getId();
+    }
+
+    @PostMapping("/unbanUser")
+    @Transactional
+    public String unbanUser(@RequestParam("userId") Long userId) {
+        // Find the message entity by ID
+        User user_to_unban = entityManager.find(User.class, userId);
+
+        User u = (User)httpSession.getAttribute("u");
+
+        // Only admins, and you cannot ban yourself...
+        if (!u.hasRole(User.Role.ADMIN) || u.getId() == user_to_unban.getId()) return "/error";
+
+        // Check if the user exists
+        if (user_to_unban != null) {
+            // Delete the user
+            user_to_unban.setEnabled(true);
+        }
+
+        // Redirect back to the current page
+        return "redirect:/user/" + user_to_unban.getId();
     }
 }

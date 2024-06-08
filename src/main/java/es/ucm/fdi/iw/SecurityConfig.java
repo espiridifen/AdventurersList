@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/admin/**").hasRole("ADMIN")	   // <-- administration
 	            .antMatchers("/user/**").hasRole("USER")	   // <-- logged-in users
 				.antMatchers("/game/*/pic").permitAll()        // <-- public access to game pictures
+				.antMatchers("/register").permitAll()
 	            .anyRequest().authenticated()
 	            .and()
 			.formLogin()

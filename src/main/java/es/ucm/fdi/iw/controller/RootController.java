@@ -4,12 +4,17 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.ucm.fdi.iw.model.Quest;
+import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.game.Game;
 
 import java.util.ArrayList;
@@ -22,10 +27,31 @@ import java.util.List;
 public class RootController {
 
 	// private static final Logger log = LogManager.getLogger(RootController.class);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/login")
     public String login(Model model) {
         return "login";
+    }
+	@GetMapping("/register")
+    public String register(Model model) {
+        return "register.html";
+    }
+    
+    @PostMapping("/register")
+    @Transactional
+    public String registerUserAccount(@RequestParam String username,
+                                        @RequestParam String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setEnabled(true);
+        user.setRoles(User.Role.USER.name());
+        
+        entityManager.persist(user);
+
+        return "redirect:/login";
     }
 
     @Autowired

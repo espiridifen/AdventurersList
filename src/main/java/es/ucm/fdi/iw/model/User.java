@@ -46,9 +46,9 @@ public class User implements Transferable<User.Transfer> {
     private @NotNull String password;
 
     @JoinColumn(name = "first_name")
-    private @NotNull String firstName;
+    private String firstName;
     @JoinColumn(name = "last_name")
-    private @NotNull String lastName;
+    private String lastName;
 
     private boolean enabled;
     private String roles; // split by ',' to separate roles

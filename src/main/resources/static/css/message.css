@@ -32,10 +32,12 @@
 .username {
     padding-top: 10px;
     font-weight: bold;
+    color: black;
 }
 
 .messageText {
     font-style: oblique;
+    color: black;
 }
 
 .profilePicture {

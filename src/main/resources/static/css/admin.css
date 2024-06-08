@@ -1,0 +1,27 @@
+.adminTable {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-height: 200vh;
+}
+
+.openReports {
+    grid-column: 1 / 2;
+}
+
+.closedReports {
+    grid-column: 2 / 3;
+}
+
+.nobullets {
+    list-style-type: none;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.report {
+    background-color: #e0cc9f;
+    color: black;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px;
+}

@@ -12,6 +12,7 @@
 
 .navText {
     color: bisque;
+    font-size: large;
 }
 
 .navButton {
@@ -19,6 +20,7 @@
     border-color: black;
     border-width: 3px;
     color: bisque;
+    font-size: x-large;
     margin: 0 10px 0 10px;
 }
 

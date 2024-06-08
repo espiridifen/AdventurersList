@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="../static/message.css" th:href="@{/css/message.css}">
 <body class="background">
     <header th:replace="fragments/header :: header"></header>
-    <div class="missions-table">
+    <div class="missions-table lighttext">
         <div th:text="${game.name}"></div>
         <form th:action="createNewGameReport" method="post">
             <input type="hidden" name="questID" th:value="${game.id}" style="display: none;"/>

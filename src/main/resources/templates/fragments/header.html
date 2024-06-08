@@ -4,8 +4,11 @@
 
         <!-- nombre del sitio; es un enlace que lleva a la página ppal -->
         <a class="navbar-brand navTitle" th:href="@{/}" href="/">
-            <img th:src="@{/img/gatoque.jpg}" src="/img/gatoque.jpg" alt="Logo AL" width="32" height="32"
-                class="d-inline-block align-text-top navText"> Adventurer's List
+            <img th:src="@{/img/adlistlogo.png}" src="/img/adlistlogo.png" alt="Logo AL" width="32" height="32"
+                class="d-inline-block align-text-top navText">
+                <span class="navText">
+                    Adventurer's List
+                </span>
         </a>
         <!-- menu hamburguesa si no cabe todo -->
         <a th:href="@{/}" href="/" class="navInicio">
@@ -14,7 +17,7 @@
             </button>
         </a>
 
-        <a href="busqueda.html" th:href="@{busqueda}" class="navBusqueda">
+        <a href="busqueda.html" th:href="@{/busqueda/}" class="navBusqueda">
             <button class="navButton">
                 Buscar partidas
             </button>

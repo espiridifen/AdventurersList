@@ -144,7 +144,7 @@
 
         <div class="sessionList" th:if="${userIsJoined}">
             <div th:if="${arethereAnyUpcomingSessions}">
-                <b>Próximas sesiones</b> <br />
+                <h2 class="lighttext">Próximas sesiones</h2> <br />
                 <ul>
                     <li th:each="eachsession : ${upcoming_sessions}">
                         <div
@@ -154,7 +154,7 @@
                 </ul>
             </div>
             <div th:if="${arethereAnyPrevSessions}">
-                <b>Sesiones previas</b> <br />
+                <h2 class="lighttext">Sesiones previas</h2> <br />
                 <ul>
                     <li th:each="eachsession : ${prev_sessions}">
                         <div

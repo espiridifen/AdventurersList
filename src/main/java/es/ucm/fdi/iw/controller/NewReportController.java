@@ -46,7 +46,7 @@ public class NewReportController {
         
         User u = (User)httpSession.getAttribute("u");
 
-        Report r = new Report(null, u, null, g, null, text);
+        Report r = new Report(null, true, u, null, g, null, text);
         entityManager.persist(r);
 
         return "reportsent.html";

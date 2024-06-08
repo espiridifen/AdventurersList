@@ -14,25 +14,61 @@
             <h1 class="mt-5">Administración</h1>
         </div>
 
-        <div th:if="${reports}">
+        <div th:if="${!openReports.empty}">
+            <div>
+                <h2>Reportes pendientes:</h2>
+            </div>
             <ul>
-                <li th:each= "report:${reports}">
-                    <div th:text="${report.reportedGame.name}">
+                <li th:each= "report:${openReports}">
+                    <div> Partida reportada: 
+                        <a th:href="@{'/game?questID=' + ${report.reportedGame.id}}" th:text="${report.reportedGame.name}"></a>
                     </div>
-                    <div th:text="${report.reportedGame.description}">
+                    <div> Usuario que envía el reporte: 
+                        <a th:href="@{'/user/' + ${report.user.id}}" th:text="${report.user.username}"></a>
                     </div>
-                    <div thth:text="${report.reason}" >
+                    <div> Descripción del reporte: 
+                        <a th:text="${report.reason}"></a>
                     </div>
+                    <form th:action="@{/admin/markReport}" method="post">
+                        <input type="hidden" name="reportId" th:value="${report.id}" style="display: none;" />
+                        <button>Marcar como resuelto</button>
+                    </form>
                 </li>
             </ul>
         </div>
-        <div th:if="${reports.empty}">
-            <h2>No hay reportes que gestionar!</h2>
+        <div th:if="${openReports.empty}">
+            <h2>No hay nuevos reportes que gestionar!</h2>
+        </div>
+
+        <div th:if="${!closedReports.empty}">
+            <div>
+                <h2>Reportes antiguos:</h2>
+            </div>
+            <ul>
+                <li th:each= "report:${closedReports}">
+                    <div> Partida reportada: 
+                        <a th:href="@{'/game?questID=' + ${report.reportedGame.id}}" th:text="${report.reportedGame.name}"></a>
+                    </div>
+                    <div> Usuario que envía el reporte: 
+                        <a th:href="@{'/user/' + ${report.user.id}}" th:text="${report.user.username}"></a>
+                    </div>
+                    <div> Descripción del reporte: 
+                        <a th:text="${report.reason}"></a>
+                    </div>
+                    <form th:action="@{/admin/markReport}" method="post">
+                        <input type="hidden" name="reportId" th:value="${report.id}" style="display: none;" />
+                        <button>Marcar como no resuelto</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${closedReports.empty}">
+            <h2>No hay reportes antiguos.</h2>
         </div>
         
     </main>
 
-    <th:block th:replace="fragments/footer.html :: footer" />
+    <!-- <th:block th:replace="fragments/footer.html :: footer" /> -->
 </body>
 
 </html>

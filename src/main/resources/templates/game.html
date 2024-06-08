@@ -42,13 +42,19 @@
             <div class="genericlist lighttext">
                 <div class="lighttext">Director de Juego:</div>
                 <ul class="list lighttext" style="margin-left: 10px;">
-                    <li th:text="${game.owner.username}" class="lighttext">Usuario</li>
+                    <li>
+                        <a th:href="@{'/user/' + ${game.owner.id}}">
+                            <div th:text="${game.owner.username}" class="lighttext">Usuario</div>
+                        </a>
+                    </li>
                 </ul>
                 <div class="lighttext">Jugadores:</div>
 
                 <ul class="list" style="margin-left: 10px;">
                     <li th:each="user : ${users}">
-                        <div th:text="${user}" class="lighttext">user</div>
+                        <a th:href="@{'/user/' + ${user.id}}">
+                            <div th:text="${user.username}" class="lighttext">user</div>
+                        </a>
                     </li>
                 </ul>
             </div>

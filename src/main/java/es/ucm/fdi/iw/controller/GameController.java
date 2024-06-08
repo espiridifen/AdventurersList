@@ -89,9 +89,9 @@ public class GameController {
         gameJoins.setParameter("gameId", gameId);
         List<GameJoin> joinlist = gameJoins.getResultList();
 
-        List<String> users = new ArrayList<String>();
+        List<User> users = new ArrayList<User>();
         for (GameJoin join : joinlist) {
-            users.add(join.getUser().getUsername());
+            users.add(join.getUser());
         }
 
         model.addAttribute("users", users);

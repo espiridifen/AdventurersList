@@ -1,6 +1,7 @@
 package es.ucm.fdi.iw.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import es.ucm.fdi.iw.model.game.Game;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,8 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")
 	private Long id;
+
+    private @NotNull Boolean isOpen;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

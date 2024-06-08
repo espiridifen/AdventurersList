@@ -8,13 +8,13 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="icon" th:href="@{/img/favicon.ico}" href="/img/adlistlogo.png" type="image/png">
     <link rel="stylesheet" th:href="@{/css/bootstrap-5.1.3.css}">
-    <title>Adventurer's List: Login</title>
+    <title>Adventurer's List: Register</title>
 </head>
 
 <body class="background">
         <div class="missions-table" style="max-width: 90%; margin-left: 5%; padding-top: 5%;">
-            <form class="form-signin" method="post" th:action="@{/login}">
-                <h2 class="form-signin-heading lighttext">Iniciar sesión</h2>
+            <form class="form-signin" method="post" th:action="@{/registerNewAcc}">
+                <h2 class="form-signin-heading lighttext">Crear cuenta</h2>
                 <p th:if="${#request.getQueryString() == 'error'}" class="error">
                     Error en nombre de usuario o contraseña
                 </p>
@@ -26,13 +26,8 @@
                     <label for="password" class="visually-hidden">Password</label>
                     <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="required">
                 </p>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                </form>
-                <a href="register.html" th:href="@{/register/}" class="navBusqueda">
-                    <button class="navButton">
-                        Buscar partidas
-                    </button>
-                </a>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+            </form>
         </div>
 </body>
 

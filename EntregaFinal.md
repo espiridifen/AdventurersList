@@ -8,3 +8,4 @@
 - Ahora se pueden visualizar bien los perfiles de los otros usuarios, y si eres admin, se pueden ver los mensajes del usuario. Además, si no es tu perfil, no aparecen la opción de cambiar tu imágen de perfil.
 - Hacer click en la imagen de perfil de un usuario en un mensaje, te lleva a su perfil.
 - Ahora los admins pueden banear usuarios, como también borrar mensajes individualmente. No te puedes banear a ti mismo. Una vez baneado, si el usuario intenta seguir usando la aplicación, un filtro de seguridad le echará. Si intenta volver a entrar, no podrá.
+- Se han hecho mejoras de visibilidad en toda la página, y se ha creado un logo para la aplicación
